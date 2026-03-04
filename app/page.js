@@ -62,6 +62,22 @@ const T = {
     footerBottom: "© 2025 Sekura. Tous droits réservés. · Sekura est un outil d'aide, pas un service de secours professionnel.",
     // Language modal
     langTitle: 'Choisir la langue',
+    // Ticker items
+    tickerItems: [
+      { icon: '👩', num: '1 femme / 3', desc: '— a modifié son trajet par peur — en France, en 2024' },
+      { icon: '🌎', num: '40 / 50', desc: '— villes les + dangereuses du monde situées en LATAM' },
+      { icon: '✈️', num: '+12M', desc: '— touristes européens visitent l\'Amérique Latine chaque année' },
+      { icon: '⏱', num: '30-60 min', desc: '— délai moyen d\'intervention policière en zone urbaine' },
+      { icon: '📈', num: '$3.85Md', desc: '— marché Women Safety mondial · CAGR 14.5%' },
+      { icon: '🔒', num: '< 3 sec', desc: '— pour déclencher un SOS discret sans regarder l\'écran' },
+    ],
+    // Problem cards
+    problemCards: [
+      { num: '1 / 3', title: 'Femmes ont modifié leur trajet par peur', desc: 'En France, au Royaume-Uni, en Espagne — pas seulement en LATAM. La peur de bouger seule la nuit est un problème mondial. Aucune app grand public n\'y répond sérieusement.', source: 'HAUT CONSEIL À L\'ÉGALITÉ · FRANCE 2024' },
+      { num: '40 / 50', title: 'Villes les plus dangereuses sont en LATAM', desc: '12 millions de touristes européens visitent l\'Amérique Latine chaque année. Beaucoup ne connaissent pas la géographie des risques locaux — zones cartel, quartiers à éviter, arnaques aux expats.', source: 'WORLD POPULATION REVIEW 2025' },
+      { num: '30-60', title: 'Minutes d\'attente pour la police en urgence', desc: 'En zone urbaine — Bogota, Mexico ou certaines banlieues européennes. En 30 minutes, tout peut être trop tard. Il faut alerter ses proches en secondes, pas en minutes.', source: 'ÉTUDE MARCHÉ SEKURA 2026' },
+      { num: '0', title: 'App vraiment conçue pour ces réalités', desc: 'Life360, bSafe, Noonlight : pensées pour les États-Unis. Aucune ne propose de SOS activable sans regarder l\'écran, de détection de déviation d\'itinéraire, ni de mode hors-ligne robuste.', source: 'ANALYSE CONCURRENTIELLE SEKURA' },
+    ],
   },
   en: {
     navFeatures: 'Features', navPricing: 'Pricing', navFaq: 'FAQ',
@@ -106,6 +122,22 @@ const T = {
     footerProduct: 'Product', footerMarkets: 'Markets', footerLegal: 'Legal',
     footerBottom: '© 2025 Sekura. All rights reserved. · Sekura is a support tool, not a professional emergency service.',
     langTitle: 'Choose language',
+    // Ticker items
+    tickerItems: [
+      { icon: '👩', num: '1 in 3', desc: '— women changed their route due to fear — in France, in 2024' },
+      { icon: '🌎', num: '40 / 50', desc: '— most dangerous cities in the world are in LATAM' },
+      { icon: '✈️', num: '+12M', desc: '— European tourists visit Latin America every year' },
+      { icon: '⏱', num: '30-60 min', desc: '— average police response time in urban areas' },
+      { icon: '📈', num: '$3.85Bn', desc: '— Women Safety global market · CAGR 14.5%' },
+      { icon: '🔒', num: '< 3 sec', desc: '— to trigger a discreet SOS without looking at screen' },
+    ],
+    // Problem cards
+    problemCards: [
+      { num: '1 / 3', title: 'Women changed their route due to fear', desc: 'In France, UK, Spain — not just in LATAM. The fear of moving alone at night is a global problem. No mainstream app addresses it seriously.', source: 'HIGH COUNCIL FOR EQUALITY · FRANCE 2024' },
+      { num: '40 / 50', title: 'Most dangerous cities are in LATAM', desc: '12 million European tourists visit Latin America every year. Many don\'t know the local risk geography — cartel zones, neighborhoods to avoid, expat scams.', source: 'WORLD POPULATION REVIEW 2025' },
+      { num: '30-60', title: 'Minutes waiting for police in emergency', desc: 'In urban areas — Bogota, Mexico or some European suburbs. In 30 minutes, everything can be too late. You need to alert your loved ones in seconds, not minutes.', source: 'SEKURA MARKET STUDY 2026' },
+      { num: '0', title: 'App truly designed for these realities', desc: 'Life360, bSafe, Noonlight: designed for the US. None offer SOS without looking at screen, route deviation detection, or robust offline mode.', source: 'SEKURA COMPETITIVE ANALYSIS' },
+    ],
   },
   es: {
     navFeatures: 'Funcionalidades', navPricing: 'Precios', navFaq: 'FAQ',
@@ -150,6 +182,22 @@ const T = {
     footerProduct: 'Producto', footerMarkets: 'Mercados', footerLegal: 'Legal',
     footerBottom: '© 2025 Sekura. Todos los derechos reservados. · Sekura es una herramienta de apoyo, no un servicio de emergencia profesional.',
     langTitle: 'Elegir idioma',
+    // Ticker items
+    tickerItems: [
+      { icon: '👩', num: '1 de 3', desc: '— mujeres cambiaron su ruta por miedo — en Francia, en 2024' },
+      { icon: '🌎', num: '40 / 50', desc: '— ciudades más peligrosas del mundo están en LATAM' },
+      { icon: '✈️', num: '+12M', desc: '— turistas europeos visitan América Latina cada año' },
+      { icon: '⏱', num: '30-60 min', desc: '— tiempo medio de respuesta policial en zonas urbanas' },
+      { icon: '📈', num: '$3.85Md', desc: '— mercado global Women Safety · CAGR 14.5%' },
+      { icon: '🔒', num: '< 3 seg', desc: '— para activar un SOS discreto sin mirar la pantalla' },
+    ],
+    // Problem cards
+    problemCards: [
+      { num: '1 / 3', title: 'Mujeres cambiaron su ruta por miedo', desc: 'En Francia, Reino Unido, España — no solo en LATAM. El miedo de moverse sola de noche es un problema mundial. Ninguna app popular lo aborda seriamente.', source: 'ALTO CONSEJO DE IGUALDAD · FRANCIA 2024' },
+      { num: '40 / 50', title: 'Ciudades más peligrosas están en LATAM', desc: '12 millones de turistas europeos visitan América Latina cada año. Muchos no conocen la geografía de riesgos local — zonas cartel, barrios a evitar, estafas a expatriados.', source: 'WORLD POPULATION REVIEW 2025' },
+      { num: '30-60', title: 'Minutos de espera por la policía en emergencia', desc: 'En zona urbana — Bogotá, México o algunos suburbios europeos. En 30 minutos, todo puede ser demasiado tarde. Hay que alertar a los seres queridos en segundos, no minutos.', source: 'ESTUDIO MERCADO SEKURA 2026' },
+      { num: '0', title: 'App realmente diseñada para estas realidades', desc: 'Life360, bSafe, Noonlight: pensadas para EE.UU. Ninguna ofrece SOS sin mirar la pantalla, detección de desviación de ruta, ni modo offline robusto.', source: 'ANÁLISIS COMPETITIVO SEKURA' },
+    ],
   },
   pt: {
     navFeatures: 'Funcionalidades', navPricing: 'Preços', navFaq: 'FAQ',
@@ -194,6 +242,22 @@ const T = {
     footerProduct: 'Produto', footerMarkets: 'Mercados', footerLegal: 'Legal',
     footerBottom: '© 2025 Sekura. Todos os direitos reservados. · Sekura é uma ferramenta de apoio, não um serviço de emergência profissional.',
     langTitle: 'Escolher idioma',
+    // Ticker items
+    tickerItems: [
+      { icon: '👩', num: '1 em 3', desc: '— mulheres mudaram sua rota por medo — na França, em 2024' },
+      { icon: '🌎', num: '40 / 50', desc: '— cidades mais perigosas do mundo estão na LATAM' },
+      { icon: '✈️', num: '+12M', desc: '— turistas europeus visitam a América Latina a cada ano' },
+      { icon: '⏱', num: '30-60 min', desc: '— tempo médio de resposta policial em áreas urbanas' },
+      { icon: '📈', num: '$3.85Bi', desc: '— mercado global Women Safety · CAGR 14.5%' },
+      { icon: '🔒', num: '< 3 seg', desc: '— para acionar um SOS discreto sem olhar para a tela' },
+    ],
+    // Problem cards
+    problemCards: [
+      { num: '1 / 3', title: 'Mulheres mudaram sua rota por medo', desc: 'Na França, Reino Unido, Espanha — não apenas na LATAM. O medo de se mover sozinha à noite é um problema global. Nenhum app popular o aborda seriamente.', source: 'ALTO CONSELHO DE IGUALDADE · FRANÇA 2024' },
+      { num: '40 / 50', title: 'Cidades mais perigosas estão na LATAM', desc: '12 milhões de turistas europeus visitam a América Latina a cada ano. Muitos não conhecem a geografia de riscos local — zonas cartel, bairros a evitar, golpes em expatriados.', source: 'WORLD POPULATION REVIEW 2025' },
+      { num: '30-60', title: 'Minutos de espera pela polícia em emergência', desc: 'Em zona urbana — Bogotá, México ou alguns subúrbios europeus. Em 30 minutos, tudo pode ser tarde demais. É preciso alertar seus entes queridos em segundos, não minutos.', source: 'ESTUDO MERCADO SEKURA 2026' },
+      { num: '0', title: 'App realmente projetado para essas realidades', desc: 'Life360, bSafe, Noonlight: pensados para os EUA. Nenhum oferece SOS sem olhar para a tela, detecção de desvio de rota, nem modo offline robusto.', source: 'ANÁLISE COMPETITIVA SEKURA' },
+    ],
   }
 }
 
@@ -547,7 +611,7 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
               {[
                 { value: adoptCount, label: t.metricAdopters },
                 { value: '$2.8Md', label: t.metricMarket },
-                { value: 'Été 2025', label: t.metricBeta },
+                { value: 'Q1 2026', label: t.metricBeta },
               ].map((m, i) => (
                 <div key={i}>
                   <p style={{ fontFamily: "'DM Serif Display',serif", fontSize: 26, color: 'var(--text)', margin: '0 0 2px' }}>
@@ -579,15 +643,9 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
 }
 
 // ── TICKER STRIP ──────────────────────────────────────────────────────────────
-function TickerStrip() {
-  const items = [
-    { icon: '👩', num: '1 femme / 3', desc: '— a modifié son trajet par peur — en France, en 2024' },
-    { icon: '🌎', num: '40 / 50', desc: '— villes les + dangereuses du monde situées en LATAM' },
-    { icon: '✈️', num: '+12M', desc: '— touristes européens visitent l\'Amérique Latine chaque année' },
-    { icon: '⏱', num: '30-60 min', desc: '— délai moyen d\'intervention policière en zone urbaine' },
-    { icon: '📈', num: '$3.85Md', desc: '— marché Women Safety mondial · CAGR 14.5%' },
-    { icon: '🔒', num: '< 3 sec', desc: '— pour déclencher un SOS discret sans regarder l\'écran' },
-  ]
+function TickerStrip({ lang }) {
+  const t = T[lang] || T.fr
+  const items = t.tickerItems || []
   const renderItems = () => items.map((item, i) => (
     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 40px', whiteSpace: 'nowrap' }}>
       <span style={{ fontSize: 18 }}>{item.icon}</span>
@@ -609,12 +667,7 @@ function TickerStrip() {
 // ── PROBLEM SECTION ───────────────────────────────────────────────────────────
 function ProblemSection({ lang }) {
   const t = T[lang] || T.fr
-  const cards = [
-    { num: '1 / 3', title: 'Femmes ont modifié leur trajet par peur', desc: 'En France, au Royaume-Uni, en Espagne — pas seulement en LATAM. La peur de bouger seule la nuit est un problème mondial. Aucune app grand public n\'y répond sérieusement.', source: 'HAUT CONSEIL À L\'ÉGALITÉ · FRANCE 2024' },
-    { num: '40 / 50', title: 'Villes les plus dangereuses sont en LATAM', desc: '12 millions de touristes européens visitent l\'Amérique Latine chaque année. Beaucoup ne connaissent pas la géographie des risques locaux — zones cartel, quartiers à éviter, arnaques aux expats.', source: 'WORLD POPULATION REVIEW 2025' },
-    { num: '30-60', title: 'Minutes d\'attente pour la police en urgence', desc: 'En zone urbaine — Bogota, Mexico ou certaines banlieues européennes. En 30 minutes, tout peut être trop tard. Il faut alerter ses proches en secondes, pas en minutes.', source: 'ÉTUDE MARCHÉ SEKURA 2026' },
-    { num: '0', title: 'App vraiment conçue pour ces réalités', desc: 'Life360, bSafe, Noonlight : pensées pour les États-Unis. Aucune ne propose de SOS activable sans regarder l\'écran, de détection de déviation d\'itinéraire, ni de mode hors-ligne robuste.', source: 'ANALYSE CONCURRENTIELLE SEKURA' },
-  ]
+  const cards = t.problemCards || []
   return (
     <section id="probleme" style={{ background: 'var(--ink-soft)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -1117,7 +1170,7 @@ export default function App() {
       <Navbar lang={lang} onLangOpen={() => setShowLangModal(true)} />
       <main>
         <HeroSection lang={lang} onCountUpdate={(c) => setWaitlistCount(c)} liveCount={waitlistCount} />
-        <TickerStrip />
+        <TickerStrip lang={lang} />
         <ProblemSection lang={lang} />
         <FeaturesSection lang={lang} />
         <UseCasesSection lang={lang} />
