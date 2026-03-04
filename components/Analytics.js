@@ -2,11 +2,7 @@
 import Script from 'next/script'
 
 export default function Analytics() {
-  const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-XXXXXXXXXX'
-  
-  if (!GA_ID || GA_ID === 'G-XXXXXXXXXX') {
-    return null // Don't load Analytics if ID is not configured
-  }
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID || 'G-M8CBR5620W'
 
   return (
     <>

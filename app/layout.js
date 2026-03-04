@@ -67,7 +67,7 @@ export const metadata = {
     },
   },
   verification: {
-    google: 'VOTRE_CODE_VERIFICATION_GSC',
+    google: 'yP-o9sL5crhFPtgwSPzJMt5LcrjFX-X3lJVp5a-jZeg',
   },
 }
 
