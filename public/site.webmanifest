@@ -1,0 +1,25 @@
+{
+  "name": "Sekura — Sécurité personnelle",
+  "short_name": "Sekura",
+  "description": "Application de sécurité personnelle — SOS discret, Heatmap IA, navigation sécurisée",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#0a0a0f",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["lifestyle", "utilities", "safety"],
+  "lang": "fr",
+  "dir": "ltr"
+}

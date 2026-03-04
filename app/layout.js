@@ -1,23 +1,46 @@
 import './globals.css'
 import Analytics from '../components/Analytics'
+import StructuredData from '../components/StructuredData'
 
 export const metadata = {
-  title: 'Sekura — La sécurité personnelle intelligente',
-  description: 'Que tu rentres seule le soir à Paris, que tu voyages à Medellín ou que tu vis à São Paulo — Sekura te protège en temps réel. Heatmap IA des zones à risque, SOS discret, navigation sécurisée.',
-  keywords: 'sécurité personnelle, femmes, voyageurs, LATAM, SOS, heatmap, sécurité',
-  icons: {
-    icon: '/favicon.svg',
-    apple: '/favicon.svg',
+  title: 'Sekura — Application de sécurité personnelle | SOS discret, Heatmap IA, Femmes & Voyageurs',
+  description: 'Sekura protège les femmes, voyageurs et familles en temps réel. Heatmap IA des zones à risque, SOS discret triple-clic, navigation sécurisée. Disponible Europe & Amérique Latine. Rejoins la whitelist gratuite.',
+  keywords: 'application sécurité personnelle, app sécurité femme, SOS discret, sécurité voyageur LATAM, personal safety app, aplicacion seguridad personal, heatmap zones risque',
+  authors: [{ name: 'Sekura' }],
+  creator: 'Sekura',
+  publisher: 'Sekura',
+  alternates: {
+    canonical: 'https://sekura.space',
+    languages: {
+      'fr': 'https://sekura.space',
+      'en': 'https://sekura.space/en',
+      'es': 'https://sekura.space/es',
+      'pt': 'https://sekura.space/pt',
+      'x-default': 'https://sekura.space',
+    },
   },
+  icons: {
+    icon: [
+      { url: '/favicon.svg' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+    other: [
+      { rel: 'mask-icon', url: '/safari-pinned-tab.svg', color: '#00E5A0' },
+    ],
+  },
+  manifest: '/site.webmanifest',
   openGraph: {
-    title: 'Sekura — La sécurité personnelle intelligente',
-    description: 'La première app qui donne à chacun le même niveau de protection que ceux qui peuvent se payer un garde du corps.',
+    type: 'website',
+    title: 'Sekura — App de sécurité personnelle intelligente',
+    description: 'SOS discret, Heatmap IA, navigation sécurisée. Pour les femmes, voyageurs et familles. Europe & Amérique Latine.',
     url: 'https://sekura.space',
     siteName: 'Sekura',
     locale: 'fr_FR',
-    type: 'website',
+    alternateLocale: ['es_ES', 'pt_BR', 'en_US'],
     images: [{
-      url: 'https://sekura.space/og-image.svg',
+      url: 'https://sekura.space/og-image.jpg',
       width: 1200,
       height: 630,
       alt: 'Sekura — Sécurité personnelle intelligente',
@@ -25,15 +48,26 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Sekura — La sécurité personnelle intelligente',
-    description: 'La première app qui donne à chacun le même niveau de protection que ceux qui peuvent se payer un garde du corps.',
+    title: 'Sekura — App de sécurité personnelle intelligente',
+    description: 'SOS discret, Heatmap IA, navigation sécurisée. Pour les femmes, voyageurs et familles.',
     creator: '@SekuraApp',
-    images: ['https://sekura.space/og-image.svg'],
+    site: '@SekuraApp',
+    images: ['https://sekura.space/og-image.jpg'],
   },
   robots: {
     index: true,
     follow: true,
-  }
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'VOTRE_CODE_VERIFICATION_GSC',
+  },
 }
 
 export default function RootLayout({ children }) {
@@ -49,6 +83,7 @@ export default function RootLayout({ children }) {
       </head>
       <body style={{ fontFamily: "'Outfit', sans-serif", background: '#0A0C14' }}>
         <Analytics />
+        <StructuredData />
         {children}
       </body>
     </html>

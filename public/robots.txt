@@ -1,10 +1,14 @@
 # Sekura robots.txt
 User-agent: *
 Allow: /
+
+# Bloquer les pages non pertinentes pour le SEO
 Disallow: /api/
+Disallow: /*.json$
+Disallow: /_next/
 
 # Sitemap
 Sitemap: https://sekura.space/sitemap.xml
 
 # Crawl-delay
-Crawl-delay: 0
+Crawl-delay: 1

@@ -1,15 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Page principale FR -->
   <url>
-    <loc>https://sekura.space</loc>
-    <lastmod>2025-06-01</lastmod>
+    <loc>https://sekura.space/</loc>
+    <lastmod>2026-03-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://sekura.space/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://sekura.space/es/"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://sekura.space/pt/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://sekura.space/en/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://sekura.space/"/>
   </url>
+
+  <!-- Page de remerciement -->
   <url>
     <loc>https://sekura.space/merci</loc>
-    <lastmod>2025-06-01</lastmod>
+    <lastmod>2026-03-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
+
+  <!-- Pages locales villes LATAM -->
+  <url>
+    <loc>https://sekura.space/es/seguridad-medellin/</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sekura.space/es/seguridad-cdmx/</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sekura.space/pt/seguranca-sao-paulo/</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sekura.space/es/seguridad-bogota/</loc>
+    <lastmod>2026-03-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
 </urlset>
