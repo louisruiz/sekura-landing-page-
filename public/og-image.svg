@@ -1,0 +1,53 @@
+<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A0C14;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#141720;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="text-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00E5A0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3DD6F5;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0%" style="stop-color:#00E5A0;stop-opacity:0.2" />
+      <stop offset="100%" style="stop-color:#00E5A0;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg-grad)"/>
+  
+  <!-- Glow effect -->
+  <circle cx="600" cy="315" r="400" fill="url(#glow)"/>
+  
+  <!-- Logo -->
+  <text x="100" y="150" font-family="Arial, sans-serif" font-size="80" font-weight="900" fill="#F0F2FF">
+    Sek<tspan fill="#00E5A0">ur</tspan>a
+  </text>
+  
+  <!-- Tagline -->
+  <text x="100" y="250" font-family="Arial, sans-serif" font-size="42" font-weight="600" fill="#F0F2FF">
+    La sécurité personnelle intelligente
+  </text>
+  
+  <!-- Sub-text -->
+  <text x="100" y="330" font-family="Arial, sans-serif" font-size="28" fill="#8892B0" font-weight="400">
+    Heatmap IA · SOS discret · Navigation sécurisée
+  </text>
+  
+  <!-- Badge -->
+  <rect x="100" y="380" width="400" height="60" rx="30" fill="rgba(0,229,160,0.1)" stroke="#00E5A0" stroke-width="2"/>
+  <text x="300" y="420" font-family="Arial, sans-serif" font-size="24" fill="#00E5A0" text-anchor="middle" font-weight="700">
+    ● BIENTÔT DISPONIBLE
+  </text>
+  
+  <!-- Shield icon -->
+  <circle cx="1000" cy="315" r="120" fill="none" stroke="url(#text-grad)" stroke-width="8"/>
+  <path d="M 1000 240 L 1000 315 L 1060 375" stroke="url(#text-grad)" stroke-width="8" stroke-linecap="round" fill="none"/>
+  <circle cx="1000" cy="315" r="15" fill="#00E5A0"/>
+  
+  <!-- Footer -->
+  <text x="600" y="580" font-family="Arial, sans-serif" font-size="20" fill="#4A5568" text-anchor="middle">
+    sekura.space · Rejoins la whitelist
+  </text>
+</svg>

@@ -1,13 +1,106 @@
 'use client'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
-import { Suspense } from 'react'
+import { Suspense, useEffect, useState } from 'react'
+
+// Traductions pour la page merci
+const T = {
+  fr: {
+    title: 'Tu es sur la liste !',
+    subtitle: 'Welcome aboard.',
+    position: (count) => `#${count} sur la liste · ${Math.max(0, 500 - count)} places restantes`,
+    emailSent: 'Un email de confirmation a été envoyé à',
+    benefitsTitle: 'CE QUE TU OBTIENS :',
+    benefits: [
+      '3 mois de Smart Safety gratuit au lancement',
+      'Accès beta prioritaire — avant le grand public',
+      'Tu es contacté(e) en avant-première',
+      'Réductions exclusives réservées aux Early Birds',
+    ],
+    nextStepsTitle: 'EN ATTENDANT :',
+    nextSteps: [
+      { icon: '𝕏', label: 'Suivre @SekuraApp sur X', href: 'https://twitter.com/SekuraApp' },
+      { icon: '📸', label: 'Instagram @SekuraApp', href: 'https://instagram.com/SekuraApp' },
+    ],
+    backHome: '← Retour à l\'accueil',
+    footer: 'Sekura est un outil d\'aide, pas un service de secours professionnel.',
+  },
+  en: {
+    title: 'You\'re on the list!',
+    subtitle: 'Welcome aboard.',
+    position: (count) => `#${count} on the list · ${Math.max(0, 500 - count)} spots remaining`,
+    emailSent: 'A confirmation email has been sent to',
+    benefitsTitle: 'WHAT YOU GET:',
+    benefits: [
+      '3 months of Smart Safety free at launch',
+      'Priority beta access — before the general public',
+      'You\'ll be contacted first',
+      'Exclusive discounts for Early Birds',
+    ],
+    nextStepsTitle: 'IN THE MEANTIME:',
+    nextSteps: [
+      { icon: '𝕏', label: 'Follow @SekuraApp on X', href: 'https://twitter.com/SekuraApp' },
+      { icon: '📸', label: 'Instagram @SekuraApp', href: 'https://instagram.com/SekuraApp' },
+    ],
+    backHome: '← Back to home',
+    footer: 'Sekura is a support tool, not a professional emergency service.',
+  },
+  es: {
+    title: '¡Estás en la lista!',
+    subtitle: 'Welcome aboard.',
+    position: (count) => `#${count} en la lista · ${Math.max(0, 500 - count)} plazas restantes`,
+    emailSent: 'Un correo de confirmación ha sido enviado a',
+    benefitsTitle: 'LO QUE OBTIENES:',
+    benefits: [
+      '3 meses de Smart Safety gratis en el lanzamiento',
+      'Acceso beta prioritario — antes del público general',
+      'Te contactaremos primero',
+      'Descuentos exclusivos para Early Birds',
+    ],
+    nextStepsTitle: 'MIENTRAS TANTO:',
+    nextSteps: [
+      { icon: '𝕏', label: 'Seguir @SekuraApp en X', href: 'https://twitter.com/SekuraApp' },
+      { icon: '📸', label: 'Instagram @SekuraApp', href: 'https://instagram.com/SekuraApp' },
+    ],
+    backHome: '← Volver al inicio',
+    footer: 'Sekura es una herramienta de apoyo, no un servicio de emergencia profesional.',
+  },
+  pt: {
+    title: 'Você está na lista!',
+    subtitle: 'Welcome aboard.',
+    position: (count) => `#${count} na lista · ${Math.max(0, 500 - count)} vagas restantes`,
+    emailSent: 'Um email de confirmação foi enviado para',
+    benefitsTitle: 'O QUE VOCÊ GANHA:',
+    benefits: [
+      '3 meses de Smart Safety grátis no lançamento',
+      'Acesso beta prioritário — antes do público geral',
+      'Você será contatado primeiro',
+      'Descontos exclusivos para Early Birds',
+    ],
+    nextStepsTitle: 'ENQUANTO ISSO:',
+    nextSteps: [
+      { icon: '𝕏', label: 'Seguir @SekuraApp no X', href: 'https://twitter.com/SekuraApp' },
+      { icon: '📸', label: 'Instagram @SekuraApp', href: 'https://instagram.com/SekuraApp' },
+    ],
+    backHome: '← Voltar ao início',
+    footer: 'Sekura é uma ferramenta de apoio, não um serviço de emergência profissional.',
+  },
+}
 
 function MerciContent() {
   const params = useSearchParams()
   const router = useRouter()
   const email = params.get('email') || ''
   const count = parseInt(params.get('count') || '1', 10)
+  const langParam = params.get('lang') || 'fr'
+  
+  const [lang, setLang] = useState('fr')
+  
+  useEffect(() => {
+    setLang(['fr', 'en', 'es', 'pt'].includes(langParam) ? langParam : 'fr')
+  }, [langParam])
+  
+  const t = T[lang] || T.fr
 
   const stagger = {
     hidden: {},
@@ -17,19 +110,6 @@ function MerciContent() {
     hidden: { opacity: 0, y: 30 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } }
   }
-
-  const benefits = [
-    '3 mois de Smart Safety gratuit au lancement',
-    'Accès beta prioritaire — avant le grand public',
-    'Tu es contacté(e) en avant-première',
-    'Réductions exclusives réservées aux Early Birds',
-  ]
-
-  const nextSteps = [
-    { icon: '𝕏', label: 'Suivre @SekuraApp sur X', href: 'https://twitter.com/SekuraApp', color: 'var(--text)' },
-    { icon: '📸', label: 'Instagram @SekuraApp', href: 'https://instagram.com/SekuraApp', color: '#E1306C' },
-    { icon: '📧', label: 'Vérifie ton email', href: `mailto:${email}`, color: 'var(--jade)' },
-  ]
 
   return (
     <div style={{ minHeight: '100vh', background: 'var(--ink)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 24px', position: 'relative', overflow: 'hidden', fontFamily: "'Outfit', sans-serif" }}>
@@ -70,22 +150,22 @@ function MerciContent() {
         <motion.h1 variants={item}
           style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(32px,5vw,52px)', lineHeight: 1.1, color: 'var(--text)', margin: '0 0 16px', letterSpacing: -1 }}
         >
-          Tu es sur la liste !<br />
-          <em style={{ color: 'var(--jade)', fontStyle: 'italic' }}>Welcome aboard.</em>
+          {t.title}<br />
+          <em style={{ color: 'var(--jade)', fontStyle: 'italic' }}>{t.subtitle}</em>
         </motion.h1>
 
         {/* Position badge */}
         <motion.div variants={item} style={{ marginBottom: 32 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(0,229,160,0.08)', border: '1px solid rgba(0,229,160,0.25)', borderRadius: 100, padding: '8px 20px' }}>
-            <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 13, color: '#00E5A0', fontWeight: 700 }}>#{count}</span>
-            <span style={{ color: 'var(--text-sec)', fontSize: 13 }}>sur la liste · {Math.max(0, 500 - count)} places restantes</span>
+            <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 13, color: '#00E5A0', fontWeight: 700 }}>{t.position(count).split(' · ')[0]}</span>
+            <span style={{ color: 'var(--text-sec)', fontSize: 13 }}>{t.position(count).split(' · ')[1]}</span>
           </div>
         </motion.div>
 
         {/* Email confirmation info */}
         {email && (
           <motion.p variants={item} style={{ color: 'var(--text-sec)', fontSize: 15, marginBottom: 40, lineHeight: 1.6 }}>
-            Un email de confirmation a été envoyé à{' '}
+            {t.emailSent}{' '}
             <strong style={{ color: 'var(--text)' }}>{email}</strong>
           </motion.p>
         )}
@@ -94,9 +174,9 @@ function MerciContent() {
         <motion.div variants={item}
           style={{ background: 'rgba(0,229,160,0.06)', border: '1px solid rgba(0,229,160,0.2)', borderRadius: 20, padding: '28px 32px', marginBottom: 40, textAlign: 'left' }}
         >
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', margin: '0 0 20px' }}>CE QUE TU OBTIENS :</p>
+          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', margin: '0 0 20px' }}>{t.benefitsTitle}</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-            {benefits.map((b, i) => (
+            {t.benefits.map((b, i) => (
               <motion.div key={i}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -112,9 +192,9 @@ function MerciContent() {
 
         {/* Next steps */}
         <motion.div variants={item} style={{ marginBottom: 40 }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--text-muted)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>EN ATTENDANT :</p>
+          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--text-muted)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>{t.nextStepsTitle}</p>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', justifyContent: 'center' }}>
-            {nextSteps.map((s, i) => (
+            {t.nextSteps.map((s, i) => (
               <motion.a key={i} href={s.href} target="_blank" rel="noopener noreferrer"
                 whileHover={{ y: -3, boxShadow: '0 8px 24px rgba(0,229,160,0.15)' }}
                 style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'var(--ink-soft)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 20px', textDecoration: 'none', color: 'var(--text)', fontSize: 14, fontWeight: 600, transition: 'border-color 0.2s' }}
@@ -133,14 +213,14 @@ function MerciContent() {
             whileTap={{ scale: 0.97 }}
             style={{ background: 'var(--jade)', color: 'var(--ink)', border: 'none', borderRadius: 12, padding: '14px 32px', fontSize: 16, fontWeight: 800, cursor: 'pointer', fontFamily: "'Outfit', sans-serif" }}
           >
-            ← Retour à l'accueil
+            {t.backHome}
           </motion.button>
         </motion.div>
 
         {/* Disclaimer */}
         <motion.p variants={item} style={{ color: 'var(--text-muted)', fontSize: 12, marginTop: 48, lineHeight: 1.6 }}>
-          Sekura est un outil d'aide, pas un service de secours professionnel.<br />
-          © 2025 Sekura · <a href="/" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>sekura.app</a>
+          {t.footer}<br />
+          © 2025 Sekura · <a href="/" style={{ color: 'var(--text-muted)', textDecoration: 'underline' }}>sekura.space</a>
         </motion.p>
       </motion.div>
     </div>

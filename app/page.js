@@ -48,6 +48,14 @@ const T = {
     waitlistCounter: (count) => `${count} personnes inscrites · Encore ${Math.max(0, 500 - count)} places en accès Early Bird`,
     // FAQ tag
     faqTitle: 'Les questions fréquentes.',
+    faqs: [
+      { q: 'Qu\'est-ce que la whitelist Sekura ?', a: 'La whitelist te donne un accès prioritaire à la beta fermée avant le lancement public. Les 500 premiers inscrits obtiennent 3 mois de plan Smart Safety gratuit. Aucune carte bancaire.' },
+      { q: 'Dans quels pays Sekura sera disponible au lancement ?', a: 'Sekura sera disponible mondialement dès le lancement. Les données de heatmap couvriront d\'abord Medellín et CDMX, avec expansion rapide Brésil et toute la LATAM.' },
+      { q: 'Comment fonctionne le mode offline ?', a: 'Sans connexion internet, le SOS se déclenche par SMS via Twilio. La dernière heatmap téléchargée reste accessible localement. L\'app occupe moins de 30MB pour appareils entrée de gamme.' },
+      { q: 'Mes données de localisation sont-elles partagées ?', a: 'Non. Aucune donnée de localisation n\'est stockée sans consentement explicite. Les SOS sont chiffrés de bout en bout. Sekura est privacy-first par architecture.' },
+      { q: 'La personne à alerter doit-elle avoir Sekura ?', a: 'Non. Tes contacts reçoivent un lien SMS accessible dans n\'importe quel navigateur, sans app.' },
+      { q: 'Sekura remplace-t-elle les services d\'urgence officiels ?', a: 'Non. Sekura est un outil d\'aide complémentaire, pas un service de secours professionnel. Sekura agit en premier rideau — alerte tes proches — mais ne se substitue pas aux secours.' },
+    ],
     // Footer
     footerTagline: 'La sécurité personnelle intelligente. Pour les femmes, les voyageurs, les familles — en Europe, en Amérique Latine, partout où tu vas.',
     footerProduct: 'Produit', footerMarkets: 'Marchés', footerLegal: 'Légal',
@@ -86,6 +94,14 @@ const T = {
     waitlistSubtitle: 'The first 500 subscribers get 3 months of Smart Safety free + closed beta access. No credit card.',
     waitlistCounter: (count) => `${count} people signed up · Still ${Math.max(0, 500 - count)} Early Bird spots left`,
     faqTitle: 'Frequently asked questions.',
+    faqs: [
+      { q: 'What is the Sekura waitlist?', a: 'The waitlist gives you priority access to the closed beta before the public launch. The first 500 subscribers get 3 months of Smart Safety plan free. No credit card required.' },
+      { q: 'In which countries will Sekura be available at launch?', a: 'Sekura will be available worldwide from launch. Heatmap data will first cover Medellín and CDMX, with rapid expansion to Brazil and all of LATAM.' },
+      { q: 'How does offline mode work?', a: 'Without internet connection, SOS is triggered via SMS through Twilio. The last downloaded heatmap remains accessible locally. The app is less than 30MB for entry-level devices.' },
+      { q: 'Is my location data shared?', a: 'No. No location data is stored without explicit consent. SOS messages are end-to-end encrypted. Sekura is privacy-first by design.' },
+      { q: 'Does the person to alert need to have Sekura?', a: 'No. Your contacts receive an SMS link accessible in any browser, without the app.' },
+      { q: 'Does Sekura replace official emergency services?', a: 'No. Sekura is a complementary support tool, not a professional emergency service. Sekura acts as a first line — alerting your loved ones — but does not replace emergency services.' },
+    ],
     footerTagline: 'Intelligent personal safety. For women, travelers, families — in Europe, Latin America, everywhere you go.',
     footerProduct: 'Product', footerMarkets: 'Markets', footerLegal: 'Legal',
     footerBottom: '© 2025 Sekura. All rights reserved. · Sekura is a support tool, not a professional emergency service.',
@@ -122,6 +138,14 @@ const T = {
     waitlistSubtitle: 'Los primeros 500 inscritos obtienen 3 meses de Smart Safety gratis + acceso beta cerrada. Sin tarjeta de crédito.',
     waitlistCounter: (count) => `${count} personas inscritas · Quedan ${Math.max(0, 500 - count)} plazas Early Bird`,
     faqTitle: 'Preguntas frecuentes.',
+    faqs: [
+      { q: '¿Qué es la lista de espera de Sekura?', a: 'La lista te da acceso prioritario a la beta cerrada antes del lanzamiento público. Los primeros 500 inscritos obtienen 3 meses de Smart Safety gratis. Sin tarjeta de crédito.' },
+      { q: '¿En qué países estará disponible Sekura en el lanzamiento?', a: 'Sekura estará disponible mundialmente desde el lanzamiento. Los datos del mapa de calor cubrirán primero Medellín y CDMX, con expansión rápida a Brasil y toda LATAM.' },
+      { q: '¿Cómo funciona el modo offline?', a: 'Sin conexión a internet, el SOS se activa por SMS a través de Twilio. El último mapa de calor descargado sigue accesible localmente. La app ocupa menos de 30MB para dispositivos de gama básica.' },
+      { q: '¿Se comparten mis datos de ubicación?', a: 'No. Ningún dato de ubicación se almacena sin consentimiento explícito. Los SOS están cifrados de extremo a extremo. Sekura es privacy-first por diseño.' },
+      { q: '¿La persona a alertar necesita tener Sekura?', a: 'No. Tus contactos reciben un enlace SMS accesible desde cualquier navegador, sin app.' },
+      { q: '¿Sekura reemplaza los servicios de emergencia oficiales?', a: 'No. Sekura es una herramienta de apoyo complementaria, no un servicio de emergencia profesional. Sekura actúa como primera línea — alertando a tus seres queridos — pero no sustituye a los servicios de emergencia.' },
+    ],
     footerTagline: 'Seguridad personal inteligente. Para mujeres, viajeros, familias — en Europa, América Latina, donde vayas.',
     footerProduct: 'Producto', footerMarkets: 'Mercados', footerLegal: 'Legal',
     footerBottom: '© 2025 Sekura. Todos los derechos reservados. · Sekura es una herramienta de apoyo, no un servicio de emergencia profesional.',
@@ -158,6 +182,14 @@ const T = {
     waitlistSubtitle: 'Os primeiros 500 inscritos ganham 3 meses de Smart Safety grátis + acesso beta fechada. Sem cartão de crédito.',
     waitlistCounter: (count) => `${count} pessoas inscritas · Ainda ${Math.max(0, 500 - count)} vagas Early Bird`,
     faqTitle: 'Perguntas frequentes.',
+    faqs: [
+      { q: 'O que é a lista de espera do Sekura?', a: 'A lista dá acesso prioritário ao beta fechado antes do lançamento público. Os primeiros 500 inscritos ganham 3 meses de Smart Safety grátis. Sem cartão de crédito.' },
+      { q: 'Em quais países o Sekura estará disponível no lançamento?', a: 'O Sekura estará disponível mundialmente desde o lançamento. Os dados do mapa de calor cobrirão primeiro Medellín e CDMX, com expansão rápida para o Brasil e toda a LATAM.' },
+      { q: 'Como funciona o modo offline?', a: 'Sem conexão à internet, o SOS é acionado por SMS através do Twilio. O último mapa de calor baixado permanece acessível localmente. O app ocupa menos de 30MB para dispositivos básicos.' },
+      { q: 'Meus dados de localização são compartilhados?', a: 'Não. Nenhum dado de localização é armazenado sem consentimento explícito. Os SOS são criptografados de ponta a ponta. Sekura é privacy-first por design.' },
+      { q: 'A pessoa a alertar precisa ter o Sekura?', a: 'Não. Seus contatos recebem um link SMS acessível em qualquer navegador, sem o app.' },
+      { q: 'O Sekura substitui os serviços de emergência oficiais?', a: 'Não. Sekura é uma ferramenta de apoio complementar, não um serviço de emergência profissional. Sekura age como primeira linha — alertando seus entes queridos — mas não substitui os serviços de emergência.' },
+    ],
     footerTagline: 'Segurança pessoal inteligente. Para mulheres, viajantes, famílias — na Europa, América Latina, onde você for.',
     footerProduct: 'Produto', footerMarkets: 'Mercados', footerLegal: 'Legal',
     footerBottom: '© 2025 Sekura. Todos os direitos reservados. · Sekura é uma ferramenta de apoio, não um serviço de emergência profissional.',
@@ -277,8 +309,8 @@ function WaitlistForm({ source = 'hero', lang = 'fr', onSuccess }) {
       const data = await res.json()
       if (data.success) {
         if (onSuccess) onSuccess(data.count)
-        // Redirect to thank-you page
-        router.push(`/merci?email=${encodeURIComponent(email)}&count=${data.count}`)
+        // Redirect to thank-you page with lang parameter
+        router.push(`/merci?email=${encodeURIComponent(email)}&count=${data.count}&lang=${lang}`)
       } else {
         setError(data.error || 'Erreur. Réessaie.')
         setTimeout(() => setError(''), 3000)
@@ -454,9 +486,9 @@ function Navbar({ lang, onLangOpen }) {
 }
 
 // ── HERO SECTION ──────────────────────────────────────────────────────────────
-function HeroSection({ lang, onCountUpdate }) {
+function HeroSection({ lang, onCountUpdate, liveCount }) {
   const t = T[lang] || T.fr
-  const { count: adoptCount, ref: adoptRef } = useCounter(247, 1600)
+  const { count: adoptCount, ref: adoptRef } = useCounter(liveCount || 247, 1600)
   const [titleLines, setTitleLines] = useState(t.heroTitle)
 
   useEffect(() => { setTitleLines(t.heroTitle) }, [lang])
@@ -515,7 +547,7 @@ function HeroSection({ lang, onCountUpdate }) {
               {[
                 { value: adoptCount, label: t.metricAdopters },
                 { value: '$2.8Md', label: t.metricMarket },
-                { value: 'Q3 2025', label: t.metricBeta },
+                { value: 'Été 2025', label: t.metricBeta },
               ].map((m, i) => (
                 <div key={i}>
                   <p style={{ fontFamily: "'DM Serif Display',serif", fontSize: 26, color: 'var(--text)', margin: '0 0 2px' }}>
@@ -870,14 +902,7 @@ function TestimonialsSection({ lang }) {
 function FAQSection({ lang }) {
   const t = T[lang] || T.fr
   const [openIndex, setOpenIndex] = useState(null)
-  const faqs = [
-    { q: 'Qu\'est-ce que la whitelist Sekura ?', a: 'La whitelist te donne un accès prioritaire à la beta fermée avant le lancement public. Les 500 premiers inscrits obtiennent 3 mois de plan Smart Safety gratuit. Aucune carte bancaire.' },
-    { q: 'Dans quels pays Sekura sera disponible au lancement ?', a: 'Sekura sera disponible mondialement dès le lancement. Les données de heatmap couvriront d\'abord Medellín et CDMX, avec expansion rapide Brésil et toute la LATAM.' },
-    { q: 'Comment fonctionne le mode offline ?', a: 'Sans connexion internet, le SOS se déclenche par SMS via Twilio. La dernière heatmap téléchargée reste accessible localement. L\'app occupe moins de 30MB pour appareils entrée de gamme.' },
-    { q: 'Mes données de localisation sont-elles partagées ?', a: 'Non. Aucune donnée de localisation n\'est stockée sans consentement explicite. Les SOS sont chiffrés de bout en bout. Sekura est privacy-first par architecture.' },
-    { q: 'La personne à alerter doit-elle avoir Sekura ?', a: 'Non. Tes contacts reçoivent un lien SMS accessible dans n\'importe quel navigateur, sans app.' },
-    { q: 'Sekura remplace-t-elle les services d\'urgence officiels ?', a: 'Non. Sekura est un outil d\'aide complémentaire, pas un service de secours professionnel. Sekura agit en premier rideau — alerte tes proches — mais ne se substitue pas aux secours.' },
-  ]
+  const faqs = t.faqs || []
   return (
     <section id="faq" style={{ background: 'var(--ink-soft)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
@@ -932,6 +957,24 @@ function WaitlistSection({ count, onCountUpdate, lang }) {
             <em style={{ color: 'var(--jade)', fontStyle: 'italic' }}>{t.waitlistTitle[1]}</em>
           </h2>
           <p style={{ color: 'var(--text-sec)', fontSize: 17, lineHeight: 1.7, marginBottom: 32 }}>{t.waitlistSubtitle}</p>
+          
+          {/* Progress bar */}
+          <div style={{ marginBottom: 32 }}>
+            <div style={{ width: '100%', height: 10, background: 'var(--ink-mid)', borderRadius: 100, overflow: 'hidden', border: '1px solid var(--border)' }}>
+              <motion.div 
+                initial={{ width: 0 }}
+                whileInView={{ width: `${Math.min((count / 500) * 100, 100)}%` }}
+                viewport={{ once: true }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+                style={{ height: '100%', background: 'linear-gradient(90deg, var(--jade), var(--sky))', borderRadius: 100 }} 
+              />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
+              <span style={{ color: 'var(--jade)', fontSize: 12, fontFamily: "'Space Mono',monospace", fontWeight: 700 }}>{count} / 500</span>
+              <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>{Math.round((count / 500) * 100)}% rempli</span>
+            </div>
+          </div>
+          
           <WaitlistForm source="cta" lang={lang} onSuccess={onCountUpdate} />
           <div style={{ marginTop: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}>
             <motion.span animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#00E5A0', display: 'inline-block' }} />
@@ -1019,14 +1062,50 @@ function LanguageModal({ onClose, onSelect, current }) {
   )
 }
 
+// ── STICKY CTA (MOBILE) ───────────────────────────────────────────────────────
+function StickyCTA({ lang, show }) {
+  const t = T[lang] || T.fr
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.div
+          initial={{ y: 100, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 100, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="show-mobile"
+          style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 999, background: 'rgba(10,12,20,0.98)', backdropFilter: 'blur(20px)', borderTop: '1px solid var(--border)', padding: '12px 16px', boxShadow: '0 -4px 20px rgba(0,0,0,0.3)' }}
+        >
+          <a href="#waitlist" style={{ textDecoration: 'none', display: 'block' }}>
+            <motion.button
+              whileTap={{ scale: 0.97 }}
+              className="btn-jade"
+              style={{ width: '100%', padding: '14px 24px', fontSize: 15, border: 'none', fontFamily: "'Outfit', sans-serif" }}
+            >
+              {t.navCta}
+            </motion.button>
+          </a>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
 // ── MAIN APP ──────────────────────────────────────────────────────────────────
 export default function App() {
   const [lang, setLang] = useState('fr')
   const [showLangModal, setShowLangModal] = useState(false)
   const [waitlistCount, setWaitlistCount] = useState(247)
+  const [showStickyCTA, setShowStickyCTA] = useState(false)
 
   useEffect(() => {
     fetch('/api/waitlist/count').then(r => r.json()).then(data => { if (data.count) setWaitlistCount(data.count) }).catch(() => {})
+    
+    const handleScroll = () => {
+      setShowStickyCTA(window.scrollY > 800)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   return (
@@ -1037,13 +1116,12 @@ export default function App() {
       `}</style>
       <Navbar lang={lang} onLangOpen={() => setShowLangModal(true)} />
       <main>
-        <HeroSection lang={lang} onCountUpdate={(c) => setWaitlistCount(c)} />
+        <HeroSection lang={lang} onCountUpdate={(c) => setWaitlistCount(c)} liveCount={waitlistCount} />
         <TickerStrip />
         <ProblemSection lang={lang} />
         <FeaturesSection lang={lang} />
         <UseCasesSection lang={lang} />
         <HowItWorksSection lang={lang} />
-        <TestimonialsSection lang={lang} />
         <FAQSection lang={lang} />
         <WaitlistSection count={waitlistCount} onCountUpdate={(c) => setWaitlistCount(c)} lang={lang} />
       </main>
@@ -1054,6 +1132,8 @@ export default function App() {
           <LanguageModal current={lang} onSelect={setLang} onClose={() => setShowLangModal(false)} />
         )}
       </AnimatePresence>
+      
+      <StickyCTA lang={lang} show={showStickyCTA} />
     </>
   )
 }
