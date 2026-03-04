@@ -40,10 +40,11 @@ export const metadata = {
     locale: 'fr_FR',
     alternateLocale: ['es_ES', 'pt_BR', 'en_US'],
     images: [{
-      url: 'https://sekura.space/og-image.jpg',
+      url: 'https://sekura.space/og-image.svg',
       width: 1200,
       height: 630,
       alt: 'Sekura — Sécurité personnelle intelligente',
+      type: 'image/svg+xml',
     }],
   },
   twitter: {
@@ -52,7 +53,7 @@ export const metadata = {
     description: 'SOS discret, Heatmap IA, navigation sécurisée. Pour les femmes, voyageurs et familles.',
     creator: '@SekuraApp',
     site: '@SekuraApp',
-    images: ['https://sekura.space/og-image.jpg'],
+    images: ['https://sekura.space/og-image.svg'],
   },
   robots: {
     index: true,
