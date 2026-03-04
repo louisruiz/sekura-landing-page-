@@ -867,20 +867,20 @@ function FeaturesSection({ lang }) {
           >
             <motion.div initial={{ scaleY: 0 }} whileHover={{ scaleY: 1 }} style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: 'var(--jade)', transformOrigin: 'top' }} />
             <div style={{ marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid var(--border)' }}>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>FEATURE 05 · PROTECTION AVANCÉE</span>
+              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>FEATURE {features[4]?.num} · {features[4]?.cat}</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32, alignItems: 'start' }}>
               <div>
-                <span style={{ fontSize: 36, display: 'block', marginBottom: 16 }}>🚨</span>
-                <h3 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>Détection automatique de situation anormale</h3>
-                <p style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>La protection qui travaille même quand tu ne peux pas interagir avec l'app. Sekura analyse ton comportement GPS en temps réel. Alerte automatique sans que tu aies à rien faire.</p>
+                <span style={{ fontSize: 36, display: 'block', marginBottom: 16 }}>{features[4]?.icon}</span>
+                <h3 style={{ fontSize: 22, fontWeight: 700, color: 'var(--text)', marginBottom: 12 }}>{features[4]?.title}</h3>
+                <p style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>{features[4]?.desc}</p>
                 <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                   <PlanBadge color="sky" text="SMART SAFETY" />
-                  <PlanBadge color="gold" text="PREMIUM PROTECTION" />
+                  <PlanBadge color={features[4]?.badge?.color} text={features[4]?.badge?.text} />
                 </div>
               </div>
               <StaggerGrid style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-                {[{ icon: '📍', title: 'Déviation d\'itinéraire', desc: 'Tu t\'éloignes inexplicablement de ton trajet prévu' }, { icon: '🛑', title: 'Immobilisation suspecte', desc: 'Téléphone immobile 20 min dans une zone à risque' }, { icon: '⚡', title: 'Zone dangereuse à venir', desc: 'Alerte AVANT que tu n\'entres dans la zone' }].map((d, i) => (
+                {(features[4]?.detectors || []).map((d, i) => (
                   <motion.div key={i} variants={staggerItem} style={{ background: 'rgba(0,229,160,0.04)', border: '1px solid var(--border-jade)', borderRadius: 12, padding: '14px 16px', display: 'flex', gap: 12 }}>
                     <span style={{ fontSize: 20 }}>{d.icon}</span>
                     <div><p style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14, margin: '0 0 4px' }}>{d.title}</p><p style={{ color: 'var(--text-sec)', fontSize: 13, margin: 0 }}>{d.desc}</p></div>
