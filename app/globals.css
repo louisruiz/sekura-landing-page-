@@ -723,6 +723,14 @@ footer{position:relative;z-index:2;border-top:1px solid var(--g1);padding:56px c
   -webkit-text-fill-color:transparent;
   background-clip:text;
 }
+/* Preserve gradient for .h1-em (hero title) */
+.h1-em.sk-glitch::before,
+.h1-em.sk-glitch::after {
+  background:linear-gradient(135deg,var(--jade) 0%,var(--sky) 100%);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
 @keyframes glitch-top {
   0%,88%,100% { transform:translate(0); opacity:1; }
   90%          { transform:translate(-3px,-1px); opacity:.8; filter:hue-rotate(25deg); }
