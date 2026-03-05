@@ -178,6 +178,17 @@ export default function App() {
     return () => window.removeEventListener('scroll', h)
   }, [])
 
+  // Close lang menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.lang-switcher')) {
+        setLangMenuOpen(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
+
   // Scarcity auto-bump
   useEffect(() => {
     let t
