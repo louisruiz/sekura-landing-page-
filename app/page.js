@@ -431,6 +431,48 @@ export default function App() {
     { av: 'M', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Marco A.', loc: 'BOGOTÁ · EXPAT' },
   ]
 
+  // Testimonials
+  const testimonials = [
+    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'Medellín', q: 'Enfin une app qui comprend nos réalités. Le SOS discret est génial — personne ne voit que tu demandes de l\'aide.' },
+    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'London', q: 'J\'ai testé la beta à Bogotá. La heatmap m\'a évité 2 zones à risque. Ça marche vraiment.' },
+    { av: 'L', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Lucas F.', loc: 'São Paulo', q: 'Mes parents sont rassurés depuis que j\'ai Sekura. Le suivi GPS est discret et efficace.' },
+    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX', q: 'L\'assistant IA connaît vraiment ma ville. Ses conseils sont précis et locaux.', feat: true },
+    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'Sydney', q: 'Perfect for solo travel. The offline SOS saved me in rural Colombia.' },
+    { av: 'M', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Marco A.', loc: 'Bogotá', q: 'Simple, efficace, discret. Exactement ce qu\'il fallait pour nos villes.' },
+  ]
+
+  // Pricing plans
+  const plans = [
+    {
+      name: 'Core Safety',
+      price: 'Gratuit',
+      per: '',
+      desc: 'Les fonctionnalités essentielles pour ta sécurité quotidienne.',
+      feats: ['Heatmap IA des zones à risque', 'SOS discret (triple-clic volume)', 'Suivi GPS temps réel', 'Alertes communautaires', '5 contacts de confiance'],
+      cta: 'Commencer gratuitement',
+      ghost: true
+    },
+    {
+      name: 'Smart Safety',
+      monthly: 2.99,
+      annual: 2.39,
+      annualTxt: 'Facturé 28.68€/an',
+      desc: 'Navigation intelligente et alertes prédictives.',
+      feats: ['Tout Core Safety +', 'Navigation anti-crime', 'Alertes prédictives', 'Mode nuit adaptatif', 'Rapports de sécurité'],
+      cta: 'Essayer Smart Safety',
+      best: true
+    },
+    {
+      name: 'Premium',
+      monthly: 7.99,
+      annual: 6.39,
+      annualTxt: 'Facturé 76.68€/an',
+      desc: 'Assistant IA et fonctionnalités avancées.',
+      feats: ['Tout Smart Safety +', 'Assistant IA sécurité 24/7', 'Analyse prédictive avancée', 'Support prioritaire', 'Données historiques'],
+      cta: 'Choisir Premium'
+    }
+  ]
+
   return (
     <>
       <CustomCursor />
