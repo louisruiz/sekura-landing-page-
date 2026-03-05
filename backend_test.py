@@ -11,7 +11,7 @@ import sys
 from datetime import datetime
 
 # Base URL from environment
-BASE_URL = "https://safe-travel-5.preview.emergentagent.com"
+BASE_URL = "https://sekura-v2-enhanced.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 class Colors:

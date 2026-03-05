@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { translations } from '../lib/translations'
 
 /* ══════════════ REVEAL WRAPPER ══════════════ */
 function R({ children, className = '', delay = 0, style = {}, tag: Tag = 'div' }) {
@@ -91,39 +92,280 @@ function CustomCursor() {
   )
 }
 
-/* ══════════════ AURORA CANVAS ══════════════ */
-function AuroraCanvas() {
+/* ══════════════ WORLD MAP CANVAS ══════════════ */
+function WorldMapCanvas() {
   const ref = useRef(null)
+  const mouse = useRef({ x: -999, y: -999 })
+  
   useEffect(() => {
     const C = ref.current; if (!C) return
     const ctx = C.getContext('2d')
-    const resize = () => { C.width = window.innerWidth; C.height = window.innerHeight }
+    let W, H
+    
+    const resize = () => { W = C.width = window.innerWidth; H = C.height = window.innerHeight }
     resize(); window.addEventListener('resize', resize)
-    const orbs = [
-      { x: .1, y: .2, r: .5, col: '0,229,160', sp: .0002, ph: 0 },
-      { x: .88, y: .12, r: .42, col: '56,209,240', sp: .00028, ph: 2.2 },
-      { x: .5, y: .9, r: .38, col: '0,229,160', sp: .00018, ph: 4.4 },
-      { x: .9, y: .75, r: .3, col: '255,61,90', sp: .00032, ph: .9 },
+    
+    // Track mouse
+    const onMouseMove = (e) => { mouse.current = { x: e.clientX, y: e.clientY } }
+    document.addEventListener('mousemove', onMouseMove)
+    
+    // Cities data with risk color (r=red, m=orange, g=green)
+    const cities = [
+      { n:'CDMX',      rx:.12, ry:.44, k:'r' },
+      { n:'Medellín',  rx:.18, ry:.60, k:'r' },
+      { n:'São Paulo', rx:.28, ry:.72, k:'m' },
+      { n:'Bogotá',    rx:.16, ry:.52, k:'r' },
+      { n:'Lima',      rx:.14, ry:.64, k:'m' },
+      { n:'Paris',     rx:.56, ry:.24, k:'g' },
+      { n:'Londres',   rx:.52, ry:.18, k:'g' },
+      { n:'Madrid',    rx:.50, ry:.31, k:'g' },
+      { n:'Sydney',    rx:.84, ry:.68, k:'g' },
+      { n:'Lagos',     rx:.60, ry:.54, k:'r' },
+      { n:'Nairobi',   rx:.68, ry:.56, k:'m' },
+      { n:'Bangkok',   rx:.80, ry:.43, k:'m' },
+      { n:'Mumbai',    rx:.74, ry:.38, k:'m' },
+      { n:'NYC',       rx:.26, ry:.26, k:'g' },
+      { n:'Toronto',   rx:.24, ry:.20, k:'g' },
+      { n:'Tokyo',     rx:.87, ry:.31, k:'g' },
+      { n:'Cairo',     rx:.63, ry:.35, k:'m' },
     ]
-    let f = 0, raf
-    const draw = () => {
-      f++; ctx.clearRect(0, 0, C.width, C.height)
-      orbs.forEach(o => {
-        const t = f * o.sp + o.ph
-        const x = (o.x + Math.sin(t) * .2) * C.width
-        const y = (o.y + Math.cos(t * .7) * .15) * C.height
-        const r = o.r * Math.max(C.width, C.height)
-        const g = ctx.createRadialGradient(x, y, 0, x, y, r)
-        g.addColorStop(0, `rgba(${o.col},.07)`)
-        g.addColorStop(.5, `rgba(${o.col},.025)`)
-        g.addColorStop(1, `rgba(${o.col},0)`)
-        ctx.fillStyle = g; ctx.fillRect(0, 0, C.width, C.height)
+    
+    const rc = { r:'#FF3A4E', m:'#FFA040', g:'#00E5A0' }
+    
+    // Links between cities
+    const links = [
+      [0,1],[1,3],[3,2],[0,13],[5,6],[5,7],[6,13],[13,14],
+      [9,10],[10,2],[11,12],[8,11],[15,11],[5,9],[3,11],
+      [0,5],[16,10],[16,5],[4,2],[14,0],[6,7],[12,15],[3,16]
+    ]
+    
+    // Pulses traveling on links
+    const pulses = links.map(() => ({
+      t: Math.random(),
+      sp: .0005 + Math.random() * .0012,
+      jade: Math.random() > .45,
+    }))
+    
+    // Stars
+    const stars = Array.from({ length: 320 }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1 + .15,
+      a: Math.random() * .2 + .03,
+      tw: Math.random() * Math.PI * 2,
+    }))
+    
+    // Orbs (keep some aurora feel) - INCREASED INTENSITY
+    const orbs = [
+      { x:.48, y:.20, r:.82, c:[0,229,160],  sp:.000130, ph:0.0, ax:.20, ay:.11 },
+      { x:.14, y:.74, r:.70, c:[50,135,255], sp:.000105, ph:2.1, ax:.24, ay:.15 },
+      { x:.86, y:.50, r:.60, c:[150,55,240], sp:.000175, ph:1.2, ax:.14, ay:.21 },
+      { x:.62, y:.85, r:.48, c:[0,200,135],  sp:.000145, ph:3.4, ax:.21, ay:.12 },
+      { x:.05, y:.28, r:.46, c:[28,115,235], sp:.000165, ph:0.8, ax:.11, ay:.18 },
+      { x:.74, y:.10, r:.42, c:[0,215,155],  sp:.000120, ph:4.2, ax:.17, ay:.09 },
+      { x:.36, y:.58, r:.36, c:[195,70,250], sp:.000190, ph:5.1, ax:.09, ay:.13 },
+    ]
+    
+    let raf
+    const draw = (ts) => {
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = '#03040f'
+      ctx.fillRect(0, 0, W, H)
+      
+      // Draw orbs with MOUSE REPULSION
+      orbs.forEach((o, i) => {
+        // Calculate mouse repulsion force
+        const baseX = o.x + Math.sin(ts * o.sp + o.ph) * o.ax
+        const baseY = o.y + Math.cos(ts * o.sp * .72 + o.ph) * o.ay
+        const orbX = baseX * W
+        const orbY = baseY * H
+        const dx = mouse.current.x - orbX
+        const dy = mouse.current.y - orbY
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        const repelRadius = 300
+        let repelX = 0, repelY = 0
+        if (dist < repelRadius && dist > 0) {
+          const force = (repelRadius - dist) / repelRadius * 0.08
+          repelX = -(dx / dist) * force * W
+          repelY = -(dy / dist) * force * H
+        }
+        
+        const ox = orbX + repelX
+        const oy = orbY + repelY
+        const r = o.r * Math.min(W, H) * (1 + Math.sin(ts * .0008 + i) * .04)
+        const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, r)
+        const [cr, cg, cb] = o.c
+        // INCREASED opacity for better visibility
+        g.addColorStop(0,   `rgba(${cr},${cg},${cb},.28)`)
+        g.addColorStop(.40, `rgba(${cr},${cg},${cb},.12)`)
+        g.addColorStop(.75, `rgba(${cr},${cg},${cb},.04)`)
+        g.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`)
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, W, H)
       })
+      
+      // Horizontal waves (scanlines) - INCREASED visibility
+      const tv = ts * .00025
+      for (let y = 0; y < H; y += 4) {
+        const a = .015 + Math.sin(y * .05 + tv * .5) * .012
+        ctx.beginPath()
+        ctx.moveTo(0, y)
+        ctx.lineTo(W, y)
+        ctx.strokeStyle = `rgba(0,229,160,${a.toFixed(3)})`
+        ctx.lineWidth = .28
+        ctx.stroke()
+      }
+      
+      // Grid dots - INCREASED visibility
+      const gs = 42
+      for (let x = 0; x < W; x += gs) {
+        for (let y = 0; y < H; y += gs) {
+          const v = Math.sin(x * .017 + tv) * Math.cos(y * .013 - tv * .6)
+          const a = .035 + v * .030
+          if (a < .01) continue
+          ctx.beginPath()
+          ctx.arc(x, y, 1, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(70,140,255,${Math.max(0, a).toFixed(3)})`
+          ctx.fill()
+        }
+      }
+      
+      // Stars - INCREASED visibility
+      stars.forEach(s => {
+        const a = s.a * (.55 + .45 * Math.sin(ts * .0009 + s.tw)) * 1.8
+        ctx.beginPath()
+        ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(58,80,135,${Math.min(1, a).toFixed(2)})`
+        ctx.fill()
+      })
+      
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,.016)'
+      ctx.lineWidth = .5
+      for (let x = 0; x < W; x += W / 16) {
+        ctx.beginPath()
+        ctx.moveTo(x,0)
+        ctx.lineTo(x,H)
+        ctx.stroke()
+      }
+      for (let y = 0; y < H; y += H / 10) {
+        ctx.beginPath()
+        ctx.moveTo(0,y)
+        ctx.lineTo(W,y)
+        ctx.stroke()
+      }
+      
+      // Mouse glow - MUCH STRONGER
+      if (mouse.current.x > 0) {
+        const mg = ctx.createRadialGradient(mouse.current.x, mouse.current.y, 0, mouse.current.x, mouse.current.y, 320)
+        mg.addColorStop(0, 'rgba(0,229,160,.18)')
+        mg.addColorStop(.4, 'rgba(0,229,160,.08)')
+        mg.addColorStop(1, 'transparent')
+        ctx.fillStyle = mg
+        ctx.fillRect(0, 0, W, H)
+      }
+      
+      // Links between cities - MORE VISIBLE
+      links.forEach(([a, b]) => {
+        const ca = cities[a], cb = cities[b]
+        const ax = ca.rx * W, ay = ca.ry * H
+        const bx = cb.rx * W, by = cb.ry * H
+        const mx2 = (ax + bx) / 2, my2 = (ay + by) / 2
+        const d = Math.hypot(mouse.current.x - mx2, mouse.current.y - my2)
+        const alpha = d < 220 ? .32 + (220 - d) / 220 * .40 : .12
+        ctx.beginPath()
+        ctx.moveTo(ax, ay)
+        ctx.lineTo(bx, by)
+        ctx.strokeStyle = `rgba(0,229,160,${alpha.toFixed(2)})`
+        ctx.lineWidth = d < 220 ? 2 : 1
+        ctx.stroke()
+      })
+      
+      // Pulses on links - BRIGHTER
+      pulses.forEach((p, i) => {
+        p.t = (p.t + p.sp) % 1
+        const [a, b] = links[i]
+        const ca = cities[a], cb = cities[b]
+        const px = ca.rx * W + (cb.rx * W - ca.rx * W) * p.t
+        const py = ca.ry * H + (cb.ry * H - ca.ry * H) * p.t
+        const col = p.jade ? '0,229,160' : '255,160,64'
+        const g = ctx.createRadialGradient(px, py, 0, px, py, 14)
+        g.addColorStop(0, `rgba(${col},1)`)
+        g.addColorStop(.5, `rgba(${col},.5)`)
+        g.addColorStop(1, 'transparent')
+        ctx.beginPath()
+        ctx.arc(px, py, 11, 0, Math.PI * 2)
+        ctx.fillStyle = g
+        ctx.fill()
+      })
+      
+      // Cities
+      cities.forEach((c, i) => {
+        const x = c.rx * W, y = c.ry * H
+        const col = rc[c.k]
+        const pulse = (Math.sin(ts * .0011 + i * .85) + 1) * .5
+        const near = Math.hypot(mouse.current.x - x, mouse.current.y - y) < 90
+        const aR = near ? 26 + pulse * 10 : 16 + pulse * 6
+        
+        // Glow
+        const ag = ctx.createRadialGradient(x, y, 0, x, y, aR)
+        ag.addColorStop(0, col + '28')
+        ag.addColorStop(1, 'transparent')
+        ctx.beginPath()
+        ctx.arc(x, y, aR, 0, Math.PI * 2)
+        ctx.fillStyle = ag
+        ctx.fill()
+        
+        // Ring
+        ctx.beginPath()
+        ctx.arc(x, y, near ? 8 + pulse * 3 : 5.5 + pulse * 2, 0, Math.PI * 2)
+        ctx.strokeStyle = col + Math.round((.10 + pulse * .16) * 255).toString(16).padStart(2, '0')
+        ctx.lineWidth = near ? 1.8 : 1
+        ctx.stroke()
+        
+        // Dot
+        ctx.beginPath()
+        ctx.arc(x, y, near ? 5 : 3.5, 0, Math.PI * 2)
+        ctx.fillStyle = col
+        ctx.fill()
+        
+        // Center white dot
+        ctx.beginPath()
+        ctx.arc(x, y, 1.5, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(255,255,255,.9)'
+        ctx.fill()
+        
+        // Label
+        ctx.font = `${near ? 'bold ' : ''}${near ? 9 : 8}px Courier New`
+        ctx.fillStyle = near ? col : 'rgba(110,122,160,.5)'
+        ctx.fillText(c.n, x + 9, y - 5)
+      })
+      
+      // Center light
+      const cl = ctx.createRadialGradient(W/2, H*.42, 0, W/2, H*.42, W*.38)
+      cl.addColorStop(0, 'rgba(0,229,160,.05)')
+      cl.addColorStop(1, 'transparent')
+      ctx.fillStyle = cl
+      ctx.fillRect(0, 0, W, H)
+      
+      // Vignette
+      const vg = ctx.createRadialGradient(W/2, H/2, H*.12, W/2, H/2, H*.94)
+      vg.addColorStop(0, 'transparent')
+      vg.addColorStop(1, 'rgba(1,1,12,.82)')
+      ctx.fillStyle = vg
+      ctx.fillRect(0, 0, W, H)
+      
       raf = requestAnimationFrame(draw)
     }
-    draw()
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
+    
+    draw(0)
+    
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', resize)
+      document.removeEventListener('mousemove', onMouseMove)
+    }
   }, [])
+  
   return <canvas ref={ref} id="aurora" />
 }
 
@@ -136,14 +378,10 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(0)
   const [openFaq, setOpenFaq] = useState(null)
   const [langMenuOpen, setLangMenuOpen] = useState(false)
-  const [demoUser, setDemoUser] = useState({ x: 42, y: 40 })
-  const [ttData, setTtData] = useState(null)
-  const [ttPos, setTtPos] = useState({ l: '50%', t: '10%' })
   const [liveN, setLiveN] = useState(12)
   const [signupMsg, setSignupMsg] = useState('')
   const [isAnnual, setIsAnnual] = useState(false)
   const emailRef = useRef(null)
-  const demoMapRef = useRef(null)
 
   const spots = 500 - sc
 
@@ -152,6 +390,9 @@ export default function App() {
     : typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es'
     : typeof window !== 'undefined' && window.location.pathname.startsWith('/pt') ? 'pt'
     : 'fr'
+
+  // Shortcut to current translations
+  const t = translations[currentLang]
 
   const langData = {
     fr: { flag: '🇫🇷', code: 'FR', name: 'Français' },
@@ -211,6 +452,37 @@ export default function App() {
     setTimeout(() => emailRef.current?.focus(), 600)
   }, [])
 
+  // Tilt 3D Magnetic Effect
+  useEffect(() => {
+    const selector = '.feat-row, .fcard, .stat-c, .step-c, .ppv-scene, .faq-item, .comp-card'
+    const cards = document.querySelectorAll(selector)
+    
+    cards.forEach(card => {
+      const handleMouseMove = (e) => {
+        const r = card.getBoundingClientRect()
+        const dx = (e.clientX - r.left - r.width / 2) / (r.width / 2)
+        const dy = (e.clientY - r.top - r.height / 2) / (r.height / 2)
+        card.style.transform = `perspective(900px) rotateX(${(-dy * 3.5).toFixed(2)}deg) rotateY(${(dx * 3.5).toFixed(2)}deg) translateZ(4px)`
+        card.style.setProperty('--sk-mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%')
+        card.style.setProperty('--sk-my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%')
+      }
+      
+      const handleMouseLeave = () => {
+        card.style.transform = ''
+      }
+      
+      card.addEventListener('mousemove', handleMouseMove)
+      card.addEventListener('mouseleave', handleMouseLeave)
+    })
+    
+    return () => {
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', card._handleMouseMove)
+        card.removeEventListener('mouseleave', card._handleMouseLeave)
+      })
+    }
+  }, [])
+
   // Signup handler (calls real API)
   const doSignup = async (email, source = 'cta') => {
     if (!email || !email.includes('@')) return false
@@ -253,32 +525,6 @@ export default function App() {
     }
   }
 
-  // Demo map
-  const zoneData = {
-    'dz-r1': { title: '⚠ Zona Rosa · Niveau 7.2/10', body: "3 incidents signalés ce soir. Vols à l'arraché fréquents après 22h. Éviter Calle 5 et Génova." },
-    'dz-r2': { title: '~ Tepito · Niveau 4.8/10', body: 'Zone modérée. Restez sur les axes principaux. Évitez les ruelles la nuit.' },
-    'dz-r3': { title: '⚠ Centro Sur · Niveau 6.1/10', body: '2 agressions signalées cette semaine. Préférez un taxi ou restez en groupe.' },
-    'dz-g1': { title: '✓ Polanco · Niveau 1.2/10', body: 'Zone très sûre. Fort éclairage public, nombreux restaurants et commerces ouverts.' },
-    'dz-g2': { title: '✓ Roma Norte · Niveau 1.8/10', body: 'Quartier touristique sécurisé. Bars et cafés fréquentés toute la nuit.' },
-  }
-
-  const handleDemoZoneEnter = (id, e) => {
-    const d = zoneData[id]; if (!d || !demoMapRef.current) return
-    setTtData(d)
-    const rect = demoMapRef.current.getBoundingClientRect()
-    const zRect = e.currentTarget.getBoundingClientRect()
-    let l = (zRect.left - rect.left + zRect.width / 2 - 100) / rect.width * 100
-    let t = (zRect.top - rect.top - 130) / rect.height * 100
-    l = Math.max(2, Math.min(l, 58)); t = Math.max(2, Math.min(t, 70))
-    setTtPos({ l: l + '%', t: t + '%' })
-  }
-
-  const handleDemoMapClick = (e) => {
-    if (!demoMapRef.current) return
-    const rect = demoMapRef.current.getBoundingClientRect()
-    setDemoUser({ x: (e.clientX - rect.left) / rect.width * 100, y: (e.clientY - rect.top) / rect.height * 100 })
-  }
-
   const cdH = String(Math.floor(totalSecs / 3600)).padStart(2, '0')
   const cdM = String(Math.floor((totalSecs % 3600) / 60)).padStart(2, '0')
   const cdS = String(totalSecs % 60).padStart(2, '0')
@@ -286,10 +532,10 @@ export default function App() {
   // Features data
   const features = [
     {
-      num: '01 / 10', tag: 'Gratuit · Core Safety', tagCls: 'tag-free',
-      h: 'Heatmap IA des zones à risque',
-      p: "Carte vivante mise à jour toutes les 2 minutes. Analyse signalements communautaires + incidents locaux + presse locale. Granularité de 50m × 50m. Disponible partout dans le monde.",
-      bullets: ['Zones colorées par niveau de risque en temps réel', 'Mise à jour depuis sources locales vérifiées', 'Disponible pour toute ville du monde dès le lancement'],
+      num: '01 / 10', tag: t.feat1Tag, tagCls: 'tag-free',
+      h: t.feat1H,
+      p: t.feat1P,
+      bullets: [t.feat1Bullet1, t.feat1Bullet2, t.feat1Bullet3],
       bulletColor: '',
       card: (
         <div className="fcard"><div className="fcard-inner">
@@ -311,16 +557,16 @@ export default function App() {
       )
     },
     {
-      num: '02 / 10', tag: 'Critique · Mode Discret', tagCls: 'tag-crit',
-      h: "SOS sans regarder l'écran",
-      p: "Triple-clic sur le bouton volume = SOS silencieux instantané. 5 contacts alertés avec GPS exact par notification + SMS. Rien à l'écran. Personne autour ne le voit.",
-      bullets: ['Activable la main dans la poche, sac fermé', "Aucune donnée affichée à l'écran pendant l'alerte", "SMS envoyé même sans l'app chez les contacts"],
+      num: '02 / 10', tag: t.feat2Tag, tagCls: 'tag-crit',
+      h: t.feat2H,
+      p: t.feat2P,
+      bullets: [t.feat2Bullet1, t.feat2Bullet2, t.feat2Bullet3],
       bulletColor: 'var(--pulse)',
       reverse: true,
       card: (
         <div className="fcard" style={{ background: 'linear-gradient(135deg,rgba(255,61,90,.04),var(--ink-2))', borderColor: 'rgba(255,61,90,.15)' }}>
           <div className="fcard-inner">
-            <div className="fcard-head"><span className="fcard-title">SOS Discret</span><span className="feat-tag tag-crit" style={{ margin: 0 }}>Critique</span></div>
+            <div className="fcard-head"><span className="fcard-title">{t.feat2H.split(' — ')[0]}</span><span className="feat-tag tag-crit" style={{ margin: 0 }}>{t.feat2Tag}</span></div>
             <div className="fsos">
               <div className="sos-btn" style={{ width: 78, height: 78, fontSize: '.98rem' }}>SOS</div>
               <div className="fsos-steps">
@@ -338,10 +584,10 @@ export default function App() {
       )
     },
     {
-      num: '03 / 10', tag: 'Smart Safety · $2.99/mois', tagCls: 'tag-smart',
-      h: 'Navigation sécurisée anti-crime',
-      p: "L'itinéraire qui évite les zones à risque actives, mis à jour en temps réel. Pas le chemin le plus court — le chemin le plus sûr. Avec 2 minutes de plus, tu arrives.",
-      bullets: ['Recalcul automatique si une zone devient dangereuse', "Alertes préventives avant d'entrer dans une zone à risque", 'Mode nuit — profil de risque adapté aux heures tardives'],
+      num: '03 / 10', tag: t.feat3Tag, tagCls: 'tag-smart',
+      h: t.feat3H,
+      p: t.feat3P,
+      bullets: [t.feat3Bullet1, t.feat3Bullet2, t.feat3Bullet3],
       bulletColor: 'var(--sky)',
       card: (
         <div className="fcard"><div className="fcard-inner">
@@ -366,22 +612,22 @@ export default function App() {
     },
     {
       num: '08 / 10', tag: 'Premium · $7.99/mois', tagCls: 'tag-prem',
-      h: 'Assistant IA sécurité 24/7',
-      p: "Powered by Claude (Anthropic). Répond à tes questions de sécurité en contexte local — ta ville, ce soir, maintenant. Des réponses concrètes, pas génériques.",
-      bullets: ['Connaissance locale : quartiers, risques, arnaques à éviter', 'Intégré nativement avec la heatmap et la navigation', 'Disponible en français, espagnol, portugais, anglais'],
+      h: t.aiAssistantH,
+      p: t.aiAssistantP,
+      bullets: [t.aiAssistantBullet1, t.aiAssistantBullet2, t.aiAssistantBullet3],
       bulletColor: 'var(--violet)',
       reverse: true,
       card: (
         <div className="fcard" style={{ background: 'linear-gradient(135deg,rgba(0,229,160,.04),var(--ink-2))', borderColor: 'rgba(0,229,160,.15)' }}>
           <div className="fcard-inner">
             <div className="fcard-head">
-              <span className="fcard-title">Assistant IA · 24/7</span>
+              <span className="fcard-title">{t.aiAssistantTitle}</span>
               <span style={{ fontFamily: 'var(--mono)', fontSize: '.48rem', color: 'var(--jade)', background: 'var(--jade-bg)', padding: '2px 8px', borderRadius: 4, border: '1px solid var(--jade-b)', fontWeight: 700, letterSpacing: '.05em' }}>Claude AI</span>
             </div>
             <div className="fchat">
-              <div className="chat-q">&quot;Est-ce sûr d'aller à Chapinero ce soir ?&quot;</div>
-              <div className="chat-a">⚠️ Niveau modéré. 2 incidents Calle 60 après 22h. Itinéraire via Carrera 13 — niveau LOW. Je l'ouvre dans la navigation ?</div>
-              <div className="chat-q">&quot;Quel taxi appeler à CDMX ?&quot;</div>
+              <div className="chat-q">{t.aiAssistantQ1}</div>
+              <div className="chat-a">{t.aiAssistantA1}</div>
+              <div className="chat-q">{t.aiAssistantQ2}</div>
               <div className="chat-typing"><div className="typing-dot" /><div className="typing-dot" /><div className="typing-dot" /></div>
             </div>
           </div>
@@ -392,62 +638,66 @@ export default function App() {
 
   // FAQ
   const faqs = [
-    { q: "Comment fonctionne le SOS sans regarder l'écran ?", a: "Tu triple-cliques sur le bouton volume physique de ton téléphone, en mode veille ou dans ta poche. Sekura détecte ce pattern et envoie silencieusement ta position GPS exacte à tes 5 contacts de confiance, par notification push ET SMS. Rien ne s'affiche à l'écran." },
-    { q: "Est-ce que mes contacts doivent avoir l'app ?", a: "Non, c'est l'un des avantages clés de Sekura. Tes contacts reçoivent un SMS avec un lien de suivi qui s'ouvre directement dans le navigateur. Aucune installation requise. Ils voient ta position en temps réel sur une carte web." },
-    { q: "La heatmap est-elle disponible pour ma ville ?", a: "Oui. La heatmap est disponible pour n'importe quelle ville dans le monde dès le lancement. Les villes prioritaires (CDMX, Medellín, São Paulo, Bogotá, Paris, Londres) auront les données les plus précises." },
-    { q: "Que se passe-t-il si je n'ai pas de connexion internet ?", a: "Le SOS fonctionne en mode offline via SMS. Sekura utilise le réseau téléphonique classique (GSM) pour envoyer un message d'alerte avec ta dernière position GPS connue. Idéal pour les zones rurales, l'Amazonie, les Andes." },
-    { q: "Mes données de localisation sont-elles sécurisées ?", a: "Toutes les données de localisation sont chiffrées de bout en bout (E2E). Elles ne sont jamais partagées avec des tiers, jamais vendues. Tu peux supprimer toutes tes données à tout moment. Sekura est RGPD compliant." },
-    { q: "Quand sort l'app ? Sur quelles plateformes ?", a: "Sekura sort en beta fermée au Q3 2025 sur iOS et Android. Les 500 premiers inscrits à la whitelist obtiennent un accès prioritaire + 3 mois Smart Safety gratuits. Lancement public au Q4 2025 en Europe et Amérique Latine." },
+    { q: t.faq1Q, a: t.faq1A },
+    { q: t.faq2Q, a: t.faq2A },
+    { q: t.faq3Q, a: t.faq3A },
+    { q: t.faq4Q, a: t.faq4A },
+    { q: t.faq5Q, a: t.faq5A },
+    { q: t.faq6Q, a: t.faq6A },
+    { q: t.faq7Q, a: t.faq7A },
+    { q: t.faq8Q, a: t.faq8A },
+    { q: t.faq9Q, a: t.faq9A },
+    { q: t.faq10Q, a: t.faq10A },
   ]
 
   // Profiles tabs data
   const profiles = [
     {
-      tab: '👩 Femme', title: 'Femme · Partout dans le monde',
-      desc: "Tu rentres seule le soir. Tu évites certaines rues. À Paris, à Londres, à Bogota — c'est la même peur. Tu veux de la discrétion, pas paraître vulnérable.",
+      tab: t.prof1Tab, title: t.prof1Title,
+      desc: t.prof1Desc,
       feats: [
-        { icon: '🤫', title: 'SOS discret · triple-clic volume', desc: "Invisible, sans regarder l'écran, depuis ta poche" },
-        { icon: '⚡', title: 'Alertes prédictives', desc: "Avertie AVANT d'entrer dans une zone à risque" },
-        { icon: '🧭', title: 'Navigation sécurisée quotidienne', desc: 'Ton trajet du soir optimisé pour ta sécurité' },
-        { icon: '⏱', title: "Timer d'arrivée", desc: "Si tu n'arrives pas à l'heure, tes proches sont alertés auto" },
+        { icon: '🤫', title: t.prof1Feat1Title, desc: t.prof1Feat1Desc },
+        { icon: '⚡', title: t.prof1Feat2Title, desc: t.prof1Feat2Desc },
+        { icon: '🧭', title: t.prof1Feat3Title, desc: t.prof1Feat3Desc },
+        { icon: '⏱', title: t.prof1Feat4Title, desc: t.prof1Feat4Desc },
       ],
-      scene: { em: '🌙', title: 'Paris · 23h30 · Métro Châtelet', desc: "Sekura t'a alertée 3 rues avant. Tu as pris le boulevard — 4 minutes de plus. Tu es arrivée." },
-      stats: [{ val: '0', lbl: 'Incidents ce soir', col: 'var(--jade)' }, { val: '3', lbl: 'Contacts notifiés', col: 'var(--sky)' }],
+      scene: { em: '🌙', title: t.prof1SceneTitle, desc: t.prof1SceneDesc },
+      stats: [{ val: t.prof1Stat1Val, lbl: t.prof1Stat1Lbl, col: 'var(--jade)' }, { val: t.prof1Stat2Val, lbl: t.prof1Stat2Lbl, col: 'var(--sky)' }],
     },
     {
-      tab: '✈️ Voyageur', title: 'Voyageur · Solo traveler · Expat',
-      desc: "Tu pars en Colombie, au Mexique, au Brésil. Tu ne connais pas la géographie des risques. Tu es une cible : touriste, téléphone visible, sans réseau local.",
+      tab: t.prof2Tab, title: t.prof2Title,
+      desc: t.prof2Desc,
       feats: [
-        { icon: '🗺️', title: "Heatmap IA dès l'atterrissage", desc: 'Connais ta zone en 30 secondes' },
-        { icon: '📊', title: 'Rapport de risque avant départ', desc: 'Zones à éviter, quartiers recommandés' },
-        { icon: '🤖', title: 'Assistant IA 24/7', desc: '"Est-ce sûr d\'aller ici ce soir ?" — réponse contextuelle' },
-        { icon: '📵', title: 'Mode offline total', desc: 'SOS par SMS — Amazonie, Andes, zones rurales' },
+        { icon: '🗺️', title: t.prof2Feat1Title, desc: t.prof2Feat1Desc },
+        { icon: '📊', title: t.prof2Feat2Title, desc: t.prof2Feat2Desc },
+        { icon: '🤖', title: t.prof2Feat3Title, desc: t.prof2Feat3Desc },
+        { icon: '📵', title: t.prof2Feat4Title, desc: t.prof2Feat4Desc },
       ],
-      scene: { em: '✈️', title: 'Medellín · Jour 1 · Atterrissage', desc: "Avant même de sortir de l'aéroport, Sekura t'a montré les zones à éviter et recommandé un taxi fiable." },
-      stats: [{ val: '30s', lbl: 'Briefing arrivée', col: 'var(--jade)' }, { val: '8+', lbl: 'Villes LATAM', col: 'var(--sky)' }],
+      scene: { em: '✈️', title: t.prof2SceneTitle, desc: t.prof2SceneDesc },
+      stats: [{ val: t.prof2Stat1Val, lbl: t.prof2Stat1Lbl, col: 'var(--jade)' }, { val: t.prof2Stat2Val, lbl: t.prof2Stat2Lbl, col: 'var(--sky)' }],
     },
     {
-      tab: '👨‍👩‍👧 Famille', title: 'Familles · Proches · Étudiants',
-      desc: "Ton fils prend le métro seul. Ta fille rentre de soirée. Tu veux être là sans être intrusif — juste savoir qu'ils sont arrivés.",
+      tab: t.prof3Tab, title: t.prof3Title,
+      desc: t.prof3Desc,
       feats: [
-        { icon: '📍', title: 'Suivi GPS temps réel', desc: 'Tous les membres sur un seul écran' },
-        { icon: '🔔', title: 'Geofencing intelligent', desc: "Alerte si sortie d'une zone définie" },
-        { icon: '✅', title: 'Check-in automatique', desc: "Confirmation d'arrivée sans action manuelle" },
-        { icon: '🔒', title: 'Chiffrement E2E', desc: 'Vos données restent entre vous — jamais partagées' },
+        { icon: '📍', title: t.prof3Feat1Title, desc: t.prof3Feat1Desc },
+        { icon: '🔔', title: t.prof3Feat2Title, desc: t.prof3Feat2Desc },
+        { icon: '✅', title: t.prof3Feat3Title, desc: t.prof3Feat3Desc },
+        { icon: '🔒', title: t.prof3Feat4Title, desc: t.prof3Feat4Desc },
       ],
-      scene: { em: '👧', title: 'Louis · 15 ans · Retour lycée', desc: '17h22 — check-in automatique reçu. "Arrivé à la maison." Tu n\'as rien eu à faire.' },
-      stats: [{ val: '5', lbl: 'Membres max', col: 'var(--jade)' }, { val: 'E2E', lbl: 'Chiffrement', col: 'var(--sky)' }],
+      scene: { em: '👧', title: t.prof3SceneTitle, desc: t.prof3SceneDesc },
+      stats: [{ val: t.prof3Stat1Val, lbl: t.prof3Stat1Lbl, col: 'var(--jade)' }, { val: t.prof3Stat2Val, lbl: t.prof3Stat2Lbl, col: 'var(--sky)' }],
     },
   ]
 
   // Comparison table
   const compRows = [
-    ["SOS sans regarder l'écran", '✓', '✕', '∼', '✕'],
-    ['Heatmap IA zones à risque', '✓', '✕', '✕', '✕'],
-    ['Navigation anti-crime', '✓', '✕', '✕', '✕'],
-    ['Mode offline total (SOS par SMS)', '✓', '∼', '∼', '✕'],
-    ['Couverture LATAM (données locales)', '✓', '✕', '✕', '✕'],
-    ['Assistant IA sécurité 24/7', '✓', '✕', '✕', '✕'],
+    [t.compFeat1, '✓', '✕', '∼', '✕'],
+    [t.compFeat2, '✓', '✕', '✕', '✕'],
+    [t.compFeat3, '✓', '✕', '✕', '✕'],
+    [t.compFeat4, '✓', '∼', '∼', '✕'],
+    [t.compFeat5, '✓', '✕', '✕', '✕'],
+    [t.compFeat6, '✓', '✕', '✕', '✕'],
   ]
 
   // Testimonials
@@ -495,32 +745,31 @@ export default function App() {
   return (
     <>
       <CustomCursor />
-      <AuroraCanvas />
+      <WorldMapCanvas />
 
       {/* ══════ COUNTDOWN BANNER ══════ */}
       <div id="cdb">
         <span className="cdb-badge">⚡ EARLY BIRD</span>
-        <span>Offre expire dans</span>
+        <span>{t.ctaUrgency}</span>
         <div className="cdb-timer">
           <span className="cdb-unit">{cdH}</span><span className="cdb-sep">:</span>
           <span className="cdb-unit">{cdM}</span><span className="cdb-sep">:</span>
           <span className="cdb-unit">{cdS}</span>
         </div>
         <span style={{ color: 'var(--t3)' }}>·</span>
-        <span><strong>{spots}</strong> places restantes</span>
+        <span><strong>{spots}</strong> {t.ctaScarcity}</span>
       </div>
 
       {/* ══════ NAV ══════ */}
       <nav id="nav" className={navScrolled ? 'scrolled' : ''}>
         <a href="#" className="logo"><LogoSVG /><span className="logo-name">SEKURA</span></a>
         <div className="nav-links">
-          <a href="#how">Comment ça marche</a>
-          <a href="#features">Fonctionnalités</a>
-          <a href="#demo">Démo</a>
-          <a href="#faq">FAQ</a>
+          <a href="#how">{t.navHow}</a>
+          <a href="#features">{t.navFeatures}</a>
+          <a href="#faq">{t.navFAQ}</a>
         </div>
         <div className="nav-right">
-          <span className="nav-count">● {sc} déjà inscrits</span>
+          <span className="nav-count">● {sc} {t.ctaRegistered}</span>
           
           {/* Language Switcher */}
           <div className={`lang-switcher ${langMenuOpen ? 'open' : ''}`}>
@@ -559,13 +808,13 @@ export default function App() {
 
       {/* ══════ HERO ══════ */}
       <section id="hero">
-        <R className="urgency-pill"><span className="urgency-dot" /><span>{spots} places early bird · Ferme dans 47h</span></R>
-        <R delay={100}><h1 className="d1"><span className="h1-em">La nuit est longue.</span><span className="h1-sub">Sekura est là.</span></h1></R>
-        <R delay={200}><p className="hero-desc">Le garde du corps numérique pour les femmes, voyageurs et familles. SOS en 3 clics, heatmap IA des zones à risque, navigation sécurisée — disponible partout dans le monde.</p></R>
+        <R className="urgency-pill"><span className="urgency-dot" /><span>{spots} {t.heroUrgency}</span></R>
+        <R delay={100}><h1 className="d1"><span className="h1-em sk-glitch" data-text={t.heroH1}>{t.heroH1}</span><span className="h1-sub">{t.heroH1Sub}</span></h1></R>
+        <R delay={200}><p className="hero-desc">{t.heroDesc}</p></R>
         <R delay={300}>
           <div className="hero-cta-wrap">
-            <button className="btn-primary" onClick={scrollToCTA}>Rejoindre la whitelist gratuitement →</button>
-            <div className="hero-trust"><span>🔒 Gratuit pour toujours</span><span>· Aucun spam ·</span><span>⚡ 3 mois Smart Safety offerts</span></div>
+            <button className="btn-primary" onClick={scrollToCTA}>{t.heroCTA}</button>
+            <div className="hero-trust"><span>{t.heroTrust1}</span><span>{t.heroTrust2}</span><span>{t.heroTrust3}</span></div>
           </div>
         </R>
 
@@ -642,33 +891,33 @@ export default function App() {
       {/* ══════ PROBLEM ══════ */}
       <section className="sec prob-sec">
         <div className="wrap">
-          <R tag="span" className="eyebrow">01 / Le Problème</R>
-          <R><h2 className="prob-headline">L'insécurité n'est pas un problème <span style={{ color: 'var(--t2)' }}>"là-bas".</span><br />C'est ici. C'est maintenant.</h2></R>
-          <R><p className="sec-p">Aucun outil n'a été conçu pour cette réalité — jusqu'à aujourd'hui.</p></R>
+          <R tag="span" className="eyebrow">{t.probEyebrow}</R>
+          <R><h2 className="prob-headline"><span className="sk-glitch" data-text={t.probH}>{t.probH}</span> <span style={{ color: 'var(--t2)' }}>{t.probHSub}</span><br />{t.probH2}</h2></R>
+          <R><p className="sec-p">{t.probDesc}</p></R>
           <div className="stats-grid">
             <R className="stat-c">
               <div className="stat-num" style={{ color: 'var(--pulse)' }}><sup>1/</sup><AnimCounter target={3} /></div>
-              <div className="stat-h">femmes a modifié son trajet par peur</div>
-              <p className="stat-p">En France, au Royaume-Uni, en Espagne, en Colombie, au Brésil — la peur de bouger seule la nuit est universelle. Aucune app grand public n'y répond sérieusement.</p>
-              <div className="stat-src">Source · Haut Conseil à l'Égalité · France 2024</div>
+              <div className="stat-h">{t.stat1Text}</div>
+              <p className="stat-p">{t.stat1Desc}</p>
+              <div className="stat-src">{t.stat1Source}</div>
             </R>
             <R className="stat-c" delay={100}>
               <div className="stat-num" style={{ color: 'var(--gold)' }}><AnimCounter target={40} /><sup>/50</sup></div>
-              <div className="stat-h">villes les plus dangereuses sont en LATAM</div>
-              <p className="stat-p">12M de touristes européens visitent l'Amérique Latine sans connaître la géographie des risques locaux. Aucun guide ne les protège en temps réel.</p>
-              <div className="stat-src">Source · World Population Review 2025</div>
+              <div className="stat-h">{t.stat2Text}</div>
+              <p className="stat-p">{t.stat2Desc}</p>
+              <div className="stat-src">{t.stat2Source}</div>
             </R>
             <R className="stat-c" delay={200}>
               <div className="stat-num" style={{ color: 'var(--sky)' }}><AnimCounter target={30} />–<AnimCounter target={60} /><span style={{ fontSize: '1.8rem', fontWeight: 700 }}>min</span></div>
-              <div className="stat-h">délai moyen d'intervention policière</div>
-              <p className="stat-p">En 30 minutes, tout peut être trop tard. Il faut alerter ses proches en secondes, pas en minutes — et sans que personne autour ne le remarque.</p>
-              <div className="stat-src">Source · Étude marché Sekura 2026</div>
+              <div className="stat-h">{t.stat3Text}</div>
+              <p className="stat-p">{t.stat3Desc}</p>
+              <div className="stat-src">{t.stat3Source}</div>
             </R>
             <R className="stat-c" delay={300} style={{ background: 'linear-gradient(135deg,rgba(0,229,160,.04),var(--ink-3))', borderColor: 'var(--jade-b)' }}>
               <div className="stat-num" style={{ color: 'var(--jade)' }}><AnimCounter target={0} /></div>
-              <div className="stat-h">app vraiment conçue pour ces réalités</div>
-              <p className="stat-p">Life360, bSafe, Noonlight : pensées pour les États-Unis. Aucune SOS sans regarder l'écran, aucune heatmap locale, aucun mode offline robuste. Sekura change ça.</p>
-              <div className="stat-src">Source · Analyse concurrentielle Sekura</div>
+              <div className="stat-h">{t.stat4Text}</div>
+              <p className="stat-p">{t.stat4Desc}</p>
+              <div className="stat-src">{t.stat4Source}</div>
             </R>
           </div>
         </div>
@@ -677,14 +926,14 @@ export default function App() {
       {/* ══════ HOW IT WORKS ══════ */}
       <section className="sec steps-sec" id="how">
         <div className="wrap">
-          <R tag="span" className="eyebrow">02 / Comment ça marche</R>
-          <R><h2 className="sec-h">En 3 étapes. Moins de 60 secondes.</h2></R>
-          <R><p className="sec-p">Tu n'as pas à changer ton comportement. Sekura s'adapte à ta vie, pas l'inverse.</p></R>
+          <R tag="span" className="eyebrow">{t.stepsEyebrow}</R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text={t.stepsH}>{t.stepsH}</span></h2></R>
+          <R><p className="sec-p">{t.stepsDesc}</p></R>
           <div className="steps-grid">
             {[
-              { n: '1', h: 'Télécharge & configure', p: "Ajoute tes 5 contacts de confiance. Sekura leur envoie un SMS automatique avec le lien de suivi. Aucune app à installer pour eux." },
-              { n: '2', h: 'Consulte la heatmap', p: 'Avant de sortir, vérifie les zones à risque en temps réel autour de toi. Active la navigation sécurisée pour ton trajet.' },
-              { n: '3', h: 'Voyage en confiance', p: "Triple-clic sur le bouton volume = SOS silencieux instantané. Ta position GPS est envoyée à tes proches. Tu n'as rien à regarder." },
+              { n: '1', h: t.step1Title, p: t.step1Desc },
+              { n: '2', h: t.step2Title, p: t.step2Desc },
+              { n: '3', h: t.step3Title, p: t.step3Desc },
             ].map((s, i) => (
               <R key={i} className="step-c" delay={i * 100}>
                 <div className="step-num">{s.n}</div><h3 className="step-h">{s.h}</h3><p className="step-p">{s.p}</p>
@@ -697,8 +946,8 @@ export default function App() {
       {/* ══════ FEATURES ══════ */}
       <section className="feat-wrap" id="features" style={{ background: 'var(--ink-1)' }}>
         <div className="feat-intro">
-          <R tag="span" className="eyebrow">03 / Fonctionnalités</R>
-          <R><h2 className="sec-h">La protection qu'ont les gens qui peuvent<br />se payer <span style={{ color: 'var(--jade)' }}>un garde du corps.</span></h2></R>
+          <R tag="span" className="eyebrow">{t.featEyebrow}</R>
+          <R><h2 className="sec-h">{t.featH1}<br />se payer <span className="sk-glitch" data-text={t.featH1Accent} style={{ color: 'var(--jade)' }}>{t.featH1Accent}</span></h2></R>
         </div>
         {features.map((f, i) => (
           <R key={i} className="feat-row">
@@ -721,65 +970,20 @@ export default function App() {
       </section>
 
       {/* ══════ DEMO ══════ */}
-      <section className="sec demo-sec" id="demo">
-        <div className="wrap demo-inner">
-          <R><div className="demo-label">Essaie maintenant</div></R>
-          <R><h2 className="demo-h">Explore la heatmap.<br /><span style={{ color: 'var(--jade)' }}>Survole les zones.</span></h2></R>
-          <R><p className="demo-sub">Clique sur les zones colorées pour voir les alertes en temps réel. C'est exactement ce que Sekura t'affiche avant de sortir.</p></R>
-          <R>
-            <div className="demo-map-wrap" ref={demoMapRef} onClick={handleDemoMapClick}>
-              <div className="demo-map-grid" />
-              {[
-                { id: 'dz-r1', cls: 'dz1', style: { top: '15%', left: '16%' } },
-                { id: 'dz-r2', cls: 'dz2', style: { top: '52%', left: '56%' } },
-                { id: 'dz-r3', cls: 'dz3', style: { top: '70%', left: '10%' } },
-                { id: 'dz-g1', cls: 'dz4', style: { top: '18%', left: '50%' } },
-                { id: 'dz-g2', cls: 'dz5', style: { top: '58%', left: '28%' } },
-              ].map(z => (
-                <div key={z.id} id={z.id} className={`demo-zone ${z.cls}`} style={z.style}
-                  onMouseEnter={(e) => handleDemoZoneEnter(z.id, e)}
-                  onMouseLeave={() => setTtData(null)}
-                />
-              ))}
-              {[
-                { label: '⚠ Zona Rosa · 7.2/10', cls: 'chip-red', style: { top: '10%', left: '30%' } },
-                { label: '~ Tepito · 4.8/10', cls: 'chip-gold', style: { top: '45%', left: '62%' } },
-                { label: '⚠ Centro Sur · 6.1/10', cls: 'chip-red', style: { top: '76%', left: '16%' } },
-                { label: '✓ Polanco · 1.2/10', cls: 'chip-green', style: { top: '12%', left: '55%' } },
-                { label: '✓ Roma Norte · 1.8/10', cls: 'chip-green', style: { top: '52%', left: '33%' } },
-              ].map((c, i) => <div key={i} className={`demo-chip ${c.cls}`} style={c.style}>{c.label}</div>)}
-              <div className="demo-user" style={{ top: demoUser.y + '%', left: demoUser.x + '%', transition: 'all .3s' }} />
-              <div className="demo-user-ring" style={{ top: `calc(${demoUser.y}% - 14px)`, left: `calc(${demoUser.x}% - 14px)`, transition: 'all .3s' }} />
-              {ttData && (
-                <div className="demo-tooltip show" style={{ left: ttPos.l, top: ttPos.t }}>
-                  <div className="dt-title">{ttData.title}</div>
-                  <div className="dt-body">{ttData.body}</div>
-                </div>
-              )}
-            </div>
-          </R>
-          <R className="demo-instructions">
-            {[{ i: '🔴', l: 'Zones à risque' }, { i: '🟡', l: 'Zones modérées' }, { i: '🟢', l: 'Zones sûres' }, { i: '📍', l: 'Ta position' }].map((x, k) => (
-              <div key={k} className="demo-inst-item"><div className="demo-inst-icon">{x.i}</div>{x.l}</div>
-            ))}
-          </R>
-        </div>
-      </section>
-
       {/* ══════ COMPARISON ══════ */}
       <section className="sec compare-sec">
         <div className="wrap">
-          <R tag="span" className="eyebrow">04 / Comparaison</R>
-          <R><h2 className="sec-h">Sekura vs les autres.<br /><span style={{ color: 'var(--jade)' }}>Il n'y a pas vraiment de match.</span></h2></R>
+          <R tag="span" className="eyebrow">{t.compEyebrow}</R>
+          <R><h2 className="sec-h">{t.compH}<br /><span className="sk-glitch" data-text={t.compHAccent} style={{ color: 'var(--jade)' }}>{t.compHAccent}</span></h2></R>
           <R><table className="compare-tbl" style={{ marginTop: 68 }}>
-            <thead><tr><th>Fonctionnalité</th><th className="col-sk col-sk-h">SEKURA</th><th>Life360</th><th>bSafe</th><th>Noonlight</th></tr></thead>
+            <thead><tr><th>{t.compTableHeader}</th><th className="col-sk col-sk-h">{t.compSekura}</th><th>Life360</th><th>bSafe</th><th>Noonlight</th></tr></thead>
             <tbody>
               {compRows.map((r, i) => (
                 <tr key={i}><td>{r[0]}</td>{r.slice(1).map((c, j) => (
                   <td key={j} className={j === 0 ? 'col-sk' : ''}><span className={c === '✓' ? 'ck-yes' : c === '✕' ? 'ck-no' : 'ck-part'}>{c}</span></td>
                 ))}</tr>
               ))}
-              <tr><td>Prix (plan de base)</td><td className="col-sk" style={{ color: 'var(--jade)', fontWeight: 700 }}>Gratuit</td><td>$7.99/mois</td><td>Gratuit</td><td>$9.99/mois</td></tr>
+              <tr><td>{t.compFeat7}</td><td className="col-sk" style={{ color: 'var(--jade)', fontWeight: 700 }}>{t.compFree}</td><td>$7.99/mois</td><td>{t.compFree}</td><td>$9.99/mois</td></tr>
             </tbody>
           </table></R>
         </div>
@@ -788,9 +992,9 @@ export default function App() {
       {/* ══════ PROFILES ══════ */}
       <section className="sec" id="profiles" style={{ background: 'var(--ink-1)' }}>
         <div className="wrap">
-          <R tag="span" className="eyebrow">05 / Pour qui ?</R>
-          <R><h2 className="sec-h">Sekura s'adapte à ton profil.</h2></R>
-          <R><p className="sec-p" style={{ marginBottom: 36 }}>Trois réalités très différentes. Une seule app.</p></R>
+          <R tag="span" className="eyebrow">{t.profEyebrow}</R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text={t.profH}>{t.profH}</span></h2></R>
+          <R><p className="sec-p" style={{ marginBottom: 36 }}>{t.profDesc}</p></R>
           <R>
             <div className="ptabs">
               {profiles.map((p, i) => (
@@ -825,8 +1029,8 @@ export default function App() {
       {/* ══════ FAQ ══════ */}
       <section className="sec faq-sec" id="faq">
         <div className="wrap">
-          <R tag="span" className="eyebrow">08 / Questions fréquentes</R>
-          <R><h2 className="sec-h">On répond à tes questions.</h2></R>
+          <R tag="span" className="eyebrow">{t.faqEyebrow}</R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text={t.faqH}>{t.faqH}</span></h2></R>
           <R>
             <div className="faq-grid">
               {faqs.map((f, i) => (
@@ -844,21 +1048,21 @@ export default function App() {
       <section id="fcta">
         <div className="fcta-inner">
           <R className="pb-wrap">
-            <div className="pb-labels"><span>0 places</span><span>500 places Early Bird</span></div>
+            <div className="pb-labels"><span>0 {t.ctaPlaces.toLowerCase()}</span><span>500 {t.ctaEarlyBird.toLowerCase()}</span></div>
             <div className="pb-track"><div className="pb-fill" style={{ width: (sc / 500 * 100) + '%' }} /></div>
-            <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> places restantes</div>
+            <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> {t.ctaScarcity}</div>
           </R>
-          <R><h2 className="fcta-h">Sois parmi les premiers.<br /><em>Rejoins la whitelist.</em></h2></R>
-          <R><p className="fcta-sub">Les 500 premiers inscrits obtiennent 3 mois de Smart Safety gratuit + accès beta fermée. Aucune carte bancaire. Tu peux te désinscrire en 1 clic.</p></R>
+          <R><h2 className="fcta-h">{t.ctaH}<br /><em className="sk-glitch" data-text={t.ctaHAccent}>{t.ctaHAccent}</em></h2></R>
+          <R><p className="fcta-sub">{t.ctaDesc}</p></R>
           <R>
             <div className="fcta-form">
-              <input ref={emailRef} type="email" className="fcta-input" placeholder="ton@email.com" onKeyDown={e => { if (e.key === 'Enter') handleMainSignup() }} />
+              <input ref={emailRef} type="email" className="fcta-input" placeholder={t.ctaPlaceholder} onKeyDown={e => { if (e.key === 'Enter') handleMainSignup() }} />
               <button className="btn-primary" onClick={handleMainSignup} style={{ padding: '14px 26px', fontSize: '.93rem', flexShrink: 0, borderRadius: 10 }}>
-                {signupMsg || 'Rejoindre →'}
+                {signupMsg || `${t.ctaButton} →`}
               </button>
             </div>
           </R>
-          <R className="fcta-trust"><span>🔒 Gratuit pour toujours</span><span>· Aucun spam ·</span><span>⚡ 3 mois Smart Safety offerts</span></R>
+          <R className="fcta-trust"><span>{t.ctaTrust1}</span><span>{t.ctaTrust2}</span><span>{t.ctaTrust3}</span></R>
         </div>
       </section>
 
@@ -867,21 +1071,21 @@ export default function App() {
         <div className="ft-grid">
           <div>
             <div className="ft-brand"><LogoSVG size={26} /><span className="ft-wordmark">SEKURA</span></div>
-            <p className="ft-desc">Le garde du corps numérique pour les femmes, voyageurs et familles — en Europe, en Amérique Latine, partout où tu vas.</p>
+            <p className="ft-desc">{t.footerDesc}</p>
             <div className="ft-soc"><a className="ft-soc-btn" href="#">𝕏</a><a className="ft-soc-btn" href="#">in</a><a className="ft-soc-btn" href="#">📸</a><a className="ft-soc-btn" href="#">♪</a></div>
           </div>
-          <div className="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Comment ça marche</a><a href="#">FAQ</a></div>
-          <div className="ft-col"><h4>Marchés</h4><a href="#">Mexique · CDMX</a><a href="#">Colombie · Medellín</a><a href="#">Brésil · São Paulo</a><a href="#">Europe · Voyageurs</a></div>
-          <div className="ft-col"><h4>Légal</h4><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Presse</a><a href="#">Contact</a></div>
+          <div className="ft-col"><h4>{t.footerProduct}</h4><a href="#">{t.footerFeatures}</a><a href="#">{t.footerHow}</a><a href="#">{t.footerFAQ}</a></div>
+          <div className="ft-col"><h4>{t.footerMarkets}</h4><a href="#">{t.footerMexico}</a><a href="#">{t.footerColombia}</a><a href="#">{t.footerBrazil}</a><a href="#">{t.footerEuropeTravelers}</a></div>
+          <div className="ft-col"><h4>{t.footerLegal}</h4><a href="#">{t.footerPrivacy}</a><a href="#">{t.footerTerms}</a><a href="#">{t.footerPress}</a><a href="#">{t.footerContact}</a></div>
         </div>
         <div className="ft-bottom">
-          <span className="ft-copy">© 2025 SEKURA · Outil d'aide à la sécurité, pas un service de secours professionnel.</span>
+          <span className="ft-copy">{t.footerCopyright}</span>
           <div className="ft-flags">🇲🇽 🇨🇴 🇧🇷 🇵🇪 🇫🇷 🇬🇧 🇺🇸 🇦🇺</div>
         </div>
       </footer>
 
       {/* ══════ FLOATING CTA ══════ */}
-      <button id="float-cta" onClick={scrollToCTA}>🛡️ Rejoindre gratuitement →</button>
+      <button id="float-cta" onClick={scrollToCTA}>{t.floatingCTA}</button>
     </>
   )
 }
