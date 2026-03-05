@@ -6,7 +6,6 @@ const nextConfig = {
   i18n: {
     locales: ['fr', 'en', 'es', 'pt'],
     defaultLocale: 'fr',
-    localeDetection: true,
   },
   experimental: {
     // Remove if not using Server Components
