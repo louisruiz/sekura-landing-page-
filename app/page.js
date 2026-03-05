@@ -496,7 +496,7 @@ function WaitlistForm({ source = 'hero', lang = 'fr', onSuccess }) {
             borderRadius: 12, padding: '14px 18px',
             color: error ? '#FF4D6A' : 'var(--text)',
             fontSize: 15, outline: 'none', transition: 'border-color 0.2s',
-            fontFamily: "'Outfit', sans-serif"
+            fontFamily: "'General Sans', sans-serif"
           }}
           onFocus={e => { if (!error) e.target.style.borderColor = 'var(--border-jade)' }}
           onBlur={e => { if (!error) e.target.style.borderColor = 'var(--border)' }}
@@ -557,7 +557,7 @@ function PhoneMockup() {
             <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#00E5A0', border: '2px solid #fff', position: 'relative', zIndex: 1 }} />
           </div>
           <div style={{ position: 'absolute', bottom: 8, left: 8, background: 'rgba(0,229,160,0.15)', border: '1px solid rgba(0,229,160,0.3)', borderRadius: 6, padding: '3px 8px' }}>
-            <span style={{ color: '#00E5A0', fontSize: 9, fontFamily: "'Space Mono',monospace", fontWeight: 700 }}>CDMX · LIVE</span>
+            <span style={{ color: '#00E5A0', fontSize: 9, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>CDMX · LIVE</span>
           </div>
           <div style={{ position: 'absolute', top: 8, right: 8, background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 6, padding: '3px 8px' }}>
             <span style={{ color: '#00E5A0', fontSize: 11, fontWeight: 700 }}>7.2</span>
@@ -580,7 +580,7 @@ function PhoneMockup() {
             <div key={c.name} style={{ background: 'var(--ink-mid)', border: '1px solid var(--border)', borderRadius: 20, padding: '4px 10px', display: 'flex', alignItems: 'center', gap: 5 }}>
               <div style={{ width: 6, height: 6, borderRadius: '50%', background: c.status === 'LIVE' ? c.color : 'var(--text-muted)' }} />
               <span style={{ color: 'var(--text-sec)', fontSize: 10 }}>{c.name}</span>
-              <span style={{ color: c.status === 'LIVE' ? c.color : 'var(--text-muted)', fontSize: 9, fontFamily: "'Space Mono',monospace" }}>● {c.status}</span>
+              <span style={{ color: c.status === 'LIVE' ? c.color : 'var(--text-muted)', fontSize: 9, fontFamily: "'JetBrains Mono', monospace" }}>● {c.status}</span>
             </div>
           ))}
         </div>
@@ -590,7 +590,7 @@ function PhoneMockup() {
 }
 
 // ── NAVBAR ────────────────────────────────────────────────────────────────────
-function Navbar({ lang, onLangOpen }) {
+function Navbar({ lang, onLangOpen, registeredCount }) {
   const t = T[lang] || T.fr
   const [scrolled, setScrolled] = useState(false)
   useEffect(() => {
@@ -605,7 +605,7 @@ function Navbar({ lang, onLangOpen }) {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
+        position: 'fixed', top: 36, left: 0, right: 0, zIndex: 1000,
         background: scrolled ? 'rgba(10,12,20,0.97)' : 'rgba(10,12,20,0.85)',
         backdropFilter: 'blur(20px)',
         borderBottom: '1px solid var(--border)',
@@ -614,18 +614,19 @@ function Navbar({ lang, onLangOpen }) {
     >
       <div style={{ maxWidth: 1280, margin: '0 auto', height: 68, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <a href="#" style={{ textDecoration: 'none' }}>
-          <span style={{ fontFamily: "'Outfit',sans-serif", fontWeight: 900, fontSize: 24, color: 'var(--text)', letterSpacing: -0.5 }}>
+          <span style={{ fontFamily: "'Clash Grotesk', sans-serif", fontWeight: 700, fontSize: 24, color: 'var(--text)', letterSpacing: '-0.03em' }}>
             Sek<span style={{ color: 'var(--jade)' }}>ur</span>a
           </span>
         </a>
         <div style={{ display: 'flex', gap: 32, alignItems: 'center' }} className="hide-mobile">
-          {[[t.navFeatures, '#fonctionnalites'], [t.navFaq, '#faq']].map(([label, href]) => (
+          {[[t.navFeatures, '#fonctionnalites'], ['Démo', '#demo'], [t.navPricing, '#pricing'], [t.navFaq, '#faq']].map(([label, href]) => (
             <motion.a key={label} href={href} style={{ color: 'var(--text-sec)', textDecoration: 'none', fontSize: 15, fontWeight: 500 }}
               whileHover={{ color: 'var(--text)' }}
             >{label}</motion.a>
           ))}
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span className="nav-count hide-mobile">● {registeredCount} déjà inscrits</span>
           <motion.button onClick={onLangOpen} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
             style={{ background: 'var(--ink-mid)', border: '1px solid var(--border)', borderRadius: 8, padding: '7px 12px', color: 'var(--text-sec)', fontSize: 14, cursor: 'pointer' }}
           >🌐 {lang.toUpperCase()}</motion.button>
@@ -642,7 +643,7 @@ function Navbar({ lang, onLangOpen }) {
 }
 
 // ── HERO SECTION ──────────────────────────────────────────────────────────────
-function HeroSection({ lang, onCountUpdate, liveCount }) {
+function HeroSection({ lang, onCountUpdate, liveCount, spotsRemaining }) {
   const t = T[lang] || T.fr
   const { count: adoptCount, ref: adoptRef } = useCounter(liveCount || 247, 1600)
   const [titleLines, setTitleLines] = useState(t.heroTitle)
@@ -650,7 +651,7 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
   useEffect(() => { setTitleLines(t.heroTitle) }, [lang])
 
   return (
-    <section style={{ minHeight: '100vh', paddingTop: 130, paddingBottom: 80, background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
+    <section style={{ minHeight: '100vh', paddingTop: 166, paddingBottom: 80, background: 'var(--ink)', position: 'relative', overflow: 'hidden' }}>
       <div className="hero-grid-bg" style={{ position: 'absolute', inset: 0, zIndex: 0 }} />
       <div style={{ position: 'absolute', top: -100, left: -150, width: 700, height: 700, borderRadius: '50%', background: 'radial-gradient(circle, rgba(0,229,160,0.07) 0%, transparent 70%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }} />
       <div style={{ position: 'absolute', bottom: -100, right: -100, width: 600, height: 600, borderRadius: '50%', background: 'radial-gradient(circle, rgba(255,77,106,0.07) 0%, transparent 70%)', filter: 'blur(60px)', zIndex: 0, pointerEvents: 'none' }} />
@@ -658,20 +659,14 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 1 }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 64, alignItems: 'center' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 28 }}>
-            {/* Badge */}
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(0,229,160,0.08)', border: '1px solid var(--border-jade)', borderRadius: 100, padding: '8px 18px', width: 'fit-content' }}>
-              <motion.span animate={{ opacity: [1, 0.2, 1] }} transition={{ duration: 1.5, repeat: Infinity }} style={{ width: 8, height: 8, borderRadius: '50%', background: '#00E5A0', display: 'inline-block', flexShrink: 0 }} />
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: '#00E5A0', letterSpacing: 3, textTransform: 'uppercase' }}>
-                <AnimatePresence mode="wait">
-                  <motion.span key={lang + '-badge'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
-                    {t.badge}
-                  </motion.span>
-                </AnimatePresence>
-              </span>
+            {/* Urgency Pill */}
+            <div className="urgency-pill" style={{ width: 'fit-content' }}>
+              <span className="urgency-dot" />
+              <span>{spotsRemaining} places early bird · Ferme dans 47h</span>
             </div>
 
             {/* H1 */}
-            <h1 style={{ fontFamily: "'DM Serif Display', serif", fontSize: 'clamp(42px, 5.5vw, 68px)', lineHeight: 1.08, letterSpacing: -1.5, color: 'var(--text)', margin: 0 }}>
+            <h1 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(42px, 5.5vw, 68px)', lineHeight: 0.95, letterSpacing: '-0.06em', fontWeight: 700, color: 'var(--text)', margin: 0 }}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span key={lang + '-title'} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.3 }} style={{ display: 'block' }}>
                   {titleLines[0]}<br />
@@ -685,7 +680,7 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
             </h1>
 
             {/* Subtitle */}
-            <p style={{ fontSize: 17, color: 'var(--text-sec)', lineHeight: 1.7, maxWidth: 520 }}>
+            <p style={{ fontSize: 17, color: 'var(--text-sec)', lineHeight: 1.82, letterSpacing: '.005em', maxWidth: 520 }}>
               <AnimatePresence mode="wait" initial={false}>
                 <motion.span key={lang + '-sub'} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} style={{ display: 'block' }}>
                   {t.heroSubtitle}
@@ -698,6 +693,9 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
               <WaitlistForm source="hero" lang={lang} onSuccess={onCountUpdate} />
             </div>
 
+            {/* Live Badge */}
+            <LiveBadge />
+
             {/* Metrics */}
             <div ref={adoptRef} style={{ display: 'flex', gap: 32, flexWrap: 'wrap', paddingTop: 8, borderTop: '1px solid var(--border)' }}>
               {[
@@ -706,14 +704,14 @@ function HeroSection({ lang, onCountUpdate, liveCount }) {
                 { value: 'Q1 2026', label: t.metricBeta },
               ].map((m, i) => (
                 <div key={i}>
-                  <p style={{ fontFamily: "'DM Serif Display',serif", fontSize: 26, color: 'var(--text)', margin: '0 0 2px' }}>
+                  <p style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 26, fontWeight: 700, letterSpacing: '-.05em', lineHeight: 1, color: 'var(--text)', margin: '0 0 2px' }}>
                     <AnimatePresence mode="wait">
                       <motion.span key={lang + '-m' + i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                         {i === 0 ? adoptCount : m.value}
                       </motion.span>
                     </AnimatePresence>
                   </p>
-                  <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: 'var(--text-muted)', letterSpacing: 2, textTransform: 'uppercase', margin: 0 }}>
+                  <p style={{ fontFamily: "var(--mono)", fontSize: 10, color: 'var(--text-muted)', letterSpacing: 2, textTransform: 'uppercase', margin: 0 }}>
                     <AnimatePresence mode="wait">
                       <motion.span key={lang + '-ml' + i} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
                         {m.label}
@@ -741,7 +739,7 @@ function TickerStrip({ lang }) {
   const renderItems = () => items.map((item, i) => (
     <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '0 40px', whiteSpace: 'nowrap' }}>
       <span style={{ fontSize: 18 }}>{item.icon}</span>
-      <span style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: 'var(--jade)' }}>{item.num}</span>
+      <span style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 22, color: 'var(--jade)' }}>{item.num}</span>
       <span style={{ color: 'var(--text-sec)', fontSize: 14 }}>{item.desc}</span>
     </div>
   ))
@@ -764,8 +762,8 @@ function ProblemSection({ lang }) {
     <section id="probleme" style={{ background: 'var(--ink-soft)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <RevealSection style={{ marginBottom: 64 }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag01}</p>
-          <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(32px,4vw,52px)', lineHeight: 1.15, color: 'var(--text)', maxWidth: 700, margin: '0 0 20px' }}>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag01}</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(32px,4vw,52px)', lineHeight: 1.15, color: 'var(--text)', maxWidth: 700, margin: '0 0 20px' }}>
             {t.problemTitle}<br />
             <em style={{ color: 'var(--jade)', fontStyle: 'italic' }}>{t.problemEmphasis}</em>
           </h2>
@@ -776,10 +774,10 @@ function ProblemSection({ lang }) {
             <motion.div key={i} variants={staggerItem} whileHover={{ y: -4, borderColor: 'var(--border-jade)' }}
               style={{ background: 'var(--ink)', border: '1px solid var(--border)', borderTop: '2px solid #FF4D6A', borderRadius: 16, padding: '28px 24px', transition: 'border-color 0.3s' }}
             >
-              <p style={{ fontFamily: "'DM Serif Display',serif", fontSize: 48, color: '#FF4D6A', lineHeight: 1, margin: '0 0 12px' }}>{c.num}</p>
+              <p style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 48, color: '#FF4D6A', lineHeight: 1, margin: '0 0 12px' }}>{c.num}</p>
               <p style={{ fontSize: 16, fontWeight: 700, color: 'var(--text)', margin: '0 0 12px' }}>{c.title}</p>
               <p style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.7, margin: '0 0 16px' }}>{c.desc}</p>
-              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: 'var(--text-muted)', letterSpacing: 2 }}>SOURCE · {c.source}</p>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--text-muted)', letterSpacing: 2 }}>SOURCE · {c.source}</p>
             </motion.div>
           ))}
         </StaggerGrid>
@@ -797,7 +795,7 @@ function PlanBadge({ color, text }) {
     red: { bg: 'rgba(255,77,106,0.1)', border: 'rgba(255,77,106,0.25)', text: '#FF4D6A' },
   }
   const c = colors[color] || colors.green
-  return <span style={{ background: c.bg, border: `1px solid ${c.border}`, color: c.text, borderRadius: 100, padding: '3px 10px', fontSize: 10, fontFamily: "'Space Mono',monospace", letterSpacing: 1 }}>{text}</span>
+  return <span style={{ background: c.bg, border: `1px solid ${c.border}`, color: c.text, borderRadius: 100, padding: '3px 10px', fontSize: 10, fontFamily: "'JetBrains Mono', monospace", letterSpacing: 1 }}>{text}</span>
 }
 
 // ── FEATURE CARD ──────────────────────────────────────────────────────────────
@@ -810,7 +808,7 @@ function FeatureCard({ feature: f, small }) {
     >
       <motion.div initial={{ scaleY: 0 }} whileHover={{ scaleY: 1 }} style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: 'var(--jade)', transformOrigin: 'top', borderRadius: '3px 0 0 3px' }} />
       <div style={{ marginBottom: 16, paddingBottom: 16, borderBottom: '1px solid var(--border)' }}>
-        <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>FEATURE {f.num} · {f.cat}</span>
+        <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>FEATURE {f.num} · {f.cat}</span>
       </div>
       <span style={{ fontSize: small ? 28 : 36, display: 'block', marginBottom: 12 }}>{f.icon}</span>
       <h3 style={{ fontSize: small ? 18 : 20, fontWeight: 700, color: 'var(--text)', marginBottom: 10 }}>{f.title}</h3>
@@ -844,8 +842,8 @@ function FeaturesSection({ lang }) {
     <section id="fonctionnalites" style={{ background: 'var(--ink-soft)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <RevealSection style={{ marginBottom: 64 }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag02}</p>
-          <blockquote style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(22px,3vw,36px)', color: 'var(--text)', lineHeight: 1.4, maxWidth: 860, margin: 0, border: 'none', padding: 0 }}>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag02}</p>
+          <blockquote style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(22px,3vw,36px)', color: 'var(--text)', lineHeight: 1.4, maxWidth: 860, margin: 0, border: 'none', padding: 0 }}>
             {t.solutionQuote}{' '}<em style={{ color: 'var(--jade)', fontStyle: 'italic' }}>{t.solutionEmphasis}</em>
           </blockquote>
         </RevealSection>
@@ -867,7 +865,7 @@ function FeaturesSection({ lang }) {
           >
             <motion.div initial={{ scaleY: 0 }} whileHover={{ scaleY: 1 }} style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 3, background: 'var(--jade)', transformOrigin: 'top' }} />
             <div style={{ marginBottom: 24, paddingBottom: 16, borderBottom: '1px solid var(--border)' }}>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>FEATURE {features[4]?.num} · {features[4]?.cat}</span>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>FEATURE {features[4]?.num} · {features[4]?.cat}</span>
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 32, alignItems: 'start' }}>
               <div>
@@ -913,8 +911,8 @@ function UseCasesSection({ lang }) {
     <section id="usecases" style={{ background: 'var(--ink)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <RevealSection style={{ marginBottom: 64, textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag03}</p>
-          <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(30px,4vw,48px)', color: 'var(--text)', margin: '0 0 16px' }}>{t.usecasesTitle}</h2>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag03}</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(30px,4vw,48px)', fontWeight: 700, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', margin: '0 0 16px' }}>{t.usecasesTitle}</h2>
           <p style={{ color: 'var(--text-sec)', fontSize: 17 }}>{t.usecasesSubtitle}</p>
         </RevealSection>
         <StaggerGrid style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: 2 }}>
@@ -923,8 +921,8 @@ function UseCasesSection({ lang }) {
               style={{ borderRadius: i === 0 ? '16px 0 0 16px' : i === 2 ? '0 16px 16px 0' : 0, padding: '36px 28px', background: 'var(--ink-soft)', border: '1px solid var(--border)', transition: 'border-color 0.3s' }}
             >
               <span style={{ fontSize: 36, display: 'block', marginBottom: 12 }}>{p.icon}</span>
-              <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>PROFIL {p.num}</span>
-              <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: 'var(--text)', margin: '8px 0 16px', lineHeight: 1.3 }}>{p.label}</h3>
+              <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--jade)', letterSpacing: 2, textTransform: 'uppercase' }}>PROFIL {p.num}</span>
+              <h3 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 22, color: 'var(--text)', margin: '8px 0 16px', lineHeight: 1.3 }}>{p.label}</h3>
               <p style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.7, fontStyle: 'italic', borderLeft: '3px solid var(--border-jade)', paddingLeft: 16, marginBottom: 20 }}>{p.pain}</p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
                 {p.features.map((f, j) => (
@@ -950,8 +948,8 @@ function HowItWorksSection({ lang }) {
     <section id="comment" style={{ background: 'var(--ink)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <RevealSection style={{ marginBottom: 64, textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag04}</p>
-          <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(30px,4vw,48px)', color: 'var(--text)', margin: '0 0 16px' }}>{t.howTitle}</h2>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag04}</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(30px,4vw,48px)', fontWeight: 700, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', margin: '0 0 16px' }}>{t.howTitle}</h2>
           <p style={{ color: 'var(--text-sec)', fontSize: 17 }}>{t.howSubtitle}</p>
         </RevealSection>
         <div style={{ position: 'relative' }}>
@@ -962,7 +960,7 @@ function HowItWorksSection({ lang }) {
                 <motion.div whileHover={{ boxShadow: '0 0 30px rgba(0,229,160,0.3)' }}
                   style={{ width: 80, height: 80, borderRadius: '50%', border: '2px solid var(--jade)', boxShadow: '0 0 20px rgba(0,229,160,0.2)', background: 'var(--ink)', margin: '0 auto 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}
                 >
-                  <span style={{ fontFamily: "'DM Serif Display',serif", fontSize: 20, color: 'var(--jade)', lineHeight: 1 }}>{s.num}</span>
+                  <span style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 20, color: 'var(--jade)', lineHeight: 1 }}>{s.num}</span>
                   <span style={{ fontSize: 16 }}>{s.icon}</span>
                 </motion.div>
                 <h3 style={{ fontSize: 17, fontWeight: 700, color: 'var(--text)', margin: '0 0 10px' }}>{s.title}</h3>
@@ -1001,8 +999,8 @@ function TestimonialsSection({ lang }) {
     <section id="avis" style={{ background: 'var(--ink-soft)', padding: '100px 0', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 24px', marginBottom: 48 }}>
         <RevealSection style={{ textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag05}</p>
-          <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(30px,4vw,48px)', color: 'var(--text)', margin: '0 0 16px' }}>{t.testimonialTitle}</h2>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag05}</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(30px,4vw,48px)', fontWeight: 700, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', margin: '0 0 16px' }}>{t.testimonialTitle}</h2>
         </RevealSection>
       </div>
       <div style={{ overflow: 'hidden', marginBottom: 20, position: 'relative' }}>
@@ -1032,8 +1030,8 @@ function FAQSection({ lang }) {
     <section id="faq" style={{ background: 'var(--ink-soft)', padding: '100px 24px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <RevealSection style={{ marginBottom: 64, textAlign: 'center' }}>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag06}</p>
-          <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(30px,4vw,48px)', color: 'var(--text)', margin: 0 }}>{t.faqTitle}</h2>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>{t.tag06}</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(30px,4vw,48px)', fontWeight: 700, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', margin: 0 }}>{t.faqTitle}</h2>
         </RevealSection>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: 8 }}>
           {faqs.map((faq, i) => (
@@ -1074,10 +1072,10 @@ function WaitlistSection({ count, onCountUpdate, lang }) {
           <motion.div initial={{ opacity: 0, scale: 0.8 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
             style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'rgba(255,184,48,0.1)', border: '1px solid rgba(255,184,48,0.3)', borderRadius: 100, padding: '8px 20px', marginBottom: 24 }}
           >
-            <span style={{ fontFamily: "'Space Mono',monospace", fontSize: 12, color: '#FFB830', letterSpacing: 2 }}>{t.waitlistBadge}</span>
+            <span style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 12, color: '#FFB830', letterSpacing: 2 }}>{t.waitlistBadge}</span>
           </motion.div>
-          <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>{t.tag07}</p>
-          <h2 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 'clamp(30px,4vw,52px)', color: 'var(--text)', lineHeight: 1.15, margin: '0 0 20px' }}>
+          <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 16 }}>{t.tag07}</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(30px,4vw,52px)', color: 'var(--text)', lineHeight: 1.15, margin: '0 0 20px' }}>
             {t.waitlistTitle[0]}<br />
             <em style={{ color: 'var(--jade)', fontStyle: 'italic' }}>{t.waitlistTitle[1]}</em>
           </h2>
@@ -1095,7 +1093,7 @@ function WaitlistSection({ count, onCountUpdate, lang }) {
               />
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 8 }}>
-              <span style={{ color: 'var(--jade)', fontSize: 12, fontFamily: "'Space Mono',monospace", fontWeight: 700 }}>{count} / 500</span>
+              <span style={{ color: 'var(--jade)', fontSize: 12, fontFamily: "'JetBrains Mono', monospace", fontWeight: 700 }}>{count} / 500</span>
               <span style={{ color: 'var(--text-muted)', fontSize: 12 }}>{Math.round((count / 500) * 100)}% rempli</span>
             </div>
           </div>
@@ -1121,7 +1119,7 @@ function Footer({ lang }) {
       <div style={{ maxWidth: 1280, margin: '0 auto' }}>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 48, marginBottom: 64 }}>
           <div>
-            <p style={{ fontFamily: "'Outfit',sans-serif", fontWeight: 900, fontSize: 26, color: 'var(--text)', margin: '0 0 12px' }}>Sek<span style={{ color: 'var(--jade)' }}>ur</span>a</p>
+            <p style={{ fontFamily: "'General Sans', sans-serif", fontWeight: 900, fontSize: 26, color: 'var(--text)', margin: '0 0 12px' }}>Sek<span style={{ color: 'var(--jade)' }}>ur</span>a</p>
             <p style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.7, marginBottom: 20 }}>{t.footerTagline}</p>
             <div style={{ display: 'flex', gap: 12 }}>
               {['𝕏', '📸', 'in', '♪'].map((icon, i) => (
@@ -1131,7 +1129,7 @@ function Footer({ lang }) {
           </div>
           {[[t.footerProduct, ['Fonctionnalités', 'Comment ça marche', 'FAQ']], [t.footerMarkets, ['Mexique · CDMX', 'Colombie · Medellín', 'Brésil · São Paulo', 'Europe · Voyageurs']], [t.footerLegal, ['Politique de confidentialité', 'CGU', 'Dossier de presse', 'Contact', 'B2B Entreprises']]].map(([title, links]) => (
             <div key={title}>
-              <p style={{ fontFamily: "'Space Mono',monospace", fontSize: 10, color: 'var(--text-muted)', letterSpacing: 2, textTransform: 'uppercase', margin: '0 0 16px' }}>{title}</p>
+              <p style={{ fontFamily: "'JetBrains Mono', monospace", fontSize: 10, color: 'var(--text-muted)', letterSpacing: 2, textTransform: 'uppercase', margin: '0 0 16px' }}>{title}</p>
               {links.map(link => (
                 <motion.a key={link} href="#" style={{ display: 'block', color: 'var(--text-sec)', textDecoration: 'none', fontSize: 14, marginBottom: 10 }} whileHover={{ color: 'var(--jade)', x: 3 }}>{link}</motion.a>
               ))}
@@ -1166,7 +1164,7 @@ function LanguageModal({ onClose, onSelect, current }) {
         style={{ background: 'var(--ink-soft)', border: '1px solid var(--border)', borderRadius: 20, padding: '32px 28px', width: '100%', maxWidth: 400 }}
         onClick={e => e.stopPropagation()}
       >
-        <h3 style={{ fontFamily: "'DM Serif Display',serif", fontSize: 22, color: 'var(--text)', margin: '0 0 24px' }}>{T[current]?.langTitle || 'Choisir la langue'}</h3>
+        <h3 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 22, color: 'var(--text)', margin: '0 0 24px' }}>{T[current]?.langTitle || 'Choisir la langue'}</h3>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {langs.map(l => (
             <motion.button key={l.code} onClick={() => { onSelect(l.code); onClose() }}
@@ -1187,32 +1185,446 @@ function LanguageModal({ onClose, onSelect, current }) {
   )
 }
 
-// ── STICKY CTA (MOBILE) ───────────────────────────────────────────────────────
-function StickyCTA({ lang, show }) {
-  const t = T[lang] || T.fr
+// ── LIVE BADGE (avoids hydration mismatch) ────────────────────────────────────
+function LiveBadge() {
+  const [num, setNum] = useState(12)
+  useEffect(() => {
+    setNum(Math.floor(10 + Math.random() * 8))
+  }, [])
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          initial={{ y: 100, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 100, opacity: 0 }}
-          transition={{ duration: 0.3 }}
-          className="show-mobile"
-          style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 999, background: 'rgba(10,12,20,0.98)', backdropFilter: 'blur(20px)', borderTop: '1px solid var(--border)', padding: '12px 16px', boxShadow: '0 -4px 20px rgba(0,0,0,0.3)' }}
-        >
-          <a href="#waitlist" style={{ textDecoration: 'none', display: 'block' }}>
+    <div className="live-badge" style={{ width: 'fit-content' }}>
+      <span className="live-dot" />
+      <span suppressHydrationWarning>{num}</span> inscriptions ces dernières 24h
+    </div>
+  )
+}
+
+// ── COUNTDOWN BAR ─────────────────────────────────────────────────────────────
+function CountdownBar({ spotsRemaining }) {
+  const [totalSecs, setTotalSecs] = useState(47 * 3600 + 59 * 60 + 31)
+  useEffect(() => {
+    const iv = setInterval(() => setTotalSecs(s => Math.max(0, s - 1)), 1000)
+    return () => clearInterval(iv)
+  }, [])
+  const h = String(Math.floor(totalSecs / 3600)).padStart(2, '0')
+  const m = String(Math.floor((totalSecs % 3600) / 60)).padStart(2, '0')
+  const s = String(totalSecs % 60).padStart(2, '0')
+  return (
+    <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1100, height: 'auto', minHeight: 36, background: 'linear-gradient(135deg, rgba(0,229,160,.12), rgba(56,209,240,.06))', borderBottom: '1px solid rgba(0,229,160,.15)', backdropFilter: 'blur(20px)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, padding: '6px 16px', flexWrap: 'wrap' }}>
+      <span className="cdb-badge hide-mobile">EARLY BIRD</span>
+      <span style={{ fontSize: '.72rem', color: 'var(--t2)' }} className="hide-mobile">Offre expire dans</span>
+      <div style={{ display: 'flex', gap: 6, alignItems: 'center' }}>
+        {[h, m, s].map((v, i) => (
+          <span key={i} style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+            <span style={{ background: 'var(--ink-3)', border: '1px solid var(--g2)', borderRadius: 5, padding: '1px 7px', fontFamily: "var(--mono)", fontSize: '.68rem', fontWeight: 700, color: 'var(--jade)', minWidth: 28, textAlign: 'center' }}>{v}</span>
+            {i < 2 && <span style={{ color: 'var(--jade)', fontFamily: "var(--mono)", fontSize: '.72rem' }}>:</span>}
+          </span>
+        ))}
+      </div>
+      <span style={{ color: 'var(--t3)' }}>·</span>
+      <span style={{ fontSize: '.72rem', color: 'var(--t2)' }}><strong style={{ color: 'var(--t1)' }}>{spotsRemaining}</strong> places restantes</span>
+    </div>
+  )
+}
+
+// ── FLOATING CTA (MOBILE) ────────────────────────────────────────────────────
+function FloatingCTA({ show }) {
+  if (!show) return null
+  return (
+    <motion.button
+      initial={{ y: 100, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      exit={{ y: 100, opacity: 0 }}
+      onClick={() => {
+        const el = document.getElementById('waitlist')
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+        setTimeout(() => {
+          const input = document.querySelector('#waitlist input[type="email"]')
+          if (input) input.focus()
+        }, 600)
+      }}
+      style={{ display: 'none', position: 'fixed', bottom: 20, left: '50%', transform: 'translateX(-50%)', zIndex: 300, background: 'var(--jade)', color: 'var(--ink)', border: 'none', padding: '14px 28px', borderRadius: 100, fontFamily: "var(--body)", fontSize: '.85rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 8px 32px rgba(0,229,160,.35)', whiteSpace: 'nowrap', maxWidth: 'calc(100vw - 40px)' }}
+      className="float-cta-btn"
+    >
+      Rejoindre gratuitement &rarr;
+    </motion.button>
+  )
+}
+
+// ── DEMO SECTION ──────────────────────────────────────────────────────────────
+function DemoSection() {
+  const [tooltipData, setTooltipData] = useState(null)
+  const [tooltipPos, setTooltipPos] = useState({ left: '50%', top: '10%' })
+  const [userPos, setUserPos] = useState({ x: 42, y: 40 })
+  const mapRef = useRef(null)
+
+  const zones = [
+    { id: 'r1', style: { width: 120, height: 120, background: 'rgba(255,61,90,.4)', top: '15%', left: '16%', filter: 'blur(22px)' }, data: { title: 'Zona Rosa · Niveau 7.2/10', body: "3 incidents signalés ce soir. Vols à l'arraché fréquents après 22h. Éviter Calle 5 et Génova." } },
+    { id: 'r2', style: { width: 80, height: 80, background: 'rgba(255,186,53,.35)', top: '52%', left: '56%', filter: 'blur(22px)' }, data: { title: 'Tepito · Niveau 4.8/10', body: 'Zone modérée. Restez sur les axes principaux. Évitez les ruelles la nuit.' } },
+    { id: 'r3', style: { width: 60, height: 60, background: 'rgba(255,61,90,.3)', top: '70%', left: '10%', filter: 'blur(22px)' }, data: { title: 'Centro Sur · Niveau 6.1/10', body: '2 agressions signalées cette semaine. Préférez un taxi ou restez en groupe.' } },
+    { id: 'g1', style: { width: 100, height: 100, background: 'rgba(0,229,160,.18)', top: '18%', left: '50%', filter: 'blur(22px)' }, data: { title: 'Polanco · Niveau 1.2/10', body: 'Zone très sûre. Fort éclairage public, nombreux restaurants et commerces ouverts.' } },
+    { id: 'g2', style: { width: 70, height: 70, background: 'rgba(0,229,160,.15)', top: '58%', left: '28%', filter: 'blur(22px)' }, data: { title: 'Roma Norte · Niveau 1.8/10', body: 'Quartier touristique sécurisé. Bars et cafés fréquentés toute la nuit.' } },
+  ]
+
+  const chips = [
+    { label: 'Zona Rosa · 7.2/10', cls: 'chip-red', style: { top: '10%', left: '30%' }, icon: '⚠' },
+    { label: 'Tepito · 4.8/10', cls: 'chip-gold', style: { top: '45%', left: '62%' }, icon: '~' },
+    { label: 'Centro Sur · 6.1/10', cls: 'chip-red', style: { top: '76%', left: '16%' }, icon: '⚠' },
+    { label: 'Polanco · 1.2/10', cls: 'chip-green', style: { top: '12%', left: '55%' }, icon: '✓' },
+    { label: 'Roma Norte · 1.8/10', cls: 'chip-green', style: { top: '52%', left: '33%' }, icon: '✓' },
+  ]
+
+  const handleMapClick = (e) => {
+    if (!mapRef.current) return
+    const rect = mapRef.current.getBoundingClientRect()
+    const x = ((e.clientX - rect.left) / rect.width * 100)
+    const y = ((e.clientY - rect.top) / rect.height * 100)
+    setUserPos({ x, y })
+  }
+
+  const handleZoneHover = (zone, e) => {
+    if (!mapRef.current) return
+    setTooltipData(zone.data)
+    const rect = mapRef.current.getBoundingClientRect()
+    const target = e.currentTarget.getBoundingClientRect()
+    let lft = (target.left - rect.left + target.width / 2 - 100) / rect.width * 100
+    let top = (target.top - rect.top - 130) / rect.height * 100
+    lft = Math.max(2, Math.min(lft, 58))
+    top = Math.max(2, Math.min(top, 70))
+    setTooltipPos({ left: lft + '%', top: top + '%' })
+  }
+
+  return (
+    <section id="demo" style={{ background: 'var(--ink-1)', position: 'relative', overflow: 'hidden', padding: '100px 24px' }}>
+      <div style={{ position: 'absolute', inset: 0, background: 'radial-gradient(ellipse at 50% 50%, rgba(0,229,160,.04), transparent 65%)', pointerEvents: 'none' }} />
+      <div style={{ maxWidth: 1280, margin: '0 auto', position: 'relative', zIndex: 1 }}>
+        <RevealSection>
+          <div style={{ fontFamily: "var(--mono)", fontSize: '.6rem', color: 'var(--jade)', letterSpacing: '.1em', textTransform: 'uppercase', marginBottom: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <span style={{ width: 24, height: 1, background: 'var(--jade-b)', display: 'inline-block' }} />
+            Essaie maintenant
+          </div>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(1.8rem,3.4vw,2.8rem)', fontWeight: 700, letterSpacing: '-.05em', lineHeight: 1.03, marginBottom: 12 }}>
+            Explore la heatmap.<br /><span style={{ color: 'var(--jade)' }}>Survole les zones.</span>
+          </h2>
+          <p style={{ fontSize: '.95rem', color: 'var(--t2)', lineHeight: 1.78, marginBottom: 40 }}>
+            Clique sur les zones colorées pour voir les alertes en temps réel. C'est exactement ce que Sekura t'affiche avant de sortir.
+          </p>
+        </RevealSection>
+
+        <div ref={mapRef} onClick={handleMapClick} style={{ borderRadius: 'var(--r24)', overflow: 'hidden', background: 'linear-gradient(150deg, #030916, #010508)', border: '1px solid rgba(0,229,160,.1)', position: 'relative', height: 400, cursor: 'crosshair' }}>
+          <div className="demo-map-grid" />
+          {zones.map(z => (
+            <div key={z.id}
+              onMouseEnter={(e) => handleZoneHover(z, e)}
+              onMouseLeave={() => setTooltipData(null)}
+              style={{ position: 'absolute', borderRadius: '50%', animation: 'breathe 3s ease-in-out infinite', cursor: 'pointer', ...z.style }}
+            />
+          ))}
+          {chips.map((c, i) => (
+            <div key={i} className={`demo-chip ${c.cls}`} style={{ ...c.style, position: 'absolute' }}>
+              {c.icon} {c.label}
+            </div>
+          ))}
+          {/* User pin */}
+          <div style={{ position: 'absolute', width: 12, height: 12, borderRadius: '50%', background: 'var(--jade)', border: '2.5px solid #fff', boxShadow: '0 0 16px var(--jade)', zIndex: 2, transform: 'translate(-50%, -50%)', left: userPos.x + '%', top: userPos.y + '%', transition: 'left 0.3s, top 0.3s' }} />
+          <div style={{ position: 'absolute', width: 40, height: 40, borderRadius: '50%', border: '1.5px solid var(--jade)', opacity: 0.6, animation: 'rout 2s ease-out infinite', zIndex: 1, left: `calc(${userPos.x}% - 14px)`, top: `calc(${userPos.y}% - 14px)`, transition: 'left 0.3s, top 0.3s' }} />
+          {/* Tooltip */}
+          {tooltipData && (
+            <div style={{ position: 'absolute', zIndex: 10, background: 'var(--ink-3)', border: '1px solid var(--g2)', borderRadius: 'var(--r12)', padding: '12px 14px', width: 200, boxShadow: '0 12px 40px rgba(0,0,0,.6)', ...tooltipPos }}>
+              <div style={{ fontFamily: "var(--mono)", fontSize: '.6rem', fontWeight: 700, marginBottom: 5, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--t1)' }}>{tooltipData.title}</div>
+              <div style={{ fontSize: '.72rem', color: 'var(--t2)', lineHeight: 1.5 }}>{tooltipData.body}</div>
+            </div>
+          )}
+        </div>
+
+        <div style={{ marginTop: 20, display: 'flex', gap: 16, justifyContent: 'center', flexWrap: 'wrap' }}>
+          {[
+            { icon: '🔴', label: 'Zones à risque' },
+            { icon: '🟡', label: 'Zones modérées' },
+            { icon: '🟢', label: 'Zones sûres' },
+            { icon: '📍', label: 'Ta position (clique pour déplacer)' },
+          ].map((item, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 7, fontSize: '.8rem', color: 'var(--t2)' }}>
+              <div style={{ width: 28, height: 28, borderRadius: 'var(--r8)', background: 'var(--ink-3)', border: '1px solid var(--g2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.75rem' }}>{item.icon}</div>
+              {item.label}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── PRICING SECTION ───────────────────────────────────────────────────────────
+function PricingSection({ lang, spotsRemaining }) {
+  const t = T[lang] || T.fr
+  const [isAnnual, setIsAnnual] = useState(false)
+
+  const plans = [
+    {
+      name: 'Core Safety',
+      desc: lang === 'fr' ? 'L\'essentiel pour ta sécurité au quotidien' : 'Essential daily safety',
+      price: '0',
+      period: lang === 'fr' ? 'Gratuit pour toujours' : 'Free forever',
+      features: [
+        lang === 'fr' ? 'Heatmap IA (base)' : 'AI Heatmap (basic)',
+        lang === 'fr' ? 'SOS discret triple-clic' : 'Discreet triple-click SOS',
+        lang === 'fr' ? 'Timer de sécurité' : 'Safety timer',
+        lang === 'fr' ? 'Mode offline SMS' : 'Offline SMS mode',
+        lang === 'fr' ? 'Faux appel d\'extraction' : 'Fake extraction call',
+        lang === 'fr' ? 'Réseau 5 contacts' : '5 contact network',
+      ],
+      badge: { color: 'green', text: 'GRATUIT' },
+      cta: lang === 'fr' ? 'Rejoindre la whitelist →' : 'Join the waitlist →',
+    },
+    {
+      name: 'Smart Safety',
+      desc: lang === 'fr' ? 'Protection avancée pour se déplacer sereinement' : 'Advanced protection for safe travel',
+      monthly: '2.99',
+      annual: '2.39',
+      annualTotal: '28.68',
+      annualSave: '7.20',
+      features: [
+        lang === 'fr' ? 'Tout Core Safety +' : 'All Core Safety +',
+        lang === 'fr' ? 'Navigation sécurisée anti-crime' : 'Anti-crime safe navigation',
+        lang === 'fr' ? 'Heatmap IA avancée (50m×50m)' : 'Advanced AI Heatmap (50m×50m)',
+        lang === 'fr' ? 'Check-in automatique' : 'Auto check-in',
+        lang === 'fr' ? 'Détection déviation itinéraire' : 'Route deviation detection',
+        lang === 'fr' ? 'Alertes prédictives' : 'Predictive alerts',
+      ],
+      badge: { color: 'sky', text: 'POPULAIRE' },
+      featured: true,
+      cta: lang === 'fr' ? 'Rejoindre la whitelist →' : 'Join the waitlist →',
+    },
+    {
+      name: 'Premium Protection',
+      desc: lang === 'fr' ? 'La protection maximale, partout dans le monde' : 'Maximum protection, worldwide',
+      monthly: '7.99',
+      annual: '6.39',
+      annualTotal: '76.68',
+      annualSave: '19.20',
+      features: [
+        lang === 'fr' ? 'Tout Smart Safety +' : 'All Smart Safety +',
+        lang === 'fr' ? 'Détection situation anormale' : 'Abnormal situation detection',
+        lang === 'fr' ? 'Assistant IA sécurité 24/7' : '24/7 AI security assistant',
+        lang === 'fr' ? 'Rapport de risque pré-départ' : 'Pre-departure risk report',
+        lang === 'fr' ? 'Support prioritaire' : 'Priority support',
+        lang === 'fr' ? 'Dashboard famille' : 'Family dashboard',
+      ],
+      badge: { color: 'gold', text: 'PREMIUM' },
+      cta: lang === 'fr' ? 'Rejoindre la whitelist →' : 'Join the waitlist →',
+    },
+  ]
+
+  return (
+    <section id="pricing" style={{ background: 'var(--ink)', padding: '100px 24px' }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto' }}>
+        <RevealSection style={{ textAlign: 'center', marginBottom: 48 }}>
+          <p style={{ fontFamily: "var(--mono)", fontSize: 11, color: 'var(--jade)', letterSpacing: 3, textTransform: 'uppercase', marginBottom: 20 }}>TARIFS</p>
+          <h2 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 'clamp(30px,4vw,48px)', fontWeight: 700, letterSpacing: '-.04em', lineHeight: 1.02, color: 'var(--text)', margin: '0 0 16px' }}>
+            {lang === 'fr' ? 'Simple, transparent.' : 'Simple, transparent.'}
+          </h2>
+          <p style={{ color: 'var(--text-sec)', fontSize: 17, lineHeight: 1.82, letterSpacing: '.005em' }}>
+            {lang === 'fr' ? 'Gratuit pour commencer. Évolue avec tes besoins.' : 'Free to start. Scales with your needs.'}
+          </p>
+        </RevealSection>
+
+        {/* Toggle */}
+        <div className="price-toggle-wrap">
+          <span className={`toggle-label ${!isAnnual ? 'active' : ''}`}>{lang === 'fr' ? 'Mensuel' : 'Monthly'}</span>
+          <div onClick={() => setIsAnnual(!isAnnual)} style={{ width: 44, height: 24, background: isAnnual ? 'var(--jade)' : 'var(--jade-bg)', border: '1px solid var(--jade-b)', borderRadius: 100, cursor: 'pointer', position: 'relative', transition: 'background .2s' }}>
+            <div style={{ position: 'absolute', top: 3, left: isAnnual ? 23 : 3, width: 16, height: 16, borderRadius: '50%', background: '#fff', transition: 'left .25s cubic-bezier(.34,1.56,.64,1)' }} />
+          </div>
+          <span className={`toggle-label ${isAnnual ? 'active' : ''}`}>{lang === 'fr' ? 'Annuel' : 'Annual'}</span>
+          <span className="toggle-save">{lang === 'fr' ? 'Économise 20%' : 'Save 20%'}</span>
+        </div>
+
+        {/* Plans grid */}
+        <StaggerGrid style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+          {plans.map((plan, i) => (
+            <motion.div key={i} variants={staggerItem} whileHover={{ y: -4, borderColor: plan.featured ? 'rgba(0,229,160,0.5)' : 'var(--border-jade)' }}
+              style={{ borderRadius: 20, padding: '32px 28px', background: plan.featured ? 'rgba(0,229,160,0.04)' : 'var(--ink-soft)', border: `1px solid ${plan.featured ? 'rgba(0,229,160,0.4)' : 'var(--border)'}`, position: 'relative', overflow: 'hidden', transition: 'border-color 0.3s' }}
+            >
+              {plan.featured && (
+                <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, background: 'linear-gradient(90deg, var(--jade), var(--sky))' }} />
+              )}
+              <PlanBadge color={plan.badge.color} text={plan.badge.text} />
+              <h3 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 22, fontWeight: 700, color: 'var(--text)', margin: '16px 0 8px', letterSpacing: '-.025em', lineHeight: 1.05 }}>{plan.name}</h3>
+              <p style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.6, marginBottom: 20 }}>{plan.desc}</p>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, marginBottom: 4 }}>
+                <span style={{ color: 'var(--text-muted)', fontSize: 16 }}>$</span>
+                <span style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: 40, fontWeight: 700, color: 'var(--text)', letterSpacing: '-.05em', lineHeight: 1 }}>
+                  {plan.price === '0' ? '0' : isAnnual ? plan.annual : plan.monthly}
+                </span>
+                <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{plan.price === '0' ? '' : '/mois'}</span>
+              </div>
+              {plan.price !== '0' && (
+                <div style={{ fontFamily: "var(--mono)", fontSize: '.57rem', color: 'var(--jade)', marginBottom: 12, height: 16, opacity: isAnnual ? 1 : 0, transition: 'opacity .2s' }}>
+                  {isAnnual ? `Soit $${plan.annualTotal}/an · Économise $${plan.annualSave}` : ''}
+                </div>
+              )}
+              {plan.price === '0' && <div style={{ fontFamily: "var(--mono)", fontSize: '.7rem', color: 'var(--jade)', marginBottom: 12 }}>{plan.period}</div>}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 24, borderTop: '1px solid var(--border)', paddingTop: 20 }}>
+                {plan.features.map((f, j) => (
+                  <div key={j} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                    <span style={{ color: 'var(--jade)', fontWeight: 700, flexShrink: 0, marginTop: 1 }}>✓</span>
+                    <span style={{ color: 'var(--text-sec)', fontSize: 14, lineHeight: 1.5 }}>{f}</span>
+                  </div>
+                ))}
+              </div>
+              <a href="#waitlist" style={{ textDecoration: 'none' }}>
+                <motion.button
+                  whileHover={{ y: -2, boxShadow: plan.featured ? '0 8px 30px rgba(0,229,160,0.35)' : '0 6px 24px rgba(0,229,160,0.15)' }}
+                  whileTap={{ scale: 0.97 }}
+                  style={{ width: '100%', padding: '14px 20px', fontSize: 15, border: plan.featured ? 'none' : '1px solid var(--border-jade)', background: plan.featured ? 'var(--jade)' : 'transparent', color: plan.featured ? 'var(--ink)' : 'var(--jade)', borderRadius: 12, fontWeight: 700, cursor: 'pointer', fontFamily: "var(--body)" }}
+                >
+                  {plan.cta}
+                </motion.button>
+              </a>
+            </motion.div>
+          ))}
+        </StaggerGrid>
+
+        {/* ROI Bar */}
+        <div className="roi-bar">
+          <div className="roi-item"><strong>Smart Safety</strong> = moins qu'un café par mois</div>
+          <span className="roi-sep">·</span>
+          <div className="roi-item">Sans carte bancaire pour la whitelist</div>
+          <span className="roi-sep">·</span>
+          <div className="roi-item">Annule à tout moment</div>
+          <span className="roi-sep">·</span>
+          <div className="roi-item"><strong>3 mois offerts</strong> pour les 500 premiers</div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ── LIVE ACTIVITY TOAST ───────────────────────────────────────────────────────
+function LiveToast() {
+  const [visible, setVisible] = useState(false)
+  const [data, setData] = useState(null)
+
+  const toastData = [
+    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'Medellín' },
+    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'London' },
+    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX' },
+    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'Sydney' },
+    { av: 'L', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Lucas F.', loc: 'São Paulo' },
+    { av: 'M', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Marco A.', loc: 'Bogotá' },
+  ]
+
+  useEffect(() => {
+    let t1, t2
+    const show = () => {
+      const d = toastData[Math.floor(Math.random() * toastData.length)]
+      setData(d)
+      setVisible(true)
+      t1 = setTimeout(() => setVisible(false), 4000)
+      t2 = setTimeout(show, Math.random() * 25000 + 15000)
+    }
+    const init = setTimeout(show, 12000)
+    return () => { clearTimeout(init); clearTimeout(t1); clearTimeout(t2) }
+  }, [])
+
+  if (!data) return null
+
+  return (
+    <div className="toast-card" style={{ transform: visible ? 'translateX(0)' : 'translateX(-120%)', opacity: visible ? 1 : 0 }}>
+      <div style={{ width: 32, height: 32, borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '.7rem', fontWeight: 700, flexShrink: 0, background: data.bg, color: '#fff' }}>{data.av}</div>
+      <div>
+        <div style={{ fontSize: '.73rem', color: 'var(--t2)', lineHeight: 1.5 }}><strong style={{ color: 'var(--t1)' }}>{data.name}</strong> vient de s'inscrire</div>
+        <span style={{ fontFamily: "var(--mono)", fontSize: '.55rem', color: 'var(--jade)', marginTop: 2, display: 'block' }}>À l'instant · {data.loc}</span>
+      </div>
+    </div>
+  )
+}
+
+// ── EXIT INTENT MODAL ─────────────────────────────────────────────────────────
+function ExitIntentModal({ show, onClose, spotsRemaining, lang, onSuccess }) {
+  const t = T[lang] || T.fr
+  const router = useRouter()
+  const [email, setEmail] = useState('')
+  const [honeypot, setHoneypot] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+
+  const handleSubmit = async () => {
+    if (!email || !email.includes('@')) {
+      setError('Email invalide')
+      setTimeout(() => setError(''), 2000)
+      return
+    }
+    setLoading(true)
+    try {
+      const res = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, lang, source: 'exit_modal', honeypot })
+      })
+      const data = await res.json()
+      if (data.success) {
+        if (onSuccess) onSuccess(data.count)
+        onClose()
+        router.push(`/merci?email=${encodeURIComponent(email)}&count=${data.count}&lang=${lang}`)
+      } else {
+        setError(data.error || 'Erreur. Réessaie.')
+        setTimeout(() => setError(''), 3000)
+      }
+    } catch {
+      setError('Erreur réseau.')
+      setTimeout(() => setError(''), 3000)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  if (!show) return null
+
+  return (
+    <motion.div
+      initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+      onClick={(e) => { if (e.target === e.currentTarget) onClose() }}
+      style={{ position: 'fixed', inset: 0, zIndex: 2000, background: 'rgba(6,8,16,.85)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 20 }}
+    >
+      <motion.div initial={{ opacity: 0, scale: 0.9, y: 30 }} animate={{ opacity: 1, scale: 1, y: 0 }} transition={{ duration: 0.3 }}>
+        <div className="exit-card">
+          <button onClick={onClose} style={{ position: 'absolute', top: 16, right: 16, background: 'var(--g1)', border: '1px solid var(--g2)', borderRadius: 8, padding: '4px 10px', color: 'var(--t3)', fontSize: '.75rem', cursor: 'pointer' }}>✕ Fermer</button>
+          <span style={{ fontSize: '3rem', marginBottom: 16, display: 'block' }}>🛡️</span>
+          <h3 style={{ fontFamily: "'Clash Grotesk', sans-serif", fontSize: '1.7rem', fontWeight: 700, letterSpacing: '-.04em', marginBottom: 10, color: 'var(--text)' }}>Attends — une dernière chose.</h3>
+          <p style={{ fontSize: '.88rem', color: 'var(--t2)', lineHeight: 1.7, marginBottom: 26 }}>
+            Il reste <strong style={{ color: 'var(--jade)' }}>{spotsRemaining}</strong> places early bird. Une fois fermées, l'offre 3 mois gratuits disparaît pour toujours.
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+            <input type="text" name="website" value={honeypot} onChange={e => setHoneypot(e.target.value)} style={{ display: 'none' }} tabIndex={-1} autoComplete="off" />
+            <input
+              type="email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
+              placeholder={error || 'ton@email.com'}
+              style={{ background: 'var(--ink-3)', border: `1.5px solid ${error ? 'var(--pulse)' : 'var(--g2)'}`, borderRadius: 'var(--r8)', padding: '13px 16px', color: 'var(--t1)', fontFamily: "var(--body)", fontSize: '.93rem', outline: 'none', transition: 'all .2s', textAlign: 'center' }}
+              onFocus={e => { if (!error) e.target.style.borderColor = 'var(--jade)' }}
+              onBlur={e => { if (!error) e.target.style.borderColor = 'var(--g2)' }}
+            />
             <motion.button
+              onClick={handleSubmit}
+              disabled={loading}
+              whileHover={{ y: -2, boxShadow: '0 8px 30px rgba(0,229,160,0.35)' }}
               whileTap={{ scale: 0.97 }}
               className="btn-jade"
-              style={{ width: '100%', padding: '14px 24px', fontSize: 15, border: 'none', fontFamily: "'Outfit', sans-serif" }}
+              style={{ width: '100%', padding: '14px 20px', fontSize: 15, border: 'none', justifyContent: 'center', borderRadius: 'var(--r8)', opacity: loading ? 0.7 : 1 }}
             >
-              {t.navCta}
+              {loading ? '...' : 'Sécuriser ma place →'}
             </motion.button>
-          </a>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            <button onClick={onClose} style={{ fontSize: '.76rem', color: 'var(--t3)', cursor: 'pointer', marginTop: 8, textDecoration: 'underline', background: 'none', border: 'none', transition: 'color .2s' }}>
+              Non merci, je préfère payer plus tard
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </motion.div>
   )
 }
 
@@ -1221,34 +1633,64 @@ export default function App() {
   const [lang, setLang] = useState('fr')
   const [showLangModal, setShowLangModal] = useState(false)
   const [waitlistCount, setWaitlistCount] = useState(247)
-  const [showStickyCTA, setShowStickyCTA] = useState(false)
+  const [showFloatCTA, setShowFloatCTA] = useState(false)
+  const [showExitModal, setShowExitModal] = useState(false)
+  const exitShownRef = useRef(false)
 
+  const spotsRemaining = Math.max(0, 500 - waitlistCount)
+
+  // Fetch initial count
   useEffect(() => {
     fetch('/api/waitlist/count').then(r => r.json()).then(data => { if (data.count) setWaitlistCount(data.count) }).catch(() => {})
-    
+  }, [])
+
+  // Scroll handler for floating CTA
+  useEffect(() => {
     const handleScroll = () => {
-      setShowStickyCTA(window.scrollY > 800)
+      setShowFloatCTA(window.scrollY > 800)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  // Exit intent
+  useEffect(() => {
+    const handleMouseLeave = (e) => {
+      if (e.clientY < 20 && !exitShownRef.current) {
+        exitShownRef.current = true
+        setShowExitModal(true)
+      }
+    }
+    document.addEventListener('mouseleave', handleMouseLeave)
+    return () => document.removeEventListener('mouseleave', handleMouseLeave)
+  }, [])
+
+  const handleCountUpdate = (newCount) => {
+    setWaitlistCount(newCount)
+  }
 
   return (
     <>
       <style>{`
         @media (max-width: 768px) { .hide-mobile { display: none !important; } }
         @media (min-width: 769px) { .show-mobile { display: none !important; } }
+        @media (max-width: 900px) { .float-cta-btn { display: block !important; } }
+        @media (min-width: 901px) { .float-cta-btn { display: none !important; } }
       `}</style>
-      <Navbar lang={lang} onLangOpen={() => setShowLangModal(true)} />
+      <CountdownBar spotsRemaining={spotsRemaining} />
+      <Navbar lang={lang} onLangOpen={() => setShowLangModal(true)} registeredCount={waitlistCount} />
       <main>
-        <HeroSection lang={lang} onCountUpdate={(c) => setWaitlistCount(c)} liveCount={waitlistCount} />
+        <HeroSection lang={lang} onCountUpdate={handleCountUpdate} liveCount={waitlistCount} spotsRemaining={spotsRemaining} />
         <TickerStrip lang={lang} />
         <ProblemSection lang={lang} />
         <FeaturesSection lang={lang} />
+        <DemoSection />
         <UseCasesSection lang={lang} />
         <HowItWorksSection lang={lang} />
+        <TestimonialsSection lang={lang} />
+        <PricingSection lang={lang} spotsRemaining={spotsRemaining} />
         <FAQSection lang={lang} />
-        <WaitlistSection count={waitlistCount} onCountUpdate={(c) => setWaitlistCount(c)} lang={lang} />
+        <WaitlistSection count={waitlistCount} onCountUpdate={handleCountUpdate} lang={lang} />
       </main>
       <Footer lang={lang} />
 
@@ -1257,8 +1699,21 @@ export default function App() {
           <LanguageModal current={lang} onSelect={setLang} onClose={() => setShowLangModal(false)} />
         )}
       </AnimatePresence>
-      
-      <StickyCTA lang={lang} show={showStickyCTA} />
+
+      <LiveToast />
+      <FloatingCTA show={showFloatCTA} />
+
+      <AnimatePresence>
+        {showExitModal && (
+          <ExitIntentModal
+            show={showExitModal}
+            onClose={() => setShowExitModal(false)}
+            spotsRemaining={spotsRemaining}
+            lang={lang}
+            onSuccess={handleCountUpdate}
+          />
+        )}
+      </AnimatePresence>
     </>
   )
 }
