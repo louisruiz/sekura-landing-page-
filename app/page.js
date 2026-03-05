@@ -520,6 +520,38 @@ export default function App() {
         </div>
         <div className="nav-right">
           <span className="nav-count">● {sc} déjà inscrits</span>
+          
+          {/* Language Switcher */}
+          <div className={`lang-switcher ${langMenuOpen ? 'open' : ''}`}>
+            <button 
+              className="lang-current" 
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
+              aria-haspopup="true" 
+              aria-expanded={langMenuOpen}
+              aria-label="Changer de langue"
+            >
+              <span className="lang-flag">{langData[currentLang].flag}</span>
+              <span className="lang-code">{langData[currentLang].code}</span>
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="lang-arrow">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </button>
+            <div className="lang-menu" role="menu" aria-hidden={!langMenuOpen}>
+              <a href="/" className={`lang-option ${currentLang === 'fr' ? 'active' : ''}`} role="menuitem" hrefLang="fr">
+                <span>🇫🇷</span><span>Français</span>
+              </a>
+              <a href="/en/" className={`lang-option ${currentLang === 'en' ? 'active' : ''}`} role="menuitem" hrefLang="en">
+                <span>🇬🇧</span><span>English</span>
+              </a>
+              <a href="/es/" className={`lang-option ${currentLang === 'es' ? 'active' : ''}`} role="menuitem" hrefLang="es">
+                <span>🇪🇸</span><span>Español</span>
+              </a>
+              <a href="/pt/" className={`lang-option ${currentLang === 'pt' ? 'active' : ''}`} role="menuitem" hrefLang="pt">
+                <span>🇧🇷</span><span>Português</span>
+              </a>
+            </div>
+          </div>
+          
           <button className="nav-cta" onClick={scrollToCTA}>Rejoindre — Gratuit →</button>
         </div>
       </nav>
