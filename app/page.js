@@ -377,14 +377,10 @@ export default function App() {
   const [activeTab, setActiveTab] = useState(0)
   const [openFaq, setOpenFaq] = useState(null)
   const [langMenuOpen, setLangMenuOpen] = useState(false)
-  const [demoUser, setDemoUser] = useState({ x: 42, y: 40 })
-  const [ttData, setTtData] = useState(null)
-  const [ttPos, setTtPos] = useState({ l: '50%', t: '10%' })
   const [liveN, setLiveN] = useState(12)
   const [signupMsg, setSignupMsg] = useState('')
   const [isAnnual, setIsAnnual] = useState(false)
   const emailRef = useRef(null)
-  const demoMapRef = useRef(null)
 
   const spots = 500 - sc
 
@@ -492,32 +488,6 @@ export default function App() {
         window.location.href = confirmationUrl
       }, 1800)
     }
-  }
-
-  // Demo map
-  const zoneData = {
-    'dz-r1': { title: '⚠ Zona Rosa · Niveau 7.2/10', body: "3 incidents signalés ce soir. Vols à l'arraché fréquents après 22h. Éviter Calle 5 et Génova." },
-    'dz-r2': { title: '~ Tepito · Niveau 4.8/10', body: 'Zone modérée. Restez sur les axes principaux. Évitez les ruelles la nuit.' },
-    'dz-r3': { title: '⚠ Centro Sur · Niveau 6.1/10', body: '2 agressions signalées cette semaine. Préférez un taxi ou restez en groupe.' },
-    'dz-g1': { title: '✓ Polanco · Niveau 1.2/10', body: 'Zone très sûre. Fort éclairage public, nombreux restaurants et commerces ouverts.' },
-    'dz-g2': { title: '✓ Roma Norte · Niveau 1.8/10', body: 'Quartier touristique sécurisé. Bars et cafés fréquentés toute la nuit.' },
-  }
-
-  const handleDemoZoneEnter = (id, e) => {
-    const d = zoneData[id]; if (!d || !demoMapRef.current) return
-    setTtData(d)
-    const rect = demoMapRef.current.getBoundingClientRect()
-    const zRect = e.currentTarget.getBoundingClientRect()
-    let l = (zRect.left - rect.left + zRect.width / 2 - 100) / rect.width * 100
-    let t = (zRect.top - rect.top - 130) / rect.height * 100
-    l = Math.max(2, Math.min(l, 58)); t = Math.max(2, Math.min(t, 70))
-    setTtPos({ l: l + '%', t: t + '%' })
-  }
-
-  const handleDemoMapClick = (e) => {
-    if (!demoMapRef.current) return
-    const rect = demoMapRef.current.getBoundingClientRect()
-    setDemoUser({ x: (e.clientX - rect.left) / rect.width * 100, y: (e.clientY - rect.top) / rect.height * 100 })
   }
 
   const cdH = String(Math.floor(totalSecs / 3600)).padStart(2, '0')
@@ -757,7 +727,6 @@ export default function App() {
         <div className="nav-links">
           <a href="#how">Comment ça marche</a>
           <a href="#features">Fonctionnalités</a>
-          <a href="#demo">Démo</a>
           <a href="#faq">FAQ</a>
         </div>
         <div className="nav-right">
@@ -962,51 +931,6 @@ export default function App() {
       </section>
 
       {/* ══════ DEMO ══════ */}
-      <section className="sec demo-sec" id="demo">
-        <div className="wrap demo-inner">
-          <R><div className="demo-label">Essaie maintenant</div></R>
-          <R><h2 className="demo-h">Explore la heatmap.<br /><span style={{ color: 'var(--jade)' }}>Survole les zones.</span></h2></R>
-          <R><p className="demo-sub">Clique sur les zones colorées pour voir les alertes en temps réel. C'est exactement ce que Sekura t'affiche avant de sortir.</p></R>
-          <R>
-            <div className="demo-map-wrap" ref={demoMapRef} onClick={handleDemoMapClick}>
-              <div className="demo-map-grid" />
-              {[
-                { id: 'dz-r1', cls: 'dz1', style: { top: '15%', left: '16%' } },
-                { id: 'dz-r2', cls: 'dz2', style: { top: '52%', left: '56%' } },
-                { id: 'dz-r3', cls: 'dz3', style: { top: '70%', left: '10%' } },
-                { id: 'dz-g1', cls: 'dz4', style: { top: '18%', left: '50%' } },
-                { id: 'dz-g2', cls: 'dz5', style: { top: '58%', left: '28%' } },
-              ].map(z => (
-                <div key={z.id} id={z.id} className={`demo-zone ${z.cls}`} style={z.style}
-                  onMouseEnter={(e) => handleDemoZoneEnter(z.id, e)}
-                  onMouseLeave={() => setTtData(null)}
-                />
-              ))}
-              {[
-                { label: '⚠ Zona Rosa · 7.2/10', cls: 'chip-red', style: { top: '10%', left: '30%' } },
-                { label: '~ Tepito · 4.8/10', cls: 'chip-gold', style: { top: '45%', left: '62%' } },
-                { label: '⚠ Centro Sur · 6.1/10', cls: 'chip-red', style: { top: '76%', left: '16%' } },
-                { label: '✓ Polanco · 1.2/10', cls: 'chip-green', style: { top: '12%', left: '55%' } },
-                { label: '✓ Roma Norte · 1.8/10', cls: 'chip-green', style: { top: '52%', left: '33%' } },
-              ].map((c, i) => <div key={i} className={`demo-chip ${c.cls}`} style={c.style}>{c.label}</div>)}
-              <div className="demo-user" style={{ top: demoUser.y + '%', left: demoUser.x + '%', transition: 'all .3s' }} />
-              <div className="demo-user-ring" style={{ top: `calc(${demoUser.y}% - 14px)`, left: `calc(${demoUser.x}% - 14px)`, transition: 'all .3s' }} />
-              {ttData && (
-                <div className="demo-tooltip show" style={{ left: ttPos.l, top: ttPos.t }}>
-                  <div className="dt-title">{ttData.title}</div>
-                  <div className="dt-body">{ttData.body}</div>
-                </div>
-              )}
-            </div>
-          </R>
-          <R className="demo-instructions">
-            {[{ i: '🔴', l: 'Zones à risque' }, { i: '🟡', l: 'Zones modérées' }, { i: '🟢', l: 'Zones sûres' }, { i: '📍', l: 'Ta position' }].map((x, k) => (
-              <div key={k} className="demo-inst-item"><div className="demo-inst-icon">{x.i}</div>{x.l}</div>
-            ))}
-          </R>
-        </div>
-      </section>
-
       {/* ══════ COMPARISON ══════ */}
       <section className="sec compare-sec">
         <div className="wrap">
