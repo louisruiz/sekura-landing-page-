@@ -98,7 +98,7 @@ export async function POST(request, { params }) {
       }
 
       const body = await request.json()
-      const { email, lang = 'fr', source = 'hero', honeypot = '' } = body
+      const { email, lang = 'fr', locale = 'fr', source = 'hero', honeypot = '' } = body
 
       if (honeypot && honeypot.length > 0) {
         return NextResponse.json({ success: true, count: 247, message: 'Tu es sur la liste !' })
