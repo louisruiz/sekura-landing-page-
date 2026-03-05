@@ -290,14 +290,17 @@ h1{
 .stat-src{font-family:var(--mono);font-size:.54rem;color:var(--t3);margin-top:14px;letter-spacing:.06em;text-transform:uppercase}
 
 /* ═══════════════════════════════════════
-   STEPS
+   STEPS — Avec animations
 ═══════════════════════════════════════ */
 .steps-sec{background:var(--ink-2)}
 .steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;position:relative}
-.steps-grid::before{content:'';position:absolute;top:36px;left:calc(16% + 8px);width:calc(67% - 16px);height:1px;background:linear-gradient(90deg,var(--jade-b),rgba(0,229,160,.05) 50%,var(--jade-b));pointer-events:none}
+.steps-grid::before{content:'';position:absolute;top:36px;left:calc(16% + 8px);width:calc(67% - 16px);height:1px;background:linear-gradient(90deg,var(--jade-b),rgba(0,229,160,.05) 50%,var(--jade-b));pointer-events:none;animation:shimmer 3s linear infinite;background-size:1000px 100%}
 .step-c{background:var(--ink-3);border:1px solid var(--g1);border-radius:var(--r20);padding:28px 24px;position:relative;transition:all .3s}
-.step-c:hover{border-color:var(--jade-b);transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,.4)}
-.step-num{width:48px;height:48px;border-radius:12px;background:var(--jade-bg);border:1.5px solid var(--jade-b);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.25rem;font-weight:800;color:var(--jade);margin-bottom:20px}
+.step-c:hover{border-color:var(--jade-b);transform:translateY(-4px) scale(1.03);box-shadow:0 20px 56px rgba(0,229,160,.2)}
+.step-num{width:48px;height:48px;border-radius:12px;background:var(--jade-bg);border:1.5px solid var(--jade-b);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.25rem;font-weight:800;color:var(--jade);margin-bottom:20px;animation:pulse-glow 3s ease-in-out infinite;animation-delay:calc(var(--step-i) * 0.3s)}
+.step-c:nth-child(1) .step-num{--step-i:0}
+.step-c:nth-child(2) .step-num{--step-i:1}
+.step-c:nth-child(3) .step-num{--step-i:2}
 .step-h{font-family:var(--display);font-size:1rem;font-weight:600;margin-bottom:9px;letter-spacing:-.025em}
 .step-p{font-size:.84rem;color:var(--t2);line-height:1.72}
 
