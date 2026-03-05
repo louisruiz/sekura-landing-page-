@@ -804,65 +804,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* ══════ TESTIMONIALS ══════ */}
-      <section className="sec" id="proof" style={{ background: 'var(--ink-2)' }}>
-        <div className="wrap">
-          <R tag="span" className="eyebrow">06 / Ils l'ont testé</R>
-          <R><h2 className="sec-h">{sc} personnes protégées.<br />Voici ce qu'elles disent.</h2></R>
-          <div className="tgrid">
-            {testimonials.map((t, i) => (
-              <R key={i} className={`tcard ${t.feat ? 'tcard-feat' : ''}`} delay={i * 80}>
-                <div className="t-stars">★★★★★</div>
-                <p className="t-q">&quot;{t.q}&quot;</p>
-                <div className="t-author"><div className="t-av" style={{ background: t.bg, color: '#fff' }}>{t.av}</div><div><div className="t-name">{t.name}</div><div className="t-loc">{t.loc}</div></div></div>
-              </R>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════ PRICING ══════ */}
-      <section className="sec price-sec" id="pricing">
-        <div className="wrap">
-          <R tag="span" className="eyebrow">07 / Tarifs</R>
-          <R><h2 className="sec-h">Simple. Transparent. Sans surprise.</h2></R>
-          <R><p className="sec-p" style={{ marginBottom: 30 }}>Les 500 premiers inscrits à la whitelist reçoivent 3 mois Smart Safety gratuits.</p></R>
-          <R>
-            <div className="price-toggle-wrap">
-              <span className={`toggle-label ${!isAnnual ? 'active' : ''}`}>Mensuel</span>
-              <div className={`toggle ${isAnnual ? 'on' : ''}`} onClick={() => setIsAnnual(!isAnnual)}><div className="toggle-knob" /></div>
-              <span className={`toggle-label ${isAnnual ? 'active' : ''}`}>Annuel</span>
-              <span className="toggle-save">Économise 20%</span>
-            </div>
-          </R>
-          <div className="pgrid">
-            {plans.map((p, i) => (
-              <R key={i} className={`pcard ${p.best ? 'pcard-best' : ''}`} delay={i * 100}>
-                <div className="p-name">{p.name}</div>
-                {p.price ? (
-                  <><div className="p-price">{p.price}<span className="pper">{p.per}</span></div><div className="p-annual" style={{ opacity: 0 }}>—</div></>
-                ) : (
-                  <><div className="p-price"><span className="psup">$</span><span>{isAnnual ? p.annual : p.monthly}</span><span className="pper"> /mois</span></div>
-                  <div className="p-annual" style={{ opacity: isAnnual ? 1 : 0 }}>{p.annualTxt}</div></>
-                )}
-                <p className="p-desc">{p.desc}</p>
-                <div className="p-feats">{p.feats.map((f, j) => <div key={j} className="p-feat"><span className="p-feat-chk">✓</span>{f}</div>)}</div>
-                <button className={`p-cta ${p.ghost ? 'p-ghost' : 'p-jade'}`} onClick={scrollToCTA}>{p.cta}</button>
-              </R>
-            ))}
-          </div>
-          <R className="roi-bar">
-            <div className="roi-item"><strong>Smart Safety</strong> = moins qu'un café par mois</div>
-            <span className="roi-sep">·</span>
-            <div className="roi-item">Sans carte bancaire pour la whitelist</div>
-            <span className="roi-sep">·</span>
-            <div className="roi-item">Annule à tout moment</div>
-            <span className="roi-sep">·</span>
-            <div className="roi-item"><strong>3 mois offerts</strong> pour les 500 premiers</div>
-          </R>
-        </div>
-      </section>
-
       {/* ══════ FAQ ══════ */}
       <section className="sec faq-sec" id="faq">
         <div className="wrap">
