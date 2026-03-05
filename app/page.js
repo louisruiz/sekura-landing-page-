@@ -573,21 +573,6 @@ export default function App() {
             <div className="hero-trust"><span>🔒 Gratuit pour toujours</span><span>· Aucun spam ·</span><span>⚡ 3 mois Smart Safety offerts</span></div>
           </div>
         </R>
-        <R>
-          <div className="proof-strip">
-            <div className="avatars">
-              {[{ l: 'V', bg: '#ff6b6b,#ee5a24' }, { l: 'E', bg: '#a29bfe,#6c5ce7' }, { l: 'L', bg: '#00cec9,#00b894' }, { l: 'P', bg: '#fdcb6e,#e17055' }, { l: 'C', bg: '#fd79a8,#e84393' }].map((a, i) => (
-                <div key={i} className="av" style={{ background: `linear-gradient(135deg,${a.bg})`, color: '#fff' }}>{a.l}</div>
-              ))}
-              <div className="av av-extra">+{sc - 5}</div>
-            </div>
-            <div className="proof-meta">
-              <div className="stars">★★★★★</div>
-              <div className="proof-txt"><strong>{sc} personnes</strong> protégées en beta · Note 4.9/5</div>
-            </div>
-            <div className="live-badge"><span className="live-dot" /><span suppressHydrationWarning>{liveN}</span> inscriptions ces dernières 24h</div>
-          </div>
-        </R>
 
         {/* PHONES */}
         <R style={{ position: 'relative' }}>
