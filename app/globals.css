@@ -326,8 +326,51 @@ h1{
 .fcard-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .fcard-title{font-family:var(--mono);font-size:.6rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)}
 
-/* Map mock */
+/* ═══════════════════════════════════════
+   ANIMATIONS ULTRA STYLÉES
+═══════════════════════════════════════ */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,229,160,0.2); }
+  50% { box-shadow: 0 0 40px rgba(0,229,160,0.4), 0 0 80px rgba(0,229,160,0.2); }
+}
+@keyframes breathe {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.15); opacity: 0.7; }
+}
+@keyframes ping {
+  0% { transform: scale(1); opacity: 1; }
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+@keyframes slide-in-right {
+  from { transform: translateX(100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes slide-in-left {
+  from { transform: translateX(-100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes rotate-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes shimmer {
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
+}
+@keyframes bounce-soft {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Map mock — Animation améliorée */
 .fmap{border-radius:12px;overflow:hidden;position:relative;height:195px;background:linear-gradient(150deg,#040C1C,#020610);border:1px solid rgba(0,229,160,.07);margin-bottom:14px}
+.fmap .heat { animation: breathe 3s ease-in-out infinite; }
+.fmap .udot { animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite; }
+.fmap .uring { animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite 1s; }
 .fmap-legend{display:flex;gap:12px;flex-wrap:wrap}
 .fml{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.54rem;color:var(--t2)}
 .fml-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
