@@ -222,15 +222,6 @@ export default function App() {
     }
   }
 
-  const handleExitSignup = async () => {
-    if (!exitEmail || !exitEmail.includes('@')) return
-    await doSignup(exitEmail, 'exit_modal')
-    setExitVis(false)
-    setExitEmail('')
-    setSignupMsg('✓ Tu es sur la liste !')
-    setTimeout(() => setSignupMsg(''), 3500)
-  }
-
   // Demo map
   const zoneData = {
     'dz-r1': { title: '⚠ Zona Rosa · Niveau 7.2/10', body: "3 incidents signalés ce soir. Vols à l'arraché fréquents après 22h. Éviter Calle 5 et Génova." },
