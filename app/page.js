@@ -750,14 +750,14 @@ export default function App() {
       {/* ══════ COUNTDOWN BANNER ══════ */}
       <div id="cdb">
         <span className="cdb-badge">⚡ EARLY BIRD</span>
-        <span>Offre expire dans</span>
+        <span>{t.ctaUrgency}</span>
         <div className="cdb-timer">
           <span className="cdb-unit">{cdH}</span><span className="cdb-sep">:</span>
           <span className="cdb-unit">{cdM}</span><span className="cdb-sep">:</span>
           <span className="cdb-unit">{cdS}</span>
         </div>
         <span style={{ color: 'var(--t3)' }}>·</span>
-        <span><strong>{spots}</strong> places restantes</span>
+        <span><strong>{spots}</strong> {t.ctaScarcity}</span>
       </div>
 
       {/* ══════ NAV ══════ */}
@@ -769,7 +769,7 @@ export default function App() {
           <a href="#faq">{t.navFAQ}</a>
         </div>
         <div className="nav-right">
-          <span className="nav-count">● {sc} déjà inscrits</span>
+          <span className="nav-count">● {sc} {t.ctaRegistered}</span>
           
           {/* Language Switcher */}
           <div className={`lang-switcher ${langMenuOpen ? 'open' : ''}`}>
@@ -897,25 +897,25 @@ export default function App() {
           <div className="stats-grid">
             <R className="stat-c">
               <div className="stat-num" style={{ color: 'var(--pulse)' }}><sup>1/</sup><AnimCounter target={3} /></div>
-              <div className="stat-h">femmes a modifié son trajet par peur</div>
+              <div className="stat-h">{t.stat1Text}</div>
               <p className="stat-p">En France, au Royaume-Uni, en Espagne, en Colombie, au Brésil — la peur de bouger seule la nuit est universelle. Aucune app grand public n'y répond sérieusement.</p>
               <div className="stat-src">Source · Haut Conseil à l'Égalité · France 2024</div>
             </R>
             <R className="stat-c" delay={100}>
               <div className="stat-num" style={{ color: 'var(--gold)' }}><AnimCounter target={40} /><sup>/50</sup></div>
-              <div className="stat-h">villes les plus dangereuses sont en LATAM</div>
+              <div className="stat-h">{t.stat2Text}</div>
               <p className="stat-p">12M de touristes européens visitent l'Amérique Latine sans connaître la géographie des risques locaux. Aucun guide ne les protège en temps réel.</p>
               <div className="stat-src">Source · World Population Review 2025</div>
             </R>
             <R className="stat-c" delay={200}>
               <div className="stat-num" style={{ color: 'var(--sky)' }}><AnimCounter target={30} />–<AnimCounter target={60} /><span style={{ fontSize: '1.8rem', fontWeight: 700 }}>min</span></div>
-              <div className="stat-h">délai moyen d'intervention policière</div>
+              <div className="stat-h">{t.stat3Text}</div>
               <p className="stat-p">En 30 minutes, tout peut être trop tard. Il faut alerter ses proches en secondes, pas en minutes — et sans que personne autour ne le remarque.</p>
               <div className="stat-src">Source · Étude marché Sekura 2026</div>
             </R>
             <R className="stat-c" delay={300} style={{ background: 'linear-gradient(135deg,rgba(0,229,160,.04),var(--ink-3))', borderColor: 'var(--jade-b)' }}>
               <div className="stat-num" style={{ color: 'var(--jade)' }}><AnimCounter target={0} /></div>
-              <div className="stat-h">app vraiment conçue pour ces réalités</div>
+              <div className="stat-h">{t.stat4Text}</div>
               <p className="stat-p">Life360, bSafe, Noonlight : pensées pour les États-Unis. Aucune SOS sans regarder l'écran, aucune heatmap locale, aucun mode offline robuste. Sekura change ça.</p>
               <div className="stat-src">Source · Analyse concurrentielle Sekura</div>
             </R>
@@ -1048,9 +1048,9 @@ export default function App() {
       <section id="fcta">
         <div className="fcta-inner">
           <R className="pb-wrap">
-            <div className="pb-labels"><span>0 places</span><span>500 places Early Bird</span></div>
+            <div className="pb-labels"><span>0 {t.ctaPlaces.toLowerCase()}</span><span>500 {t.ctaEarlyBird.toLowerCase()}</span></div>
             <div className="pb-track"><div className="pb-fill" style={{ width: (sc / 500 * 100) + '%' }} /></div>
-            <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> places restantes</div>
+            <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> {t.ctaScarcity}</div>
           </R>
           <R><h2 className="fcta-h">{t.ctaH}<br /><em className="sk-glitch" data-text={t.ctaHAccent}>{t.ctaHAccent}</em></h2></R>
           <R><p className="fcta-sub">{t.ctaDesc}</p></R>
@@ -1058,11 +1058,11 @@ export default function App() {
             <div className="fcta-form">
               <input ref={emailRef} type="email" className="fcta-input" placeholder={t.ctaPlaceholder} onKeyDown={e => { if (e.key === 'Enter') handleMainSignup() }} />
               <button className="btn-primary" onClick={handleMainSignup} style={{ padding: '14px 26px', fontSize: '.93rem', flexShrink: 0, borderRadius: 10 }}>
-                {signupMsg || 'Rejoindre →'}
+                {signupMsg || `${t.ctaButton} →`}
               </button>
             </div>
           </R>
-          <R className="fcta-trust"><span>🔒 Gratuit pour toujours</span><span>· Aucun spam ·</span><span>⚡ 3 mois Smart Safety offerts</span></R>
+          <R className="fcta-trust"><span>{t.ctaTrust1}</span><span>{t.ctaTrust2}</span><span>{t.ctaTrust3}</span></R>
         </div>
       </section>
 
