@@ -245,9 +245,15 @@ export default function App() {
       emailRef.current.style.borderColor = 'var(--jade)'
       setSignupMsg('✓ Tu es sur la liste !')
       
-      // Redirection après 2 secondes vers la page de confirmation
+      // Redirection après 2 secondes vers la page de confirmation selon la langue
+      const successRedirects = {
+        fr: '/merci',
+        en: '/en/thank-you',
+        es: '/es/gracias',
+        pt: '/pt/obrigado',
+      }
       setTimeout(() => {
-        window.location.href = '/merci'
+        window.location.href = successRedirects[currentLang] || '/merci'
       }, 2000)
     }
   }
