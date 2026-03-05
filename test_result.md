@@ -291,6 +291,8 @@ test_plan:
 
 agent_communication:
   - agent: "main"
-    message: "Built complete Sekura landing page MVP. Backend API working (tested via curl). Supabase integration confirmed working (count:1 returned). All frontend sections implemented. Please test the backend API endpoints, especially the Resend email sending. Base URL: https://personal-protection.preview.emergentagent.com"
+    message: "Built complete Sekura landing page MVP. Backend API working (tested via curl). Supabase integration confirmed working (count:1 returned). All frontend sections implemented. Please test the backend API endpoints, especially the Resend email sending. Base URL: https://safety-heatmap-demo.preview.emergentagent.com"
   - agent: "testing"
     message: "Backend testing completed successfully. All core API endpoints working correctly: ✅ POST /api/waitlist (Supabase + Resend integration), ✅ GET /api/waitlist/count, ✅ Rate limiting (3/min), ✅ Email validation, ✅ Duplicate detection (409), ✅ Honeypot protection. Resend email integration verified - emails sent successfully via onboarding@resend.dev with proper HTML template. No critical issues found."
+  - agent: "main"
+    message: "V2 COMPLETE REDESIGN from HTML reference. Full conversion to React/Next.js. 15+ sections: Hero (3-phone mockups), Marquee, Press bar, Problem (animated counters), Steps, Features (4 alternating rows with card mockups), Interactive Demo (heatmap), Comparison table, Profile tabs (Femme/Voyageur/Famille), Testimonials (grid), Pricing (toggle), FAQ (accordion grid), Final CTA (progress bar + form), Footer. All interactive features: countdown timer, custom cursor, aurora canvas, live toast, exit intent modal, floating CTA, scarcity auto-bump, counter sync. Backend API /api/waitlist preserved - NOT modified."

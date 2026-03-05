@@ -75,14 +75,15 @@ export default function RootLayout({ children }) {
   return (
     <html lang="fr">
       <head>
+        {/* Fontshare: Clash Grotesk + General Sans */}
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link href="https://api.fontshare.com/v2/css?f[]=clash-grotesk@400,500,600,700,800&f[]=general-sans@300,400,500,600,700&display=swap" rel="stylesheet" />
+        {/* Google Fonts: JetBrains Mono */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
+        <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
-      <body style={{ fontFamily: "'Outfit', sans-serif", background: '#0A0C14' }}>
+      <body style={{ fontFamily: "'General Sans', sans-serif", background: '#0A0C14' }}>
         <Analytics />
         <StructuredData />
         {children}
