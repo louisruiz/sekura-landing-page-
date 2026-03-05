@@ -502,7 +502,6 @@ export default function App() {
           <a href="#how">Comment ça marche</a>
           <a href="#features">Fonctionnalités</a>
           <a href="#demo">Démo</a>
-          <a href="#pricing">Tarifs</a>
           <a href="#faq">FAQ</a>
         </div>
         <div className="nav-right">
