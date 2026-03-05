@@ -219,7 +219,11 @@ export default function App() {
       emailRef.current.value = ''
       emailRef.current.style.borderColor = 'var(--jade)'
       setSignupMsg('✓ Tu es sur la liste !')
-      setTimeout(() => { setSignupMsg(''); if (emailRef.current) emailRef.current.style.borderColor = '' }, 3500)
+      
+      // Redirection après 2 secondes vers la page de confirmation
+      setTimeout(() => {
+        window.location.href = '/merci'
+      }, 2000)
     }
   }
 
