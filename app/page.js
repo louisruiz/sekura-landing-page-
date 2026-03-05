@@ -153,7 +153,7 @@ function WorldMapCanvas() {
       tw: Math.random() * Math.PI * 2,
     }))
     
-    // Orbs (keep some aurora feel)
+    // Orbs (keep some aurora feel) - INCREASED INTENSITY
     const orbs = [
       { x:.48, y:.20, r:.82, c:[0,229,160],  sp:.000130, ph:0.0, ax:.20, ay:.11 },
       { x:.14, y:.74, r:.70, c:[50,135,255], sp:.000105, ph:2.1, ax:.24, ay:.15 },
@@ -170,55 +170,70 @@ function WorldMapCanvas() {
       ctx.fillStyle = '#03040f'
       ctx.fillRect(0, 0, W, H)
       
-      // Draw orbs
+      // Draw orbs with MOUSE REPULSION
       orbs.forEach((o, i) => {
-        const mx = (mouse.current.x / W - .5) * .06
-        const my = (mouse.current.y / H - .5) * .06
-        const ox = (o.x + Math.sin(ts * o.sp + o.ph) * o.ax + mx) * W
-        const oy = (o.y + Math.cos(ts * o.sp * .72 + o.ph) * o.ay + my) * H
+        // Calculate mouse repulsion force
+        const baseX = o.x + Math.sin(ts * o.sp + o.ph) * o.ax
+        const baseY = o.y + Math.cos(ts * o.sp * .72 + o.ph) * o.ay
+        const orbX = baseX * W
+        const orbY = baseY * H
+        const dx = mouse.current.x - orbX
+        const dy = mouse.current.y - orbY
+        const dist = Math.sqrt(dx * dx + dy * dy)
+        const repelRadius = 300
+        let repelX = 0, repelY = 0
+        if (dist < repelRadius && dist > 0) {
+          const force = (repelRadius - dist) / repelRadius * 0.08
+          repelX = -(dx / dist) * force * W
+          repelY = -(dy / dist) * force * H
+        }
+        
+        const ox = orbX + repelX
+        const oy = orbY + repelY
         const r = o.r * Math.min(W, H) * (1 + Math.sin(ts * .0008 + i) * .04)
         const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, r)
         const [cr, cg, cb] = o.c
-        g.addColorStop(0,   `rgba(${cr},${cg},${cb},.14)`)
-        g.addColorStop(.40, `rgba(${cr},${cg},${cb},.05)`)
-        g.addColorStop(.75, `rgba(${cr},${cg},${cb},.015)`)
+        // INCREASED opacity for better visibility
+        g.addColorStop(0,   `rgba(${cr},${cg},${cb},.28)`)
+        g.addColorStop(.40, `rgba(${cr},${cg},${cb},.12)`)
+        g.addColorStop(.75, `rgba(${cr},${cg},${cb},.04)`)
         g.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`)
         ctx.fillStyle = g
         ctx.fillRect(0, 0, W, H)
       })
       
-      // Horizontal waves
+      // Horizontal waves (scanlines) - INCREASED visibility
       const tv = ts * .00025
       for (let y = 0; y < H; y += 4) {
-        const a = .005 + Math.sin(y * .05 + tv * .5) * .004
+        const a = .015 + Math.sin(y * .05 + tv * .5) * .012
         ctx.beginPath()
         ctx.moveTo(0, y)
         ctx.lineTo(W, y)
         ctx.strokeStyle = `rgba(0,229,160,${a.toFixed(3)})`
-        ctx.lineWidth = .22
+        ctx.lineWidth = .28
         ctx.stroke()
       }
       
-      // Grid dots
+      // Grid dots - INCREASED visibility
       const gs = 42
       for (let x = 0; x < W; x += gs) {
         for (let y = 0; y < H; y += gs) {
           const v = Math.sin(x * .017 + tv) * Math.cos(y * .013 - tv * .6)
-          const a = .014 + v * .014
-          if (a < .003) continue
+          const a = .035 + v * .030
+          if (a < .01) continue
           ctx.beginPath()
-          ctx.arc(x, y, .8, 0, Math.PI * 2)
+          ctx.arc(x, y, 1, 0, Math.PI * 2)
           ctx.fillStyle = `rgba(70,140,255,${Math.max(0, a).toFixed(3)})`
           ctx.fill()
         }
       }
       
-      // Stars
+      // Stars - INCREASED visibility
       stars.forEach(s => {
-        const a = s.a * (.55 + .45 * Math.sin(ts * .0009 + s.tw))
+        const a = s.a * (.55 + .45 * Math.sin(ts * .0009 + s.tw)) * 1.8
         ctx.beginPath()
         ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(58,80,135,${a.toFixed(2)})`
+        ctx.fillStyle = `rgba(58,80,135,${Math.min(1, a).toFixed(2)})`
         ctx.fill()
       })
       
@@ -238,32 +253,33 @@ function WorldMapCanvas() {
         ctx.stroke()
       }
       
-      // Mouse glow
+      // Mouse glow - MUCH STRONGER
       if (mouse.current.x > 0) {
-        const mg = ctx.createRadialGradient(mouse.current.x, mouse.current.y, 0, mouse.current.x, mouse.current.y, 240)
-        mg.addColorStop(0, 'rgba(0,229,160,.06)')
+        const mg = ctx.createRadialGradient(mouse.current.x, mouse.current.y, 0, mouse.current.x, mouse.current.y, 320)
+        mg.addColorStop(0, 'rgba(0,229,160,.18)')
+        mg.addColorStop(.4, 'rgba(0,229,160,.08)')
         mg.addColorStop(1, 'transparent')
         ctx.fillStyle = mg
         ctx.fillRect(0, 0, W, H)
       }
       
-      // Links between cities
+      // Links between cities - MORE VISIBLE
       links.forEach(([a, b]) => {
         const ca = cities[a], cb = cities[b]
         const ax = ca.rx * W, ay = ca.ry * H
         const bx = cb.rx * W, by = cb.ry * H
         const mx2 = (ax + bx) / 2, my2 = (ay + by) / 2
         const d = Math.hypot(mouse.current.x - mx2, mouse.current.y - my2)
-        const alpha = d < 180 ? .18 + (180 - d) / 180 * .25 : .055
+        const alpha = d < 220 ? .32 + (220 - d) / 220 * .40 : .12
         ctx.beginPath()
         ctx.moveTo(ax, ay)
         ctx.lineTo(bx, by)
         ctx.strokeStyle = `rgba(0,229,160,${alpha.toFixed(2)})`
-        ctx.lineWidth = d < 180 ? 1.3 : .65
+        ctx.lineWidth = d < 220 ? 2 : 1
         ctx.stroke()
       })
       
-      // Pulses on links
+      // Pulses on links - BRIGHTER
       pulses.forEach((p, i) => {
         p.t = (p.t + p.sp) % 1
         const [a, b] = links[i]
@@ -271,9 +287,9 @@ function WorldMapCanvas() {
         const px = ca.rx * W + (cb.rx * W - ca.rx * W) * p.t
         const py = ca.ry * H + (cb.ry * H - ca.ry * H) * p.t
         const col = p.jade ? '0,229,160' : '255,160,64'
-        const g = ctx.createRadialGradient(px, py, 0, px, py, 11)
-        g.addColorStop(0, `rgba(${col},.9)`)
-        g.addColorStop(.5, `rgba(${col},.3)`)
+        const g = ctx.createRadialGradient(px, py, 0, px, py, 14)
+        g.addColorStop(0, `rgba(${col},1)`)
+        g.addColorStop(.5, `rgba(${col},.5)`)
         g.addColorStop(1, 'transparent')
         ctx.beginPath()
         ctx.arc(px, py, 11, 0, Math.PI * 2)
