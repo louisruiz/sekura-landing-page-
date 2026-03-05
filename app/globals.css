@@ -211,12 +211,12 @@ h1{
 .badge-green{font-family:var(--mono);font-size:.42rem;font-weight:700;background:var(--jade-bg);color:var(--jade);border:1px solid var(--jade-b);padding:2px 6px;border-radius:4px}
 
 .pmap{flex:1;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(150deg,#03091A,#01040D);border:1px solid rgba(0,229,160,.06)}
-.mg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,160,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,.04) 1px,transparent 1px);background-size:17px 17px}
-.heat{position:absolute;border-radius:50%;filter:blur(14px)}
-.h-r1{width:52px;height:52px;background:rgba(255,61,90,.5);top:12%;left:22%;animation:breathe 3s ease-in-out infinite}
-.h-r2{width:36px;height:36px;background:rgba(255,186,53,.4);top:50%;left:56%;animation:breathe 2.5s ease-in-out infinite 1s}
-.h-r3{width:26px;height:26px;background:rgba(255,61,90,.3);top:70%;left:14%;animation:breathe 2s ease-in-out infinite .5s}
-.h-g{width:44px;height:44px;background:rgba(0,229,160,.2);top:26%;left:50%;animation:breathe 3.5s ease-in-out infinite 1.5s}
+.mg{position:absolute;inset:0;background-image:linear-gradient(rgba(0,229,160,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(0,229,160,.04) 1px,transparent 1px);background-size:17px 17px;animation:rotate-slow 60s linear infinite}
+.heat{position:absolute;border-radius:50%;filter:blur(14px);animation:breathe 4s ease-in-out infinite}
+.h-r1{width:52px;height:52px;background:rgba(255,61,90,.5);top:12%;left:22%;animation-delay:0s}
+.h-r2{width:36px;height:36px;background:rgba(255,186,53,.4);top:50%;left:56%;animation-delay:.7s}
+.h-r3{width:26px;height:26px;background:rgba(255,61,90,.3);top:70%;left:14%;animation-delay:1.4s}
+.h-g{width:44px;height:44px;background:rgba(0,229,160,.2);top:26%;left:50%;animation-delay:2.1s}
 @keyframes breathe{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.9;transform:scale(1.2)}}
 .udot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--jade);border:2px solid #fff;box-shadow:0 0 12px var(--jade);z-index:2;top:39%;left:41%}
 .uring{position:absolute;width:30px;height:30px;border-radius:50%;border:1px solid var(--jade);opacity:.7;animation:rout 2s ease-out infinite;top:calc(39% - 10.5px);left:calc(41% - 10.5px);z-index:1}
