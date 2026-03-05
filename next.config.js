@@ -3,10 +3,6 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  i18n: {
-    locales: ['fr', 'en', 'es', 'pt'],
-    defaultLocale: 'fr',
-  },
   experimental: {
     // Remove if not using Server Components
     serverComponentsExternalPackages: ['mongodb'],
