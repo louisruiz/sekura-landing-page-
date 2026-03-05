@@ -1,14 +1,27 @@
-# Sekura robots.txt
 User-agent: *
 Allow: /
-
-# Bloquer les pages non pertinentes pour le SEO
 Disallow: /api/
-Disallow: /*.json$
 Disallow: /_next/
 
-# Sitemap
-Sitemap: https://sekura.space/sitemap.xml
+User-agent: GPTBot
+Allow: /
 
-# Crawl-delay
-Crawl-delay: 1
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+Sitemap: https://sekura.space/sitemap.xml
