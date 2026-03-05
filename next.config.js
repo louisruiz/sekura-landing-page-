@@ -11,6 +11,31 @@ const nextConfig = {
     // Remove if not using Server Components
     serverComponentsExternalPackages: ['mongodb'],
   },
+  async redirects() {
+    return [
+      // Anciennes URLs de confirmation → nouvelle route unifiée
+      {
+        source: '/merci',
+        destination: '/confirmation/fr',
+        permanent: false,
+      },
+      {
+        source: '/en/thank-you',
+        destination: '/confirmation/en',
+        permanent: false,
+      },
+      {
+        source: '/es/gracias',
+        destination: '/confirmation/es',
+        permanent: false,
+      },
+      {
+        source: '/pt/obrigado',
+        destination: '/confirmation/pt',
+        permanent: false,
+      },
+    ]
+  },
   webpack(config, { dev }) {
     if (dev) {
       // Reduce CPU/memory from file watching
