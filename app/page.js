@@ -1011,9 +1011,9 @@ export default function App() {
       <nav id="nav" className={navScrolled ? 'scrolled' : ''}>
         <a href="#" className="logo"><LogoSVG /><span className="logo-name">SEKURA</span></a>
         <div className="nav-links">
-          <a href="#how">Comment ça marche</a>
-          <a href="#features">Fonctionnalités</a>
-          <a href="#faq">FAQ</a>
+          <a href="#how">{t.navHow}</a>
+          <a href="#features">{t.navFeatures}</a>
+          <a href="#faq">{t.navFAQ}</a>
         </div>
         <div className="nav-right">
           <span className="nav-count">● {sc} déjà inscrits</span>
@@ -1055,13 +1055,13 @@ export default function App() {
 
       {/* ══════ HERO ══════ */}
       <section id="hero">
-        <R className="urgency-pill"><span className="urgency-dot" /><span>{spots} places early bird · Ferme dans 47h</span></R>
-        <R delay={100}><h1 className="d1"><span className="h1-em sk-glitch" data-text="La nuit est longue.">La nuit est longue.</span><span className="h1-sub">Sekura est là.</span></h1></R>
-        <R delay={200}><p className="hero-desc">Le garde du corps numérique pour les femmes, voyageurs et familles. SOS en 3 clics, heatmap IA des zones à risque, navigation sécurisée — disponible partout dans le monde.</p></R>
+        <R className="urgency-pill"><span className="urgency-dot" /><span>{spots} {t.heroUrgency}</span></R>
+        <R delay={100}><h1 className="d1"><span className="h1-em sk-glitch" data-text={t.heroH1}>{t.heroH1}</span><span className="h1-sub">{t.heroH1Sub}</span></h1></R>
+        <R delay={200}><p className="hero-desc">{t.heroDesc}</p></R>
         <R delay={300}>
           <div className="hero-cta-wrap">
-            <button className="btn-primary" onClick={scrollToCTA}>Rejoindre la whitelist gratuitement →</button>
-            <div className="hero-trust"><span>🔒 Gratuit pour toujours</span><span>· Aucun spam ·</span><span>⚡ 3 mois Smart Safety offerts</span></div>
+            <button className="btn-primary" onClick={scrollToCTA}>{t.heroCTA}</button>
+            <div className="hero-trust"><span>{t.heroTrust1}</span><span>{t.heroTrust2}</span><span>{t.heroTrust3}</span></div>
           </div>
         </R>
 
@@ -1138,9 +1138,9 @@ export default function App() {
       {/* ══════ PROBLEM ══════ */}
       <section className="sec prob-sec">
         <div className="wrap">
-          <R tag="span" className="eyebrow">01 / Le Problème</R>
-          <R><h2 className="prob-headline"><span className="sk-glitch" data-text="L'insécurité n'est pas un problème">L'insécurité n'est pas un problème</span> <span style={{ color: 'var(--t2)' }}>"là-bas".</span><br />C'est ici. C'est maintenant.</h2></R>
-          <R><p className="sec-p">Aucun outil n'a été conçu pour cette réalité — jusqu'à aujourd'hui.</p></R>
+          <R tag="span" className="eyebrow">{t.probEyebrow}</R>
+          <R><h2 className="prob-headline"><span className="sk-glitch" data-text={t.probH}>{t.probH}</span> <span style={{ color: 'var(--t2)' }}>{t.probHSub}</span><br />{t.probH2}</h2></R>
+          <R><p className="sec-p">{t.probDesc}</p></R>
           <div className="stats-grid">
             <R className="stat-c">
               <div className="stat-num" style={{ color: 'var(--pulse)' }}><sup>1/</sup><AnimCounter target={3} /></div>
@@ -1173,14 +1173,14 @@ export default function App() {
       {/* ══════ HOW IT WORKS ══════ */}
       <section className="sec steps-sec" id="how">
         <div className="wrap">
-          <R tag="span" className="eyebrow">02 / Comment ça marche</R>
-          <R><h2 className="sec-h"><span className="sk-glitch" data-text="En 3 étapes. Moins de 60 secondes.">En 3 étapes. Moins de 60 secondes.</span></h2></R>
-          <R><p className="sec-p">Tu n'as pas à changer ton comportement. Sekura s'adapte à ta vie, pas l'inverse.</p></R>
+          <R tag="span" className="eyebrow">{t.stepsEyebrow}</R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text={t.stepsH}>{t.stepsH}</span></h2></R>
+          <R><p className="sec-p">{t.stepsDesc}</p></R>
           <div className="steps-grid">
             {[
-              { n: '1', h: 'Télécharge & configure', p: "Ajoute tes 5 contacts de confiance. Sekura leur envoie un SMS automatique avec le lien de suivi. Aucune app à installer pour eux." },
-              { n: '2', h: 'Consulte la heatmap', p: 'Avant de sortir, vérifie les zones à risque en temps réel autour de toi. Active la navigation sécurisée pour ton trajet.' },
-              { n: '3', h: 'Voyage en confiance', p: "Triple-clic sur le bouton volume = SOS silencieux instantané. Ta position GPS est envoyée à tes proches. Tu n'as rien à regarder." },
+              { n: '1', h: t.step1Title, p: t.step1Desc },
+              { n: '2', h: t.step2Title, p: t.step2Desc },
+              { n: '3', h: t.step3Title, p: t.step3Desc },
             ].map((s, i) => (
               <R key={i} className="step-c" delay={i * 100}>
                 <div className="step-num">{s.n}</div><h3 className="step-h">{s.h}</h3><p className="step-p">{s.p}</p>
@@ -1193,8 +1193,8 @@ export default function App() {
       {/* ══════ FEATURES ══════ */}
       <section className="feat-wrap" id="features" style={{ background: 'var(--ink-1)' }}>
         <div className="feat-intro">
-          <R tag="span" className="eyebrow">03 / Fonctionnalités</R>
-          <R><h2 className="sec-h">La protection qu'ont les gens qui peuvent<br />se payer <span className="sk-glitch" data-text="un garde du corps." style={{ color: 'var(--jade)' }}>un garde du corps.</span></h2></R>
+          <R tag="span" className="eyebrow">{t.featEyebrow}</R>
+          <R><h2 className="sec-h">{t.featH1}<br />se payer <span className="sk-glitch" data-text={t.featH1Accent} style={{ color: 'var(--jade)' }}>{t.featH1Accent}</span></h2></R>
         </div>
         {features.map((f, i) => (
           <R key={i} className="feat-row">
@@ -1220,8 +1220,8 @@ export default function App() {
       {/* ══════ COMPARISON ══════ */}
       <section className="sec compare-sec">
         <div className="wrap">
-          <R tag="span" className="eyebrow">04 / Comparaison</R>
-          <R><h2 className="sec-h">Sekura vs les autres.<br /><span className="sk-glitch" data-text="Il n'y a pas vraiment de match." style={{ color: 'var(--jade)' }}>Il n'y a pas vraiment de match.</span></h2></R>
+          <R tag="span" className="eyebrow">{t.compEyebrow}</R>
+          <R><h2 className="sec-h">{t.compH}<br /><span className="sk-glitch" data-text={t.compHAccent} style={{ color: 'var(--jade)' }}>{t.compHAccent}</span></h2></R>
           <R><table className="compare-tbl" style={{ marginTop: 68 }}>
             <thead><tr><th>Fonctionnalité</th><th className="col-sk col-sk-h">SEKURA</th><th>Life360</th><th>bSafe</th><th>Noonlight</th></tr></thead>
             <tbody>
@@ -1239,9 +1239,9 @@ export default function App() {
       {/* ══════ PROFILES ══════ */}
       <section className="sec" id="profiles" style={{ background: 'var(--ink-1)' }}>
         <div className="wrap">
-          <R tag="span" className="eyebrow">05 / Pour qui ?</R>
-          <R><h2 className="sec-h"><span className="sk-glitch" data-text="Sekura s'adapte à ton profil.">Sekura s'adapte à ton profil.</span></h2></R>
-          <R><p className="sec-p" style={{ marginBottom: 36 }}>Trois réalités très différentes. Une seule app.</p></R>
+          <R tag="span" className="eyebrow">{t.profEyebrow}</R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text={t.profH}>{t.profH}</span></h2></R>
+          <R><p className="sec-p" style={{ marginBottom: 36 }}>{t.profDesc}</p></R>
           <R>
             <div className="ptabs">
               {profiles.map((p, i) => (
@@ -1276,8 +1276,8 @@ export default function App() {
       {/* ══════ FAQ ══════ */}
       <section className="sec faq-sec" id="faq">
         <div className="wrap">
-          <R tag="span" className="eyebrow">08 / Questions fréquentes</R>
-          <R><h2 className="sec-h"><span className="sk-glitch" data-text="On répond à tes questions.">On répond à tes questions.</span></h2></R>
+          <R tag="span" className="eyebrow">{t.faqEyebrow}</R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text={t.faqH}>{t.faqH}</span></h2></R>
           <R>
             <div className="faq-grid">
               {faqs.map((f, i) => (
@@ -1299,11 +1299,11 @@ export default function App() {
             <div className="pb-track"><div className="pb-fill" style={{ width: (sc / 500 * 100) + '%' }} /></div>
             <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> places restantes</div>
           </R>
-          <R><h2 className="fcta-h">Sois parmi les premiers.<br /><em className="sk-glitch" data-text="Rejoins la whitelist.">Rejoins la whitelist.</em></h2></R>
-          <R><p className="fcta-sub">Les 500 premiers inscrits obtiennent 3 mois de Smart Safety gratuit + accès beta fermée. Aucune carte bancaire. Tu peux te désinscrire en 1 clic.</p></R>
+          <R><h2 className="fcta-h">{t.ctaH}<br /><em className="sk-glitch" data-text={t.ctaHAccent}>{t.ctaHAccent}</em></h2></R>
+          <R><p className="fcta-sub">{t.ctaDesc}</p></R>
           <R>
             <div className="fcta-form">
-              <input ref={emailRef} type="email" className="fcta-input" placeholder="ton@email.com" onKeyDown={e => { if (e.key === 'Enter') handleMainSignup() }} />
+              <input ref={emailRef} type="email" className="fcta-input" placeholder={t.ctaPlaceholder} onKeyDown={e => { if (e.key === 'Enter') handleMainSignup() }} />
               <button className="btn-primary" onClick={handleMainSignup} style={{ padding: '14px 26px', fontSize: '.93rem', flexShrink: 0, borderRadius: 10 }}>
                 {signupMsg || 'Rejoindre →'}
               </button>
