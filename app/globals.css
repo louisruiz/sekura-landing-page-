@@ -395,10 +395,11 @@ h1{
 .fsos-good{background:var(--jade-bg);border:1px solid var(--jade-b);border-radius:9px;padding:11px;font-size:.68rem;color:var(--t2);animation:pulse-glow 2s ease-in-out infinite .5s}
 .fsos-good-l{color:var(--jade);font-family:var(--mono);font-weight:700;font-size:.58rem;margin-bottom:3px;display:block;letter-spacing:.05em;text-transform:uppercase}
 
-/* Route mock */
-.froute-map{border-radius:12px;overflow:hidden;position:relative;height:168px;background:linear-gradient(150deg,#040C1C,#020610);border:1px solid rgba(0,229,160,.07);margin-bottom:14px}
+/* Route mock — Avec animations */
+.froute-map{border-radius:12px;overflow:hidden;position:relative;height:168px;background:linear-gradient(150deg,#040C1C,#020610);border:1px solid rgba(0,229,160,.07);margin-bottom:14px;animation:pulse-glow 4s ease-in-out infinite}
 .froute-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.frs{background:var(--ink-3);border:1px solid var(--g1);border-radius:9px;padding:11px;text-align:center}
+.frs{background:var(--ink-3);border:1px solid var(--g1);border-radius:9px;padding:11px;text-align:center;transition:all .3s}
+.frs:hover{transform:scale(1.05);border-color:var(--jade-b);background:var(--jade-bg)}
 .frs-val{font-family:var(--display);font-size:.96rem;font-weight:700}
 .frs-lbl{font-family:var(--mono);font-size:.46rem;color:var(--t3);margin-top:2px;text-transform:uppercase;letter-spacing:.05em}
 
