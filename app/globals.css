@@ -207,7 +207,7 @@ h1{
 .notch{width:58px;height:7px;background:#000;border-radius:0 0 7px 7px;margin:0 auto 12px;flex-shrink:0}
 .prow{display:flex;justify-content:space-between;align-items:center}
 .ptag{font-family:var(--mono);font-size:.5rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)}
-.badge-red{font-family:var(--mono);font-size:.42rem;font-weight:700;background:var(--pulse);color:#fff;padding:2px 6px;border-radius:4px;animation:ublink 1.5s ease-in-out infinite}
+.badge-red{font-family:var(--mono);font-size:.42rem;font-weight:700;background:var(--pulse);color:#fff;padding:2px 6px;border-radius:4px;animation:pulse-glow 2s ease-in-out infinite}
 .badge-green{font-family:var(--mono);font-size:.42rem;font-weight:700;background:var(--jade-bg);color:var(--jade);border:1px solid var(--jade-b);padding:2px 6px;border-radius:4px}
 
 .pmap{flex:1;border-radius:12px;overflow:hidden;position:relative;background:linear-gradient(150deg,#03091A,#01040D);border:1px solid rgba(0,229,160,.06)}
