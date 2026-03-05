@@ -597,19 +597,6 @@ export default function App() {
         </R>
       </section>
 
-      {/* ══════ MARQUEE ══════ */}
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((m, i) => (
-            <div key={i} className="mitem">
-              <div className="mav" style={{ background: m.bg, color: '#fff' }}>{m.av}</div>
-              <div><div className="mname">{m.name}</div><div className="mloc">{m.loc}</div></div>
-              <div className="mstars">★★★★★</div>
-            </div>
-          ))}
-        </div>
-      </div>
-
       {/* ══════ PRESS ══════ */}
       <R className="press-bar">
         <div className="press-inner">
