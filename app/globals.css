@@ -191,15 +191,17 @@ h1{
 .live-dot{width:5px;height:5px;border-radius:50%;background:var(--jade);box-shadow:0 0 8px var(--jade);animation:ublink 2s ease-in-out infinite}
 
 /* ═══════════════════════════════════════
-   PHONE MOCKUPS
+   PHONE MOCKUPS — Avec animations avancées
 ═══════════════════════════════════════ */
 .phones-wrap{position:relative;z-index:1;margin-top:72px;width:100%;max-width:1020px}
 .phones-row{display:flex;justify-content:center;align-items:flex-end;gap:0}
-.phone-frame{border-radius:38px;background:linear-gradient(165deg,#0E1224,#070910);border:1px solid rgba(255,255,255,.09);overflow:hidden;box-shadow:0 48px 100px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.06)}
-.phone-main{width:220px}
-.phone-side{opacity:.55;transform:scale(.88)}
-.phone-side-l{transform:scale(.88) translateX(18px)}
-.phone-side-r{transform:scale(.88) translateX(-18px)}
+.phone-frame{border-radius:38px;background:linear-gradient(165deg,#0E1224,#070910);border:1px solid rgba(255,255,255,.09);overflow:hidden;box-shadow:0 48px 100px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.06);transition:all .4s}
+.phone-main{width:220px;animation:pulse-glow 5s ease-in-out infinite}
+.phone-main:hover{transform:scale(1.02)}
+.phone-side{opacity:.55;transform:scale(.88);transition:all .4s}
+.phone-side:hover{opacity:1;transform:scale(.92);filter:none}
+.phone-side-l{transform:scale(.88) translateX(18px);animation:float 6s ease-in-out infinite}
+.phone-side-r{transform:scale(.88) translateX(-18px);animation:float 6s ease-in-out infinite 3s}
 .p-screen{padding:16px 13px;min-height:460px;display:flex;flex-direction:column;gap:8px}
 .p-screen-main{padding:18px 15px;min-height:550px}
 .notch{width:58px;height:7px;background:#000;border-radius:0 0 7px 7px;margin:0 auto 12px;flex-shrink:0}
