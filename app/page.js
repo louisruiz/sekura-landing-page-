@@ -448,6 +448,37 @@ export default function App() {
     setTimeout(() => emailRef.current?.focus(), 600)
   }, [])
 
+  // Tilt 3D Magnetic Effect
+  useEffect(() => {
+    const selector = '.feat-row, .fcard, .stat-c, .step-c, .ppv-scene, .faq-item, .comp-card'
+    const cards = document.querySelectorAll(selector)
+    
+    cards.forEach(card => {
+      const handleMouseMove = (e) => {
+        const r = card.getBoundingClientRect()
+        const dx = (e.clientX - r.left - r.width / 2) / (r.width / 2)
+        const dy = (e.clientY - r.top - r.height / 2) / (r.height / 2)
+        card.style.transform = `perspective(900px) rotateX(${(-dy * 3.5).toFixed(2)}deg) rotateY(${(dx * 3.5).toFixed(2)}deg) translateZ(4px)`
+        card.style.setProperty('--sk-mx', ((e.clientX - r.left) / r.width * 100).toFixed(1) + '%')
+        card.style.setProperty('--sk-my', ((e.clientY - r.top) / r.height * 100).toFixed(1) + '%')
+      }
+      
+      const handleMouseLeave = () => {
+        card.style.transform = ''
+      }
+      
+      card.addEventListener('mousemove', handleMouseMove)
+      card.addEventListener('mouseleave', handleMouseLeave)
+    })
+    
+    return () => {
+      cards.forEach(card => {
+        card.removeEventListener('mousemove', card._handleMouseMove)
+        card.removeEventListener('mouseleave', card._handleMouseLeave)
+      })
+    }
+  }, [])
+
   // Signup handler (calls real API)
   const doSignup = async (email, source = 'cta') => {
     if (!email || !email.includes('@')) return false

@@ -739,6 +739,37 @@ footer{position:relative;z-index:2;border-top:1px solid var(--g1);padding:56px c
 }
 @keyframes glitch-bot {
   0%,88%,100% { transform:translate(0); opacity:1; }
+
+/* ═══════════════════════════════════════
+   TILT 3D MAGNETIC EFFECT
+═══════════════════════════════════════ */
+.feat-row, .fcard, .stat-c, .step-c, .ppv-scene, .faq-item, .comp-card {
+  position: relative;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1);
+  will-change: transform;
+}
+
+.feat-row::before, .fcard::before, .stat-c::before, .step-c::before,
+.ppv-scene::before, .faq-item::before, .comp-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at var(--sk-mx, 50%) var(--sk-my, 50%),
+    rgba(0,229,160,.16) 0%, transparent 62%
+  );
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s;
+}
+
+.feat-row:hover::before, .fcard:hover::before, .stat-c:hover::before,
+.step-c:hover::before, .ppv-scene:hover::before, .faq-item:hover::before,
+.comp-card:hover::before {
+  opacity: 1;
+}
+
   90%          { transform:translate(3px,1px); opacity:.8; filter:hue-rotate(-25deg); }
   93%          { transform:translate(-3px,-1px); }
   96%          { transform:translate(0); }
