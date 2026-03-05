@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 
-export default function ThankYouPage() {
+export default function GraciasPage() {
   useEffect(() => {
     document.body.style.overflow = 'hidden'
     return () => { document.body.style.overflow = '' }
@@ -62,7 +62,7 @@ export default function ThankYouPage() {
         padding: 'clamp(40px, 8vw, 80px) clamp(20px, 5%, 48px)',
         textAlign: 'center'
       }}>
-        {/* Icône checkmark animée */}
+        {/* Icono checkmark animado */}
         <div style={{
           width: 72, height: 72,
           background: 'rgba(0,229,160,0.12)',
@@ -71,7 +71,7 @@ export default function ThankYouPage() {
           margin: '0 auto 28px',
           animation: 'pop-in 0.5s cubic-bezier(0.34,1.56,0.64,1)'
         }}>
-          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" role="img" aria-label="Confirmation">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" role="img" aria-label="Confirmación">
             <path d="M7 16L13 22L25 10" stroke="#00E5A0" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </div>
@@ -90,10 +90,10 @@ export default function ThankYouPage() {
           textTransform: 'uppercase',
           marginBottom: 20
         }}>
-          WHITELIST CONFIRMÉE ✓
+          WHITELIST CONFIRMADA ✓
         </div>
 
-        {/* Titre principal */}
+        {/* Título principal */}
         <h1 style={{
           fontFamily: 'var(--display)',
           fontSize: 'clamp(2rem, 5vw, 3.2rem)',
@@ -103,11 +103,11 @@ export default function ThankYouPage() {
           marginBottom: 16,
           lineHeight: 1.1
         }}>
-          Tu es dedans.<br/>
-          <span style={{ color: 'var(--jade)' }}>Sekura arrive bientôt.</span>
+          Ya estás dentro.<br/>
+          <span style={{ color: 'var(--jade)' }}>Sekura llega pronto.</span>
         </h1>
 
-        {/* Sous-titre */}
+        {/* Subtítulo */}
         <p style={{
           fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)',
           color: 'var(--t2)',
@@ -115,11 +115,11 @@ export default function ThankYouPage() {
           lineHeight: 1.7,
           marginBottom: 36
         }}>
-          Vérifie ton email — tu y trouveras ta confirmation et tous les détails
-          sur ton accès beta prioritaire + les 3 mois Smart Safety offerts.
+          Revisa tu email — encontrarás tu confirmación y todos los detalles
+          sobre tu acceso beta prioritario + 3 meses Smart Safety gratis.
         </p>
 
-        {/* 3 étapes à venir */}
+        {/* 3 pasos siguientes */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -132,41 +132,41 @@ export default function ThankYouPage() {
           <div className="confirm-step">
             <span className="confirm-step-num">1</span>
             <div>
-              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Vérifie ton email</strong>
+              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Revisa tu email</strong>
               <p style={{ color: 'var(--t2)', fontSize: '0.82rem', margin: '2px 0 0' }}>
-                Un email de confirmation vient d'être envoyé depuis hello@sekura.space
+                Se acaba de enviar un email de confirmación desde hello@sekura.space
               </p>
             </div>
           </div>
           <div className="confirm-step">
             <span className="confirm-step-num">2</span>
             <div>
-              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Accès beta Q3 2025</strong>
+              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Acceso beta Q3 2025</strong>
               <p style={{ color: 'var(--t2)', fontSize: '0.82rem', margin: '2px 0 0' }}>
-                Tu reçois un accès prioritaire à la beta fermée iOS et Android
+                Obtienes acceso prioritario a la beta cerrada de iOS y Android
               </p>
             </div>
           </div>
           <div className="confirm-step">
             <span className="confirm-step-num">3</span>
             <div>
-              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>3 mois Smart Safety offerts</strong>
+              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>3 meses Smart Safety gratis</strong>
               <p style={{ color: 'var(--t2)', fontSize: '0.82rem', margin: '2px 0 0' }}>
-                Réservés aux 500 premiers — tu en fais partie
+                Reservado para los primeros 500 — tú eres uno de ellos
               </p>
             </div>
           </div>
         </div>
 
-        {/* CTA retour accueil */}
-        <Link href="/" style={{
+        {/* CTA volver al inicio */}
+        <Link href="/es" style={{
           fontFamily: 'var(--body)',
           fontSize: '0.85rem',
           color: 'var(--t3)',
           textDecoration: 'none',
           transition: 'color 0.2s'
         }}>
-          ← Retour à l'accueil
+          ← Volver al inicio
         </Link>
       </main>
     </>

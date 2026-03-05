@@ -62,7 +62,7 @@ export default function ThankYouPage() {
         padding: 'clamp(40px, 8vw, 80px) clamp(20px, 5%, 48px)',
         textAlign: 'center'
       }}>
-        {/* Icône checkmark animée */}
+        {/* Checkmark icon animated */}
         <div style={{
           width: 72, height: 72,
           background: 'rgba(0,229,160,0.12)',
@@ -90,10 +90,10 @@ export default function ThankYouPage() {
           textTransform: 'uppercase',
           marginBottom: 20
         }}>
-          WHITELIST CONFIRMÉE ✓
+          WHITELIST CONFIRMED ✓
         </div>
 
-        {/* Titre principal */}
+        {/* Main title */}
         <h1 style={{
           fontFamily: 'var(--display)',
           fontSize: 'clamp(2rem, 5vw, 3.2rem)',
@@ -103,11 +103,11 @@ export default function ThankYouPage() {
           marginBottom: 16,
           lineHeight: 1.1
         }}>
-          Tu es dedans.<br/>
-          <span style={{ color: 'var(--jade)' }}>Sekura arrive bientôt.</span>
+          You're in.<br/>
+          <span style={{ color: 'var(--jade)' }}>Sekura is coming soon.</span>
         </h1>
 
-        {/* Sous-titre */}
+        {/* Subtitle */}
         <p style={{
           fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)',
           color: 'var(--t2)',
@@ -115,11 +115,11 @@ export default function ThankYouPage() {
           lineHeight: 1.7,
           marginBottom: 36
         }}>
-          Vérifie ton email — tu y trouveras ta confirmation et tous les détails
-          sur ton accès beta prioritaire + les 3 mois Smart Safety offerts.
+          Check your email — you'll find your confirmation and all the details
+          about your priority beta access + 3 months Smart Safety free.
         </p>
 
-        {/* 3 étapes à venir */}
+        {/* 3 steps ahead */}
         <div style={{
           display: 'flex',
           flexDirection: 'column',
@@ -132,41 +132,41 @@ export default function ThankYouPage() {
           <div className="confirm-step">
             <span className="confirm-step-num">1</span>
             <div>
-              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Vérifie ton email</strong>
+              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Check your email</strong>
               <p style={{ color: 'var(--t2)', fontSize: '0.82rem', margin: '2px 0 0' }}>
-                Un email de confirmation vient d'être envoyé depuis hello@sekura.space
+                A confirmation email was just sent from hello@sekura.space
               </p>
             </div>
           </div>
           <div className="confirm-step">
             <span className="confirm-step-num">2</span>
             <div>
-              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Accès beta Q3 2025</strong>
+              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>Beta access Q3 2025</strong>
               <p style={{ color: 'var(--t2)', fontSize: '0.82rem', margin: '2px 0 0' }}>
-                Tu reçois un accès prioritaire à la beta fermée iOS et Android
+                You get priority access to the closed iOS and Android beta
               </p>
             </div>
           </div>
           <div className="confirm-step">
             <span className="confirm-step-num">3</span>
             <div>
-              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>3 mois Smart Safety offerts</strong>
+              <strong style={{ color: 'var(--t1)', fontSize: '0.9rem' }}>3 months Smart Safety free</strong>
               <p style={{ color: 'var(--t2)', fontSize: '0.82rem', margin: '2px 0 0' }}>
-                Réservés aux 500 premiers — tu en fais partie
+                Reserved for the first 500 — you're one of them
               </p>
             </div>
           </div>
         </div>
 
-        {/* CTA retour accueil */}
-        <Link href="/" style={{
+        {/* CTA back home */}
+        <Link href="/en" style={{
           fontFamily: 'var(--body)',
           fontSize: '0.85rem',
           color: 'var(--t3)',
           textDecoration: 'none',
           transition: 'color 0.2s'
         }}>
-          ← Retour à l'accueil
+          ← Back to home
         </Link>
       </main>
     </>

@@ -10,7 +10,7 @@ import json
 import sys
 from datetime import datetime
 
-BASE_URL = "https://safety-heatmap-demo.preview.emergentagent.com"
+BASE_URL = "https://safe-travel-5.preview.emergentagent.com"
 API_BASE = f"{BASE_URL}/api"
 
 class Colors:

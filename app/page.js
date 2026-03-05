@@ -135,21 +135,30 @@ export default function App() {
   const [navScrolled, setNavScrolled] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
   const [openFaq, setOpenFaq] = useState(null)
-  const [isAnnual, setIsAnnual] = useState(false)
-  const [toastD, setToastD] = useState(null)
-  const [toastVis, setToastVis] = useState(false)
-  const [exitVis, setExitVis] = useState(false)
+  const [langMenuOpen, setLangMenuOpen] = useState(false)
   const [demoUser, setDemoUser] = useState({ x: 42, y: 40 })
   const [ttData, setTtData] = useState(null)
   const [ttPos, setTtPos] = useState({ l: '50%', t: '10%' })
   const [liveN, setLiveN] = useState(12)
   const [signupMsg, setSignupMsg] = useState('')
-  const [exitEmail, setExitEmail] = useState('')
-  const exitShownRef = useRef(false)
+  const [isAnnual, setIsAnnual] = useState(false)
   const emailRef = useRef(null)
   const demoMapRef = useRef(null)
 
   const spots = 500 - sc
+
+  // Détection de la langue courante
+  const currentLang = typeof window !== 'undefined' && window.location.pathname.startsWith('/en') ? 'en'
+    : typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es'
+    : typeof window !== 'undefined' && window.location.pathname.startsWith('/pt') ? 'pt'
+    : 'fr'
+
+  const langData = {
+    fr: { flag: '🇫🇷', code: 'FR', name: 'Français' },
+    en: { flag: '🇬🇧', code: 'EN', name: 'English' },
+    es: { flag: '🇪🇸', code: 'ES', name: 'Español' },
+    pt: { flag: '🇧🇷', code: 'PT', name: 'Português' },
+  }
 
   // Fetch initial count
   useEffect(() => {
@@ -169,6 +178,17 @@ export default function App() {
     return () => window.removeEventListener('scroll', h)
   }, [])
 
+  // Close lang menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.lang-switcher')) {
+        setLangMenuOpen(false)
+      }
+    }
+    document.addEventListener('click', handleClickOutside)
+    return () => document.removeEventListener('click', handleClickOutside)
+  }, [])
+
   // Scarcity auto-bump
   useEffect(() => {
     let t
@@ -186,34 +206,6 @@ export default function App() {
     return () => clearTimeout(t)
   }, [])
 
-  // Toast
-  const toastData = [
-    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'Medellín' },
-    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'London' },
-    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX' },
-    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'Sydney' },
-    { av: 'L', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Lucas F.', loc: 'São Paulo' },
-    { av: 'M', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Marco A.', loc: 'Bogotá' },
-  ]
-  useEffect(() => {
-    let t1, t2
-    const show = () => {
-      const d = toastData[Math.floor(Math.random() * toastData.length)]
-      setToastD(d); setToastVis(true)
-      t1 = setTimeout(() => setToastVis(false), 4000)
-      t2 = setTimeout(show, Math.random() * 25000 + 15000)
-    }
-    const init = setTimeout(show, 12000)
-    return () => { clearTimeout(init); clearTimeout(t1); clearTimeout(t2) }
-  }, [])
-
-  // Exit intent
-  useEffect(() => {
-    const h = (e) => { if (e.clientY < 20 && !exitShownRef.current) { exitShownRef.current = true; setExitVis(true) } }
-    document.addEventListener('mouseleave', h)
-    return () => document.removeEventListener('mouseleave', h)
-  }, [])
-
   const scrollToCTA = useCallback(() => {
     document.getElementById('fcta')?.scrollIntoView({ behavior: 'smooth' })
     setTimeout(() => emailRef.current?.focus(), 600)
@@ -226,7 +218,7 @@ export default function App() {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, lang: 'fr', source, honeypot: '' })
+        body: JSON.stringify({ email, lang: currentLang, locale: currentLang, source, honeypot: '' })
       })
       const data = await res.json()
       if (data.success) {
@@ -252,17 +244,13 @@ export default function App() {
       emailRef.current.value = ''
       emailRef.current.style.borderColor = 'var(--jade)'
       setSignupMsg('✓ Tu es sur la liste !')
-      setTimeout(() => { setSignupMsg(''); if (emailRef.current) emailRef.current.style.borderColor = '' }, 3500)
+      
+      // Redirection après 2 secondes vers la page de confirmation unifiée
+      const confirmationUrl = `/confirmation/${currentLang || 'fr'}`
+      setTimeout(() => {
+        window.location.href = confirmationUrl
+      }, 1800)
     }
-  }
-
-  const handleExitSignup = async () => {
-    if (!exitEmail || !exitEmail.includes('@')) return
-    await doSignup(exitEmail, 'exit_modal')
-    setExitVis(false)
-    setExitEmail('')
-    setSignupMsg('✓ Tu es sur la liste !')
-    setTimeout(() => setSignupMsg(''), 3500)
   }
 
   // Demo map
@@ -402,23 +390,6 @@ export default function App() {
     },
   ]
 
-  // Testimonials
-  const testimonials = [
-    { q: "Enfin une app qui comprend vraiment les risques à Medellín. La heatmap est précise au niveau des rues — elle connaît El Centro mieux que moi après 3 ans ici. J'aurais donné n'importe quoi pour avoir ça quand je suis arrivée.", name: 'Valentina R.', loc: 'MEDELLÍN · COLOMBIE · BETA TESTER #12', av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', feat: true },
-    { q: "As a solo female traveler, this is the app I've been waiting for. The discrete SOS is genius. I used it once and it worked perfectly.", name: 'Emma T.', loc: 'LONDON UK · SOLO TRAVELER', av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)' },
-    { q: "J'envoie des équipes en Colombie et au Mexique. Sekura va devenir un standard pour mes collaborateurs terrain dès le lancement public.", name: 'Pierre D.', loc: 'PARIS · DIRECTEUR ONG INTERNATIONALE', av: 'P', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)' },
-    { q: "A heatmap atualizada em tempo real de São Paulo é exatamente o que eu precisava. O modo offline funcionou perfeitamente no interior.", name: 'Lucas F.', loc: 'SÃO PAULO · BRÉSIL · BETA TESTER #7', av: 'L', bg: 'linear-gradient(135deg,#00cec9,#00b894)' },
-    { q: "Mis padres ya no se preocupan cuando salgo de noche. El timer de seguridad les da tranquilidad. Eso cambia todo.", name: 'Camila M.', loc: 'CIUDAD DE MÉXICO · ESTUDIANTE', av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)' },
-    { q: "The route planning changed how I move around CDMX. My family in Australia can see me moving safely. Absolute game changer.", name: 'Sarah K.', loc: 'SYDNEY · AUSTRALIA · DIGITAL NOMAD', av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)' },
-  ]
-
-  // Pricing plans
-  const plans = [
-    { name: 'Core Safety', price: 'Gratuit', per: ' · pour toujours', desc: 'Les fonctionnalités essentielles pour rester en sécurité au quotidien.', feats: ['Heatmap IA des zones à risque', 'SOS discret triple-clic', 'Timer de sécurité check-in', 'Réseau de confiance 5 contacts', 'Mode offline · SOS par SMS', "Faux appel d'extraction"], cta: 'Rejoindre la whitelist', ghost: true },
-    { name: 'Smart Safety', monthly: '2.99', annual: '2.39', annualTxt: 'Soit $28.68/an · Économise $7.20', desc: 'Pour voyageurs et personnes qui se déplacent en zones à risque.', feats: ['Tout Core Safety inclus', 'Navigation sécurisée anti-crime', "Détection déviation d'itinéraire", 'Alertes prédictives zones à venir', 'Rapport de risque destination', 'Signalements illimités'], cta: '3 mois gratuits → Whitelist', best: true },
-    { name: 'Premium Protection', monthly: '7.99', annual: '6.39', annualTxt: 'Soit $76.68/an · Économise $19.20', desc: 'Pour professionnels en mission, expats, et familles avec proches en zone à risque.', feats: ['Tout Smart Safety inclus', 'Assistant IA sécurité 24/7', 'Rapport de risque personnalisé', 'Enregistrement audio auto SOS', 'Dashboard famille complet', 'Support prioritaire 24/7'], cta: 'Rejoindre la whitelist', ghost: true },
-  ]
-
   // FAQ
   const faqs = [
     { q: "Comment fonctionne le SOS sans regarder l'écran ?", a: "Tu triple-cliques sur le bouton volume physique de ton téléphone, en mode veille ou dans ta poche. Sekura détecte ce pattern et envoie silencieusement ta position GPS exacte à tes 5 contacts de confiance, par notification push ET SMS. Rien ne s'affiche à l'écran." },
@@ -479,15 +450,46 @@ export default function App() {
     ['Assistant IA sécurité 24/7', '✓', '✕', '✕', '✕'],
   ]
 
-  // Marquee items
-  const marqueeItems = [
-    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'MEDELLÍN · BETA #12' },
-    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'LONDON · SOLO TRAVELER' },
-    { av: 'L', bg: 'linear-gradient(135deg,#00cec9,#00b894)', name: 'Lucas F.', loc: 'SÃO PAULO · BETA #7' },
-    { av: 'P', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Pierre D.', loc: 'PARIS · ONG INTERNATIONALE' },
-    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX · ESTUDIANTE' },
-    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'SYDNEY · DIGITAL NOMAD' },
-    { av: 'M', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Marco A.', loc: 'BOGOTÁ · EXPAT' },
+  // Testimonials
+  const testimonials = [
+    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'Medellín', q: 'Enfin une app qui comprend nos réalités. Le SOS discret est génial — personne ne voit que tu demandes de l\'aide.' },
+    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'London', q: 'J\'ai testé la beta à Bogotá. La heatmap m\'a évité 2 zones à risque. Ça marche vraiment.' },
+    { av: 'L', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Lucas F.', loc: 'São Paulo', q: 'Mes parents sont rassurés depuis que j\'ai Sekura. Le suivi GPS est discret et efficace.' },
+    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX', q: 'L\'assistant IA connaît vraiment ma ville. Ses conseils sont précis et locaux.', feat: true },
+    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'Sydney', q: 'Perfect for solo travel. The offline SOS saved me in rural Colombia.' },
+    { av: 'M', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Marco A.', loc: 'Bogotá', q: 'Simple, efficace, discret. Exactement ce qu\'il fallait pour nos villes.' },
+  ]
+
+  // Pricing plans
+  const plans = [
+    {
+      name: 'Core Safety',
+      price: 'Gratuit',
+      per: '',
+      desc: 'Les fonctionnalités essentielles pour ta sécurité quotidienne.',
+      feats: ['Heatmap IA des zones à risque', 'SOS discret (triple-clic volume)', 'Suivi GPS temps réel', 'Alertes communautaires', '5 contacts de confiance'],
+      cta: 'Commencer gratuitement',
+      ghost: true
+    },
+    {
+      name: 'Smart Safety',
+      monthly: 2.99,
+      annual: 2.39,
+      annualTxt: 'Facturé 28.68€/an',
+      desc: 'Navigation intelligente et alertes prédictives.',
+      feats: ['Tout Core Safety +', 'Navigation anti-crime', 'Alertes prédictives', 'Mode nuit adaptatif', 'Rapports de sécurité'],
+      cta: 'Essayer Smart Safety',
+      best: true
+    },
+    {
+      name: 'Premium',
+      monthly: 7.99,
+      annual: 6.39,
+      annualTxt: 'Facturé 76.68€/an',
+      desc: 'Assistant IA et fonctionnalités avancées.',
+      feats: ['Tout Smart Safety +', 'Assistant IA sécurité 24/7', 'Analyse prédictive avancée', 'Support prioritaire', 'Données historiques'],
+      cta: 'Choisir Premium'
+    }
   ]
 
   return (
@@ -515,11 +517,42 @@ export default function App() {
           <a href="#how">Comment ça marche</a>
           <a href="#features">Fonctionnalités</a>
           <a href="#demo">Démo</a>
-          <a href="#pricing">Tarifs</a>
           <a href="#faq">FAQ</a>
         </div>
         <div className="nav-right">
           <span className="nav-count">● {sc} déjà inscrits</span>
+          
+          {/* Language Switcher */}
+          <div className={`lang-switcher ${langMenuOpen ? 'open' : ''}`}>
+            <button 
+              className="lang-current" 
+              onClick={() => setLangMenuOpen(!langMenuOpen)}
+              aria-haspopup="true" 
+              aria-expanded={langMenuOpen}
+              aria-label="Changer de langue"
+            >
+              <span className="lang-flag">{langData[currentLang].flag}</span>
+              <span className="lang-code">{langData[currentLang].code}</span>
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" className="lang-arrow">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </button>
+            <div className="lang-menu" role="menu" aria-hidden={!langMenuOpen}>
+              <a href="/" className={`lang-option ${currentLang === 'fr' ? 'active' : ''}`} role="menuitem" hrefLang="fr">
+                <span>🇫🇷</span><span>Français</span>
+              </a>
+              <a href="/en/" className={`lang-option ${currentLang === 'en' ? 'active' : ''}`} role="menuitem" hrefLang="en">
+                <span>🇬🇧</span><span>English</span>
+              </a>
+              <a href="/es/" className={`lang-option ${currentLang === 'es' ? 'active' : ''}`} role="menuitem" hrefLang="es">
+                <span>🇪🇸</span><span>Español</span>
+              </a>
+              <a href="/pt/" className={`lang-option ${currentLang === 'pt' ? 'active' : ''}`} role="menuitem" hrefLang="pt">
+                <span>🇧🇷</span><span>Português</span>
+              </a>
+            </div>
+          </div>
+          
           <button className="nav-cta" onClick={scrollToCTA}>Rejoindre — Gratuit →</button>
         </div>
       </nav>
@@ -533,21 +566,6 @@ export default function App() {
           <div className="hero-cta-wrap">
             <button className="btn-primary" onClick={scrollToCTA}>Rejoindre la whitelist gratuitement →</button>
             <div className="hero-trust"><span>🔒 Gratuit pour toujours</span><span>· Aucun spam ·</span><span>⚡ 3 mois Smart Safety offerts</span></div>
-          </div>
-        </R>
-        <R>
-          <div className="proof-strip">
-            <div className="avatars">
-              {[{ l: 'V', bg: '#ff6b6b,#ee5a24' }, { l: 'E', bg: '#a29bfe,#6c5ce7' }, { l: 'L', bg: '#00cec9,#00b894' }, { l: 'P', bg: '#fdcb6e,#e17055' }, { l: 'C', bg: '#fd79a8,#e84393' }].map((a, i) => (
-                <div key={i} className="av" style={{ background: `linear-gradient(135deg,${a.bg})`, color: '#fff' }}>{a.l}</div>
-              ))}
-              <div className="av av-extra">+{sc - 5}</div>
-            </div>
-            <div className="proof-meta">
-              <div className="stars">★★★★★</div>
-              <div className="proof-txt"><strong>{sc} personnes</strong> protégées en beta · Note 4.9/5</div>
-            </div>
-            <div className="live-badge"><span className="live-dot" /><span suppressHydrationWarning>{liveN}</span> inscriptions ces dernières 24h</div>
           </div>
         </R>
 
@@ -610,19 +628,6 @@ export default function App() {
           <div className="phones-glow" />
         </R>
       </section>
-
-      {/* ══════ MARQUEE ══════ */}
-      <div className="marquee-wrap">
-        <div className="marquee-track">
-          {[...marqueeItems, ...marqueeItems].map((m, i) => (
-            <div key={i} className="mitem">
-              <div className="mav" style={{ background: m.bg, color: '#fff' }}>{m.av}</div>
-              <div><div className="mname">{m.name}</div><div className="mloc">{m.loc}</div></div>
-              <div className="mstars">★★★★★</div>
-            </div>
-          ))}
-        </div>
-      </div>
 
       {/* ══════ PRESS ══════ */}
       <R className="press-bar">
@@ -817,65 +822,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* ══════ TESTIMONIALS ══════ */}
-      <section className="sec" id="proof" style={{ background: 'var(--ink-2)' }}>
-        <div className="wrap">
-          <R tag="span" className="eyebrow">06 / Ils l'ont testé</R>
-          <R><h2 className="sec-h">{sc} personnes protégées.<br />Voici ce qu'elles disent.</h2></R>
-          <div className="tgrid">
-            {testimonials.map((t, i) => (
-              <R key={i} className={`tcard ${t.feat ? 'tcard-feat' : ''}`} delay={i * 80}>
-                <div className="t-stars">★★★★★</div>
-                <p className="t-q">&quot;{t.q}&quot;</p>
-                <div className="t-author"><div className="t-av" style={{ background: t.bg, color: '#fff' }}>{t.av}</div><div><div className="t-name">{t.name}</div><div className="t-loc">{t.loc}</div></div></div>
-              </R>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ══════ PRICING ══════ */}
-      <section className="sec price-sec" id="pricing">
-        <div className="wrap">
-          <R tag="span" className="eyebrow">07 / Tarifs</R>
-          <R><h2 className="sec-h">Simple. Transparent. Sans surprise.</h2></R>
-          <R><p className="sec-p" style={{ marginBottom: 30 }}>Les 500 premiers inscrits à la whitelist reçoivent 3 mois Smart Safety gratuits.</p></R>
-          <R>
-            <div className="price-toggle-wrap">
-              <span className={`toggle-label ${!isAnnual ? 'active' : ''}`}>Mensuel</span>
-              <div className={`toggle ${isAnnual ? 'on' : ''}`} onClick={() => setIsAnnual(!isAnnual)}><div className="toggle-knob" /></div>
-              <span className={`toggle-label ${isAnnual ? 'active' : ''}`}>Annuel</span>
-              <span className="toggle-save">Économise 20%</span>
-            </div>
-          </R>
-          <div className="pgrid">
-            {plans.map((p, i) => (
-              <R key={i} className={`pcard ${p.best ? 'pcard-best' : ''}`} delay={i * 100}>
-                <div className="p-name">{p.name}</div>
-                {p.price ? (
-                  <><div className="p-price">{p.price}<span className="pper">{p.per}</span></div><div className="p-annual" style={{ opacity: 0 }}>—</div></>
-                ) : (
-                  <><div className="p-price"><span className="psup">$</span><span>{isAnnual ? p.annual : p.monthly}</span><span className="pper"> /mois</span></div>
-                  <div className="p-annual" style={{ opacity: isAnnual ? 1 : 0 }}>{p.annualTxt}</div></>
-                )}
-                <p className="p-desc">{p.desc}</p>
-                <div className="p-feats">{p.feats.map((f, j) => <div key={j} className="p-feat"><span className="p-feat-chk">✓</span>{f}</div>)}</div>
-                <button className={`p-cta ${p.ghost ? 'p-ghost' : 'p-jade'}`} onClick={scrollToCTA}>{p.cta}</button>
-              </R>
-            ))}
-          </div>
-          <R className="roi-bar">
-            <div className="roi-item"><strong>Smart Safety</strong> = moins qu'un café par mois</div>
-            <span className="roi-sep">·</span>
-            <div className="roi-item">Sans carte bancaire pour la whitelist</div>
-            <span className="roi-sep">·</span>
-            <div className="roi-item">Annule à tout moment</div>
-            <span className="roi-sep">·</span>
-            <div className="roi-item"><strong>3 mois offerts</strong> pour les 500 premiers</div>
-          </R>
-        </div>
-      </section>
-
       {/* ══════ FAQ ══════ */}
       <section className="sec faq-sec" id="faq">
         <div className="wrap">
@@ -924,7 +870,7 @@ export default function App() {
             <p className="ft-desc">Le garde du corps numérique pour les femmes, voyageurs et familles — en Europe, en Amérique Latine, partout où tu vas.</p>
             <div className="ft-soc"><a className="ft-soc-btn" href="#">𝕏</a><a className="ft-soc-btn" href="#">in</a><a className="ft-soc-btn" href="#">📸</a><a className="ft-soc-btn" href="#">♪</a></div>
           </div>
-          <div className="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Comment ça marche</a><a href="#">Tarifs</a><a href="#">FAQ</a></div>
+          <div className="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Comment ça marche</a><a href="#">FAQ</a></div>
           <div className="ft-col"><h4>Marchés</h4><a href="#">Mexique · CDMX</a><a href="#">Colombie · Medellín</a><a href="#">Brésil · São Paulo</a><a href="#">Europe · Voyageurs</a></div>
           <div className="ft-col"><h4>Légal</h4><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Presse</a><a href="#">Contact</a></div>
         </div>
@@ -936,32 +882,6 @@ export default function App() {
 
       {/* ══════ FLOATING CTA ══════ */}
       <button id="float-cta" onClick={scrollToCTA}>🛡️ Rejoindre gratuitement →</button>
-
-      {/* ══════ LIVE TOAST ══════ */}
-      {toastD && (
-        <div id="live-toast" className={toastVis ? 'show' : ''}>
-          <div className="toast-av" style={{ background: toastD.bg, color: '#fff' }}>{toastD.av}</div>
-          <div>
-            <div className="toast-txt"><strong>{toastD.name}</strong> vient de s'inscrire</div>
-            <span className="toast-time">À l'instant · {toastD.loc}</span>
-          </div>
-        </div>
-      )}
-
-      {/* ══════ EXIT MODAL ══════ */}
-      <div id="exit-modal" className={exitVis ? 'show' : ''} onClick={(e) => { if (e.target.id === 'exit-modal') setExitVis(false) }}>
-        <div className="exit-card">
-          <button className="exit-close" onClick={() => setExitVis(false)}>✕ Fermer</button>
-          <span className="exit-em">🛡️</span>
-          <h3 className="exit-h">Attends — une dernière chose.</h3>
-          <p className="exit-sub">Il reste <strong style={{ color: 'var(--jade)' }}>{spots}</strong> places early bird. Une fois fermées, l'offre 3 mois gratuits disparaît pour toujours.</p>
-          <div className="exit-form">
-            <input type="email" className="exit-input" placeholder="ton@email.com" value={exitEmail} onChange={e => setExitEmail(e.target.value)} />
-            <button className="btn-primary" onClick={handleExitSignup} style={{ width: '100%', justifyContent: 'center', borderRadius: 'var(--r8)' }}>Sécuriser ma place →</button>
-            <button className="exit-cancel" onClick={() => setExitVis(false)}>Non merci, je préfère payer plus tard</button>
-          </div>
-        </div>
-      </div>
     </>
   )
 }
