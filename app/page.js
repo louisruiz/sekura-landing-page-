@@ -535,7 +535,7 @@ export default function App() {
       num: '01 / 10', tag: t.feat1Tag, tagCls: 'tag-free',
       h: t.feat1H,
       p: t.feat1P,
-      bullets: ['Zones colorées par niveau de risque en temps réel', 'Mise à jour depuis sources locales vérifiées', 'Disponible pour toute ville du monde dès le lancement'],
+      bullets: [t.feat1Bullet1, t.feat1Bullet2, t.feat1Bullet3],
       bulletColor: '',
       card: (
         <div className="fcard"><div className="fcard-inner">
@@ -560,7 +560,7 @@ export default function App() {
       num: '02 / 10', tag: t.feat2Tag, tagCls: 'tag-crit',
       h: t.feat2H,
       p: t.feat2P,
-      bullets: ['Activable la main dans la poche, sac fermé', "Aucune donnée affichée à l'écran pendant l'alerte", "SMS envoyé même sans l'app chez les contacts"],
+      bullets: [t.feat2Bullet1, t.feat2Bullet2, t.feat2Bullet3],
       bulletColor: 'var(--pulse)',
       reverse: true,
       card: (
@@ -587,7 +587,7 @@ export default function App() {
       num: '03 / 10', tag: t.feat3Tag, tagCls: 'tag-smart',
       h: t.feat3H,
       p: t.feat3P,
-      bullets: ['Recalcul automatique si une zone devient dangereuse', "Alertes préventives avant d'entrer dans une zone à risque", 'Mode nuit — profil de risque adapté aux heures tardives'],
+      bullets: [t.feat3Bullet1, t.feat3Bullet2, t.feat3Bullet3],
       bulletColor: 'var(--sky)',
       card: (
         <div className="fcard"><div className="fcard-inner">
@@ -898,26 +898,26 @@ export default function App() {
             <R className="stat-c">
               <div className="stat-num" style={{ color: 'var(--pulse)' }}><sup>1/</sup><AnimCounter target={3} /></div>
               <div className="stat-h">{t.stat1Text}</div>
-              <p className="stat-p">En France, au Royaume-Uni, en Espagne, en Colombie, au Brésil — la peur de bouger seule la nuit est universelle. Aucune app grand public n'y répond sérieusement.</p>
-              <div className="stat-src">Source · Haut Conseil à l'Égalité · France 2024</div>
+              <p className="stat-p">{t.stat1Desc}</p>
+              <div className="stat-src">{t.stat1Source}</div>
             </R>
             <R className="stat-c" delay={100}>
               <div className="stat-num" style={{ color: 'var(--gold)' }}><AnimCounter target={40} /><sup>/50</sup></div>
               <div className="stat-h">{t.stat2Text}</div>
-              <p className="stat-p">12M de touristes européens visitent l'Amérique Latine sans connaître la géographie des risques locaux. Aucun guide ne les protège en temps réel.</p>
-              <div className="stat-src">Source · World Population Review 2025</div>
+              <p className="stat-p">{t.stat2Desc}</p>
+              <div className="stat-src">{t.stat2Source}</div>
             </R>
             <R className="stat-c" delay={200}>
               <div className="stat-num" style={{ color: 'var(--sky)' }}><AnimCounter target={30} />–<AnimCounter target={60} /><span style={{ fontSize: '1.8rem', fontWeight: 700 }}>min</span></div>
               <div className="stat-h">{t.stat3Text}</div>
-              <p className="stat-p">En 30 minutes, tout peut être trop tard. Il faut alerter ses proches en secondes, pas en minutes — et sans que personne autour ne le remarque.</p>
-              <div className="stat-src">Source · Étude marché Sekura 2026</div>
+              <p className="stat-p">{t.stat3Desc}</p>
+              <div className="stat-src">{t.stat3Source}</div>
             </R>
             <R className="stat-c" delay={300} style={{ background: 'linear-gradient(135deg,rgba(0,229,160,.04),var(--ink-3))', borderColor: 'var(--jade-b)' }}>
               <div className="stat-num" style={{ color: 'var(--jade)' }}><AnimCounter target={0} /></div>
               <div className="stat-h">{t.stat4Text}</div>
-              <p className="stat-p">Life360, bSafe, Noonlight : pensées pour les États-Unis. Aucune SOS sans regarder l'écran, aucune heatmap locale, aucun mode offline robuste. Sekura change ça.</p>
-              <div className="stat-src">Source · Analyse concurrentielle Sekura</div>
+              <p className="stat-p">{t.stat4Desc}</p>
+              <div className="stat-src">{t.stat4Source}</div>
             </R>
           </div>
         </div>
