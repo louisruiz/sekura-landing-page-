@@ -853,7 +853,7 @@ export default function App() {
       <section className="sec prob-sec">
         <div className="wrap">
           <R tag="span" className="eyebrow">01 / Le Problème</R>
-          <R><h2 className="prob-headline">L'insécurité n'est pas un problème <span style={{ color: 'var(--t2)' }}>"là-bas".</span><br />C'est ici. C'est maintenant.</h2></R>
+          <R><h2 className="prob-headline"><span className="sk-glitch" data-text="L'insécurité n'est pas un problème">L'insécurité n'est pas un problème</span> <span style={{ color: 'var(--t2)' }}>"là-bas".</span><br />C'est ici. C'est maintenant.</h2></R>
           <R><p className="sec-p">Aucun outil n'a été conçu pour cette réalité — jusqu'à aujourd'hui.</p></R>
           <div className="stats-grid">
             <R className="stat-c">
@@ -888,7 +888,7 @@ export default function App() {
       <section className="sec steps-sec" id="how">
         <div className="wrap">
           <R tag="span" className="eyebrow">02 / Comment ça marche</R>
-          <R><h2 className="sec-h">En 3 étapes. Moins de 60 secondes.</h2></R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text="En 3 étapes. Moins de 60 secondes.">En 3 étapes. Moins de 60 secondes.</span></h2></R>
           <R><p className="sec-p">Tu n'as pas à changer ton comportement. Sekura s'adapte à ta vie, pas l'inverse.</p></R>
           <div className="steps-grid">
             {[
@@ -935,7 +935,7 @@ export default function App() {
       <section className="sec compare-sec">
         <div className="wrap">
           <R tag="span" className="eyebrow">04 / Comparaison</R>
-          <R><h2 className="sec-h">Sekura vs les autres.<br /><span style={{ color: 'var(--jade)' }}>Il n'y a pas vraiment de match.</span></h2></R>
+          <R><h2 className="sec-h">Sekura vs les autres.<br /><span className="sk-glitch" data-text="Il n'y a pas vraiment de match." style={{ color: 'var(--jade)' }}>Il n'y a pas vraiment de match.</span></h2></R>
           <R><table className="compare-tbl" style={{ marginTop: 68 }}>
             <thead><tr><th>Fonctionnalité</th><th className="col-sk col-sk-h">SEKURA</th><th>Life360</th><th>bSafe</th><th>Noonlight</th></tr></thead>
             <tbody>
@@ -954,7 +954,7 @@ export default function App() {
       <section className="sec" id="profiles" style={{ background: 'var(--ink-1)' }}>
         <div className="wrap">
           <R tag="span" className="eyebrow">05 / Pour qui ?</R>
-          <R><h2 className="sec-h">Sekura s'adapte à ton profil.</h2></R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text="Sekura s'adapte à ton profil.">Sekura s'adapte à ton profil.</span></h2></R>
           <R><p className="sec-p" style={{ marginBottom: 36 }}>Trois réalités très différentes. Une seule app.</p></R>
           <R>
             <div className="ptabs">
@@ -991,7 +991,7 @@ export default function App() {
       <section className="sec faq-sec" id="faq">
         <div className="wrap">
           <R tag="span" className="eyebrow">08 / Questions fréquentes</R>
-          <R><h2 className="sec-h">On répond à tes questions.</h2></R>
+          <R><h2 className="sec-h"><span className="sk-glitch" data-text="On répond à tes questions.">On répond à tes questions.</span></h2></R>
           <R>
             <div className="faq-grid">
               {faqs.map((f, i) => (
@@ -1013,7 +1013,7 @@ export default function App() {
             <div className="pb-track"><div className="pb-fill" style={{ width: (sc / 500 * 100) + '%' }} /></div>
             <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> places restantes</div>
           </R>
-          <R><h2 className="fcta-h">Sois parmi les premiers.<br /><span className="sk-glitch" data-text="Rejoins la whitelist."><em>Rejoins la whitelist.</em></span></h2></R>
+          <R><h2 className="fcta-h">Sois parmi les premiers.<br /><em className="sk-glitch" data-text="Rejoins la whitelist.">Rejoins la whitelist.</em></h2></R>
           <R><p className="fcta-sub">Les 500 premiers inscrits obtiennent 3 mois de Smart Safety gratuit + accès beta fermée. Aucune carte bancaire. Tu peux te désinscrire en 1 clic.</p></R>
           <R>
             <div className="fcta-form">

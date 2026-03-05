@@ -715,6 +715,14 @@ footer{position:relative;z-index:2;border-top:1px solid var(--g1);padding:56px c
   clip-path: polygon(0 62%, 100% 62%, 100% 100%, 0 100%);
   animation: glitch-bot 6s ease-in-out infinite 4s;
 }
+/* Preserve gradient for .fcta-h em */
+.fcta-h em.sk-glitch::before,
+.fcta-h em.sk-glitch::after {
+  background:linear-gradient(135deg,var(--jade),var(--sky));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
 @keyframes glitch-top {
   0%,88%,100% { transform:translate(0); opacity:1; }
   90%          { transform:translate(-3px,-1px); opacity:.8; filter:hue-rotate(25deg); }
