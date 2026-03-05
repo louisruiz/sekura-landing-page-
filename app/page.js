@@ -612,22 +612,22 @@ export default function App() {
     },
     {
       num: '08 / 10', tag: 'Premium · $7.99/mois', tagCls: 'tag-prem',
-      h: 'Assistant IA sécurité 24/7',
-      p: "Powered by Claude (Anthropic). Répond à tes questions de sécurité en contexte local — ta ville, ce soir, maintenant. Des réponses concrètes, pas génériques.",
-      bullets: ['Connaissance locale : quartiers, risques, arnaques à éviter', 'Intégré nativement avec la heatmap et la navigation', 'Disponible en français, espagnol, portugais, anglais'],
+      h: t.aiAssistantH,
+      p: t.aiAssistantP,
+      bullets: [t.aiAssistantBullet1, t.aiAssistantBullet2, t.aiAssistantBullet3],
       bulletColor: 'var(--violet)',
       reverse: true,
       card: (
         <div className="fcard" style={{ background: 'linear-gradient(135deg,rgba(0,229,160,.04),var(--ink-2))', borderColor: 'rgba(0,229,160,.15)' }}>
           <div className="fcard-inner">
             <div className="fcard-head">
-              <span className="fcard-title">Assistant IA · 24/7</span>
+              <span className="fcard-title">{t.aiAssistantTitle}</span>
               <span style={{ fontFamily: 'var(--mono)', fontSize: '.48rem', color: 'var(--jade)', background: 'var(--jade-bg)', padding: '2px 8px', borderRadius: 4, border: '1px solid var(--jade-b)', fontWeight: 700, letterSpacing: '.05em' }}>Claude AI</span>
             </div>
             <div className="fchat">
-              <div className="chat-q">&quot;Est-ce sûr d'aller à Chapinero ce soir ?&quot;</div>
-              <div className="chat-a">⚠️ Niveau modéré. 2 incidents Calle 60 après 22h. Itinéraire via Carrera 13 — niveau LOW. Je l'ouvre dans la navigation ?</div>
-              <div className="chat-q">&quot;Quel taxi appeler à CDMX ?&quot;</div>
+              <div className="chat-q">{t.aiAssistantQ1}</div>
+              <div className="chat-a">{t.aiAssistantA1}</div>
+              <div className="chat-q">{t.aiAssistantQ2}</div>
               <div className="chat-typing"><div className="typing-dot" /><div className="typing-dot" /><div className="typing-dot" /></div>
             </div>
           </div>
@@ -653,51 +653,51 @@ export default function App() {
   // Profiles tabs data
   const profiles = [
     {
-      tab: '👩 Femme', title: 'Femme · Partout dans le monde',
-      desc: "Tu rentres seule le soir. Tu évites certaines rues. À Paris, à Londres, à Bogota — c'est la même peur. Tu veux de la discrétion, pas paraître vulnérable.",
+      tab: t.prof1Tab, title: t.prof1Title,
+      desc: t.prof1Desc,
       feats: [
-        { icon: '🤫', title: 'SOS discret · triple-clic volume', desc: "Invisible, sans regarder l'écran, depuis ta poche" },
-        { icon: '⚡', title: 'Alertes prédictives', desc: "Avertie AVANT d'entrer dans une zone à risque" },
-        { icon: '🧭', title: 'Navigation sécurisée quotidienne', desc: 'Ton trajet du soir optimisé pour ta sécurité' },
-        { icon: '⏱', title: "Timer d'arrivée", desc: "Si tu n'arrives pas à l'heure, tes proches sont alertés auto" },
+        { icon: '🤫', title: t.prof1Feat1Title, desc: t.prof1Feat1Desc },
+        { icon: '⚡', title: t.prof1Feat2Title, desc: t.prof1Feat2Desc },
+        { icon: '🧭', title: t.prof1Feat3Title, desc: t.prof1Feat3Desc },
+        { icon: '⏱', title: t.prof1Feat4Title, desc: t.prof1Feat4Desc },
       ],
-      scene: { em: '🌙', title: 'Paris · 23h30 · Métro Châtelet', desc: "Sekura t'a alertée 3 rues avant. Tu as pris le boulevard — 4 minutes de plus. Tu es arrivée." },
-      stats: [{ val: '0', lbl: 'Incidents ce soir', col: 'var(--jade)' }, { val: '3', lbl: 'Contacts notifiés', col: 'var(--sky)' }],
+      scene: { em: '🌙', title: t.prof1SceneTitle, desc: t.prof1SceneDesc },
+      stats: [{ val: t.prof1Stat1Val, lbl: t.prof1Stat1Lbl, col: 'var(--jade)' }, { val: t.prof1Stat2Val, lbl: t.prof1Stat2Lbl, col: 'var(--sky)' }],
     },
     {
-      tab: '✈️ Voyageur', title: 'Voyageur · Solo traveler · Expat',
-      desc: "Tu pars en Colombie, au Mexique, au Brésil. Tu ne connais pas la géographie des risques. Tu es une cible : touriste, téléphone visible, sans réseau local.",
+      tab: t.prof2Tab, title: t.prof2Title,
+      desc: t.prof2Desc,
       feats: [
-        { icon: '🗺️', title: "Heatmap IA dès l'atterrissage", desc: 'Connais ta zone en 30 secondes' },
-        { icon: '📊', title: 'Rapport de risque avant départ', desc: 'Zones à éviter, quartiers recommandés' },
-        { icon: '🤖', title: 'Assistant IA 24/7', desc: '"Est-ce sûr d\'aller ici ce soir ?" — réponse contextuelle' },
-        { icon: '📵', title: 'Mode offline total', desc: 'SOS par SMS — Amazonie, Andes, zones rurales' },
+        { icon: '🗺️', title: t.prof2Feat1Title, desc: t.prof2Feat1Desc },
+        { icon: '📊', title: t.prof2Feat2Title, desc: t.prof2Feat2Desc },
+        { icon: '🤖', title: t.prof2Feat3Title, desc: t.prof2Feat3Desc },
+        { icon: '📵', title: t.prof2Feat4Title, desc: t.prof2Feat4Desc },
       ],
-      scene: { em: '✈️', title: 'Medellín · Jour 1 · Atterrissage', desc: "Avant même de sortir de l'aéroport, Sekura t'a montré les zones à éviter et recommandé un taxi fiable." },
-      stats: [{ val: '30s', lbl: 'Briefing arrivée', col: 'var(--jade)' }, { val: '8+', lbl: 'Villes LATAM', col: 'var(--sky)' }],
+      scene: { em: '✈️', title: t.prof2SceneTitle, desc: t.prof2SceneDesc },
+      stats: [{ val: t.prof2Stat1Val, lbl: t.prof2Stat1Lbl, col: 'var(--jade)' }, { val: t.prof2Stat2Val, lbl: t.prof2Stat2Lbl, col: 'var(--sky)' }],
     },
     {
-      tab: '👨‍👩‍👧 Famille', title: 'Familles · Proches · Étudiants',
-      desc: "Ton fils prend le métro seul. Ta fille rentre de soirée. Tu veux être là sans être intrusif — juste savoir qu'ils sont arrivés.",
+      tab: t.prof3Tab, title: t.prof3Title,
+      desc: t.prof3Desc,
       feats: [
-        { icon: '📍', title: 'Suivi GPS temps réel', desc: 'Tous les membres sur un seul écran' },
-        { icon: '🔔', title: 'Geofencing intelligent', desc: "Alerte si sortie d'une zone définie" },
-        { icon: '✅', title: 'Check-in automatique', desc: "Confirmation d'arrivée sans action manuelle" },
-        { icon: '🔒', title: 'Chiffrement E2E', desc: 'Vos données restent entre vous — jamais partagées' },
+        { icon: '📍', title: t.prof3Feat1Title, desc: t.prof3Feat1Desc },
+        { icon: '🔔', title: t.prof3Feat2Title, desc: t.prof3Feat2Desc },
+        { icon: '✅', title: t.prof3Feat3Title, desc: t.prof3Feat3Desc },
+        { icon: '🔒', title: t.prof3Feat4Title, desc: t.prof3Feat4Desc },
       ],
-      scene: { em: '👧', title: 'Louis · 15 ans · Retour lycée', desc: '17h22 — check-in automatique reçu. "Arrivé à la maison." Tu n\'as rien eu à faire.' },
-      stats: [{ val: '5', lbl: 'Membres max', col: 'var(--jade)' }, { val: 'E2E', lbl: 'Chiffrement', col: 'var(--sky)' }],
+      scene: { em: '👧', title: t.prof3SceneTitle, desc: t.prof3SceneDesc },
+      stats: [{ val: t.prof3Stat1Val, lbl: t.prof3Stat1Lbl, col: 'var(--jade)' }, { val: t.prof3Stat2Val, lbl: t.prof3Stat2Lbl, col: 'var(--sky)' }],
     },
   ]
 
   // Comparison table
   const compRows = [
-    ["SOS sans regarder l'écran", '✓', '✕', '∼', '✕'],
-    ['Heatmap IA zones à risque', '✓', '✕', '✕', '✕'],
-    ['Navigation anti-crime', '✓', '✕', '✕', '✕'],
-    ['Mode offline total (SOS par SMS)', '✓', '∼', '∼', '✕'],
-    ['Couverture LATAM (données locales)', '✓', '✕', '✕', '✕'],
-    ['Assistant IA sécurité 24/7', '✓', '✕', '✕', '✕'],
+    [t.compFeat1, '✓', '✕', '∼', '✕'],
+    [t.compFeat2, '✓', '✕', '✕', '✕'],
+    [t.compFeat3, '✓', '✕', '✕', '✕'],
+    [t.compFeat4, '✓', '∼', '∼', '✕'],
+    [t.compFeat5, '✓', '✕', '✕', '✕'],
+    [t.compFeat6, '✓', '✕', '✕', '✕'],
   ]
 
   // Testimonials
@@ -976,14 +976,14 @@ export default function App() {
           <R tag="span" className="eyebrow">{t.compEyebrow}</R>
           <R><h2 className="sec-h">{t.compH}<br /><span className="sk-glitch" data-text={t.compHAccent} style={{ color: 'var(--jade)' }}>{t.compHAccent}</span></h2></R>
           <R><table className="compare-tbl" style={{ marginTop: 68 }}>
-            <thead><tr><th>Fonctionnalité</th><th className="col-sk col-sk-h">SEKURA</th><th>Life360</th><th>bSafe</th><th>Noonlight</th></tr></thead>
+            <thead><tr><th>{t.compTableHeader}</th><th className="col-sk col-sk-h">{t.compSekura}</th><th>Life360</th><th>bSafe</th><th>Noonlight</th></tr></thead>
             <tbody>
               {compRows.map((r, i) => (
                 <tr key={i}><td>{r[0]}</td>{r.slice(1).map((c, j) => (
                   <td key={j} className={j === 0 ? 'col-sk' : ''}><span className={c === '✓' ? 'ck-yes' : c === '✕' ? 'ck-no' : 'ck-part'}>{c}</span></td>
                 ))}</tr>
               ))}
-              <tr><td>Prix (plan de base)</td><td className="col-sk" style={{ color: 'var(--jade)', fontWeight: 700 }}>Gratuit</td><td>$7.99/mois</td><td>Gratuit</td><td>$9.99/mois</td></tr>
+              <tr><td>{t.compFeat7}</td><td className="col-sk" style={{ color: 'var(--jade)', fontWeight: 700 }}>{t.compFree}</td><td>$7.99/mois</td><td>{t.compFree}</td><td>$9.99/mois</td></tr>
             </tbody>
           </table></R>
         </div>
@@ -1071,21 +1071,21 @@ export default function App() {
         <div className="ft-grid">
           <div>
             <div className="ft-brand"><LogoSVG size={26} /><span className="ft-wordmark">SEKURA</span></div>
-            <p className="ft-desc">Le garde du corps numérique pour les femmes, voyageurs et familles — en Europe, en Amérique Latine, partout où tu vas.</p>
+            <p className="ft-desc">{t.footerDesc}</p>
             <div className="ft-soc"><a className="ft-soc-btn" href="#">𝕏</a><a className="ft-soc-btn" href="#">in</a><a className="ft-soc-btn" href="#">📸</a><a className="ft-soc-btn" href="#">♪</a></div>
           </div>
-          <div className="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Comment ça marche</a><a href="#">FAQ</a></div>
-          <div className="ft-col"><h4>Marchés</h4><a href="#">Mexique · CDMX</a><a href="#">Colombie · Medellín</a><a href="#">Brésil · São Paulo</a><a href="#">Europe · Voyageurs</a></div>
-          <div className="ft-col"><h4>Légal</h4><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Presse</a><a href="#">Contact</a></div>
+          <div className="ft-col"><h4>{t.footerProduct}</h4><a href="#">{t.footerFeatures}</a><a href="#">{t.footerHow}</a><a href="#">{t.footerFAQ}</a></div>
+          <div className="ft-col"><h4>{t.footerMarkets}</h4><a href="#">{t.footerMexico}</a><a href="#">{t.footerColombia}</a><a href="#">{t.footerBrazil}</a><a href="#">{t.footerEuropeTravelers}</a></div>
+          <div className="ft-col"><h4>{t.footerLegal}</h4><a href="#">{t.footerPrivacy}</a><a href="#">{t.footerTerms}</a><a href="#">{t.footerPress}</a><a href="#">{t.footerContact}</a></div>
         </div>
         <div className="ft-bottom">
-          <span className="ft-copy">© 2025 SEKURA · Outil d'aide à la sécurité, pas un service de secours professionnel.</span>
+          <span className="ft-copy">{t.footerCopyright}</span>
           <div className="ft-flags">🇲🇽 🇨🇴 🇧🇷 🇵🇪 🇫🇷 🇬🇧 🇺🇸 🇦🇺</div>
         </div>
       </footer>
 
       {/* ══════ FLOATING CTA ══════ */}
-      <button id="float-cta" onClick={scrollToCTA}>🛡️ Rejoindre gratuitement →</button>
+      <button id="float-cta" onClick={scrollToCTA}>{t.floatingCTA}</button>
     </>
   )
 }
