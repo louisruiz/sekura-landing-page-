@@ -126,6 +126,7 @@ export async function POST(request, { params }) {
           {
             email: email.toLowerCase(),
             lang,
+            locale: locale || lang,
             source,
             ip_address: ip,
             user_agent: userAgent
