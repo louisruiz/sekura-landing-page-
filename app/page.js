@@ -39,8 +39,6 @@ function AnimCounter({ target, prefix = '', suffix = '' }) {
   }, [target])
   return <span ref={ref}>{prefix}{val}{suffix}</span>
 }
-  }
-}
 
 /* ══════════════ LOGO SVG ══════════════ */
 function LogoSVG({ size = 32 }) {
@@ -534,9 +532,9 @@ export default function App() {
   // Features data
   const features = [
     {
-      num: '01 / 10', tag: 'Gratuit · Core Safety', tagCls: 'tag-free',
-      h: 'Heatmap IA des zones à risque',
-      p: "Carte vivante mise à jour toutes les 2 minutes. Analyse signalements communautaires + incidents locaux + presse locale. Granularité de 50m × 50m. Disponible partout dans le monde.",
+      num: '01 / 10', tag: t.feat1Tag, tagCls: 'tag-free',
+      h: t.feat1H,
+      p: t.feat1P,
       bullets: ['Zones colorées par niveau de risque en temps réel', 'Mise à jour depuis sources locales vérifiées', 'Disponible pour toute ville du monde dès le lancement'],
       bulletColor: '',
       card: (
@@ -559,16 +557,16 @@ export default function App() {
       )
     },
     {
-      num: '02 / 10', tag: 'Critique · Mode Discret', tagCls: 'tag-crit',
-      h: "SOS sans regarder l'écran",
-      p: "Triple-clic sur le bouton volume = SOS silencieux instantané. 5 contacts alertés avec GPS exact par notification + SMS. Rien à l'écran. Personne autour ne le voit.",
+      num: '02 / 10', tag: t.feat2Tag, tagCls: 'tag-crit',
+      h: t.feat2H,
+      p: t.feat2P,
       bullets: ['Activable la main dans la poche, sac fermé', "Aucune donnée affichée à l'écran pendant l'alerte", "SMS envoyé même sans l'app chez les contacts"],
       bulletColor: 'var(--pulse)',
       reverse: true,
       card: (
         <div className="fcard" style={{ background: 'linear-gradient(135deg,rgba(255,61,90,.04),var(--ink-2))', borderColor: 'rgba(255,61,90,.15)' }}>
           <div className="fcard-inner">
-            <div className="fcard-head"><span className="fcard-title">SOS Discret</span><span className="feat-tag tag-crit" style={{ margin: 0 }}>Critique</span></div>
+            <div className="fcard-head"><span className="fcard-title">{t.feat2H.split(' — ')[0]}</span><span className="feat-tag tag-crit" style={{ margin: 0 }}>{t.feat2Tag}</span></div>
             <div className="fsos">
               <div className="sos-btn" style={{ width: 78, height: 78, fontSize: '.98rem' }}>SOS</div>
               <div className="fsos-steps">
@@ -586,9 +584,9 @@ export default function App() {
       )
     },
     {
-      num: '03 / 10', tag: 'Smart Safety · $2.99/mois', tagCls: 'tag-smart',
-      h: 'Navigation sécurisée anti-crime',
-      p: "L'itinéraire qui évite les zones à risque actives, mis à jour en temps réel. Pas le chemin le plus court — le chemin le plus sûr. Avec 2 minutes de plus, tu arrives.",
+      num: '03 / 10', tag: t.feat3Tag, tagCls: 'tag-smart',
+      h: t.feat3H,
+      p: t.feat3P,
       bullets: ['Recalcul automatique si une zone devient dangereuse', "Alertes préventives avant d'entrer dans une zone à risque", 'Mode nuit — profil de risque adapté aux heures tardives'],
       bulletColor: 'var(--sky)',
       card: (
@@ -640,12 +638,16 @@ export default function App() {
 
   // FAQ
   const faqs = [
-    { q: "Comment fonctionne le SOS sans regarder l'écran ?", a: "Tu triple-cliques sur le bouton volume physique de ton téléphone, en mode veille ou dans ta poche. Sekura détecte ce pattern et envoie silencieusement ta position GPS exacte à tes 5 contacts de confiance, par notification push ET SMS. Rien ne s'affiche à l'écran." },
-    { q: "Est-ce que mes contacts doivent avoir l'app ?", a: "Non, c'est l'un des avantages clés de Sekura. Tes contacts reçoivent un SMS avec un lien de suivi qui s'ouvre directement dans le navigateur. Aucune installation requise. Ils voient ta position en temps réel sur une carte web." },
-    { q: "La heatmap est-elle disponible pour ma ville ?", a: "Oui. La heatmap est disponible pour n'importe quelle ville dans le monde dès le lancement. Les villes prioritaires (CDMX, Medellín, São Paulo, Bogotá, Paris, Londres) auront les données les plus précises." },
-    { q: "Que se passe-t-il si je n'ai pas de connexion internet ?", a: "Le SOS fonctionne en mode offline via SMS. Sekura utilise le réseau téléphonique classique (GSM) pour envoyer un message d'alerte avec ta dernière position GPS connue. Idéal pour les zones rurales, l'Amazonie, les Andes." },
-    { q: "Mes données de localisation sont-elles sécurisées ?", a: "Toutes les données de localisation sont chiffrées de bout en bout (E2E). Elles ne sont jamais partagées avec des tiers, jamais vendues. Tu peux supprimer toutes tes données à tout moment. Sekura est RGPD compliant." },
-    { q: "Quand sort l'app ? Sur quelles plateformes ?", a: "Sekura sort en beta fermée au Q3 2025 sur iOS et Android. Les 500 premiers inscrits à la whitelist obtiennent un accès prioritaire + 3 mois Smart Safety gratuits. Lancement public au Q4 2025 en Europe et Amérique Latine." },
+    { q: t.faq1Q, a: t.faq1A },
+    { q: t.faq2Q, a: t.faq2A },
+    { q: t.faq3Q, a: t.faq3A },
+    { q: t.faq4Q, a: t.faq4A },
+    { q: t.faq5Q, a: t.faq5A },
+    { q: t.faq6Q, a: t.faq6A },
+    { q: t.faq7Q, a: t.faq7A },
+    { q: t.faq8Q, a: t.faq8A },
+    { q: t.faq9Q, a: t.faq9A },
+    { q: t.faq10Q, a: t.faq10A },
   ]
 
   // Profiles tabs data
