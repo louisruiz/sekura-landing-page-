@@ -876,32 +876,6 @@ export default function App() {
 
       {/* ══════ FLOATING CTA ══════ */}
       <button id="float-cta" onClick={scrollToCTA}>🛡️ Rejoindre gratuitement →</button>
-
-      {/* ══════ LIVE TOAST ══════ */}
-      {toastD && (
-        <div id="live-toast" className={toastVis ? 'show' : ''}>
-          <div className="toast-av" style={{ background: toastD.bg, color: '#fff' }}>{toastD.av}</div>
-          <div>
-            <div className="toast-txt"><strong>{toastD.name}</strong> vient de s'inscrire</div>
-            <span className="toast-time">À l'instant · {toastD.loc}</span>
-          </div>
-        </div>
-      )}
-
-      {/* ══════ EXIT MODAL ══════ */}
-      <div id="exit-modal" className={exitVis ? 'show' : ''} onClick={(e) => { if (e.target.id === 'exit-modal') setExitVis(false) }}>
-        <div className="exit-card">
-          <button className="exit-close" onClick={() => setExitVis(false)}>✕ Fermer</button>
-          <span className="exit-em">🛡️</span>
-          <h3 className="exit-h">Attends — une dernière chose.</h3>
-          <p className="exit-sub">Il reste <strong style={{ color: 'var(--jade)' }}>{spots}</strong> places early bird. Une fois fermées, l'offre 3 mois gratuits disparaît pour toujours.</p>
-          <div className="exit-form">
-            <input type="email" className="exit-input" placeholder="ton@email.com" value={exitEmail} onChange={e => setExitEmail(e.target.value)} />
-            <button className="btn-primary" onClick={handleExitSignup} style={{ width: '100%', justifyContent: 'center', borderRadius: 'var(--r8)' }}>Sécuriser ma place →</button>
-            <button className="exit-cancel" onClick={() => setExitVis(false)}>Non merci, je préfère payer plus tard</button>
-          </div>
-        </div>
-      </div>
     </>
   )
 }
