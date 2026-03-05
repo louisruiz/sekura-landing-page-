@@ -424,17 +424,6 @@ export default function App() {
     ['Assistant IA sécurité 24/7', '✓', '✕', '✕', '✕'],
   ]
 
-  // Marquee items
-  const marqueeItems = [
-    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'MEDELLÍN · BETA #12' },
-    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'LONDON · SOLO TRAVELER' },
-    { av: 'L', bg: 'linear-gradient(135deg,#00cec9,#00b894)', name: 'Lucas F.', loc: 'SÃO PAULO · BETA #7' },
-    { av: 'P', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Pierre D.', loc: 'PARIS · ONG INTERNATIONALE' },
-    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX · ESTUDIANTE' },
-    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'SYDNEY · DIGITAL NOMAD' },
-    { av: 'M', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Marco A.', loc: 'BOGOTÁ · EXPAT' },
-  ]
-
   // Testimonials
   const testimonials = [
     { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'Medellín', q: 'Enfin une app qui comprend nos réalités. Le SOS discret est génial — personne ne voit que tu demandes de l\'aide.' },
