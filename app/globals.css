@@ -231,7 +231,12 @@ h1{
 .stitle{display:block;font-size:.5rem;color:var(--t1);font-weight:700;margin-bottom:2px}
 
 .contacts-row{display:flex;gap:5px;flex-shrink:0}
-.contact-c{flex:1;background:rgba(255,255,255,.03);border:1px solid var(--g1);border-radius:8px;padding:6px 4px;text-align:center}
+.contact-c{flex:1;background:rgba(255,255,255,.03);border:1px solid var(--g1);border-radius:8px;padding:6px 4px;text-align:center;animation:bounce-soft 3s ease-in-out infinite;animation-delay:calc(var(--c) * 0.2s)}
+.contact-c:nth-child(1){--c:0}
+.contact-c:nth-child(2){--c:1}
+.contact-c:nth-child(3){--c:2}
+.contact-c:nth-child(4){--c:3}
+.contact-c:nth-child(5){--c:4}
 .c-av{width:20px;height:20px;border-radius:50%;margin:0 auto 3px;display:flex;align-items:center;justify-content:center;font-size:.48rem;font-weight:700}
 .c-name{font-size:.44rem;font-weight:600;margin-bottom:1px}
 .c-live{font-size:.4rem;color:var(--jade);font-weight:600}
