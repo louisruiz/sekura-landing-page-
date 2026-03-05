@@ -376,15 +376,18 @@ h1{
 .fml{display:flex;align-items:center;gap:5px;font-family:var(--mono);font-size:.54rem;color:var(--t2)}
 .fml-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* SOS mock */
+/* SOS mock — Avec animations */
 .fsos{display:flex;flex-direction:column;align-items:center;gap:18px;padding:20px 0}
 .fsos-steps{display:flex;gap:6px;align-items:center}
-.fsos-step{background:var(--ink-3);border:1px solid var(--g2);border-radius:7px;padding:6px 11px;font-family:var(--mono);font-size:.6rem;color:var(--t2);text-align:center}
+.fsos-step{background:var(--ink-3);border:1px solid var(--g2);border-radius:7px;padding:6px 11px;font-family:var(--mono);font-size:.6rem;color:var(--t2);text-align:center;animation:bounce-soft 2s ease-in-out infinite;animation-delay:calc(var(--i) * 0.2s)}
+.fsos-step:nth-child(1){--i:0}
+.fsos-step:nth-child(3){--i:1}
+.fsos-step:nth-child(5){--i:2}
 .fsos-arr{color:var(--t3);font-size:.65rem}
 .fsos-compare{display:grid;grid-template-columns:1fr 1fr;gap:7px;width:100%}
-.fsos-bad{background:var(--pulse-bg);border:1px solid var(--pulse-b);border-radius:9px;padding:11px;font-size:.68rem;color:var(--t2)}
+.fsos-bad{background:var(--pulse-bg);border:1px solid var(--pulse-b);border-radius:9px;padding:11px;font-size:.68rem;color:var(--t2);animation:pulse-glow 2s ease-in-out infinite}
 .fsos-bad-l{color:var(--pulse);font-family:var(--mono);font-weight:700;font-size:.58rem;margin-bottom:3px;display:block;letter-spacing:.05em;text-transform:uppercase}
-.fsos-good{background:var(--jade-bg);border:1px solid var(--jade-b);border-radius:9px;padding:11px;font-size:.68rem;color:var(--t2)}
+.fsos-good{background:var(--jade-bg);border:1px solid var(--jade-b);border-radius:9px;padding:11px;font-size:.68rem;color:var(--t2);animation:pulse-glow 2s ease-in-out infinite .5s}
 .fsos-good-l{color:var(--jade);font-family:var(--mono);font-weight:700;font-size:.58rem;margin-bottom:3px;display:block;letter-spacing:.05em;text-transform:uppercase}
 
 /* Route mock */
