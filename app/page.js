@@ -218,7 +218,7 @@ export default function App() {
       const res = await fetch('/api/waitlist', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, lang: 'fr', source, honeypot: '' })
+        body: JSON.stringify({ email, lang: currentLang, locale: currentLang, source, honeypot: '' })
       })
       const data = await res.json()
       if (data.success) {
