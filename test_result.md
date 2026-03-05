@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: "Build the complete Sekura personal safety app landing page with functional waitlist (Supabase + Resend), dark premium design, 10 feature sections, testimonials carousel, pricing, FAQ accordion, phone mockup, language switcher (FR/EN/ES/PT), scroll animations."
+user_problem_statement: "Build the complete Sekura personal safety app landing page with functional waitlist (Supabase + Resend), dark premium design, 10 feature sections, testimonials carousel, pricing, FAQ accordion, phone mockup, language switcher (FR/EN/ES/PT), scroll animations. [UPDATE 2025-03-05] Add 3 enhancements: (1) World map animated canvas background with cities/links/pulses, (2) Glitch effect on main titles, (3) Semi-transparent section backgrounds to show canvas."
 
 backend:
   - task: "POST /api/waitlist - Email subscription with Supabase storage"
@@ -180,6 +180,42 @@ frontend:
       - working: true
         agent: "main"
         comment: "All 8 sections render - confirmed by checking section IDs in HTML. Hero screenshot confirmed beautiful design."
+
+  - task: "World Map Canvas Background"
+    implemented: true
+    working: true
+    file: "app/page.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Replaced AuroraCanvas with WorldMapCanvas featuring 17 cities (CDMX, Paris, Tokyo, etc.), animated links between cities, traveling pulses, risk-color coded cities (red/orange/green), grid pattern, stars, orbs, mouse interaction glow. Canvas visible through semi-transparent section backgrounds."
+
+  - task: "Glitch effect on main titles"
+    implemented: true
+    working: true
+    file: "app/page.js, app/globals.css"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "CSS glitch effect added with ::before/::after pseudo-elements and keyframe animations. Applied to hero H1 'La nuit est longue.', features H2 'un garde du corps.', and final CTA 'Rejoins la whitelist.' Visible glitch distortion effect with color shift."
+
+  - task: "Semi-transparent section backgrounds"
+    implemented: true
+    working: true
+    file: "app/globals.css"
+    stuck_count: 0
+    priority: "medium"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Converted solid backgrounds to rgba() with transparency: hero (0.72), prob-sec (0.80), steps-sec (0.75), demo-sec (0.80), press-bar/marquee (0.70). Canvas now visible through sections while maintaining text readability."
 
   - task: "Waitlist form with validation and success state"
     implemented: true
@@ -291,8 +327,11 @@ test_plan:
 
 agent_communication:
   - agent: "main"
-    message: "Built complete Sekura landing page MVP. Backend API working (tested via curl). Supabase integration confirmed working (count:1 returned). All frontend sections implemented. Please test the backend API endpoints, especially the Resend email sending. Base URL: https://safe-travel-5.preview.emergentagent.com"
+    message: "Built complete Sekura landing page MVP. Backend API working (tested via curl). Supabase integration confirmed working (count:1 returned). All frontend sections implemented. Please test the backend API endpoints, especially the Resend email sending. Base URL: https://sekura-v2-enhanced.preview.emergentagent.com"
   - agent: "testing"
     message: "Backend testing completed successfully. All core API endpoints working correctly: ✅ POST /api/waitlist (Supabase + Resend integration), ✅ GET /api/waitlist/count, ✅ Rate limiting (3/min), ✅ Email validation, ✅ Duplicate detection (409), ✅ Honeypot protection. Resend email integration verified - emails sent successfully via onboarding@resend.dev with proper HTML template. No critical issues found."
   - agent: "main"
     message: "V2 COMPLETE REDESIGN from HTML reference. Full conversion to React/Next.js. 15+ sections: Hero (3-phone mockups), Marquee, Press bar, Problem (animated counters), Steps, Features (4 alternating rows with card mockups), Interactive Demo (heatmap), Comparison table, Profile tabs (Femme/Voyageur/Famille), Testimonials (grid), Pricing (toggle), FAQ (accordion grid), Final CTA (progress bar + form), Footer. All interactive features: countdown timer, custom cursor, aurora canvas, live toast, exit intent modal, floating CTA, scarcity auto-bump, counter sync. Backend API /api/waitlist preserved - NOT modified."
+
+  - agent: "main"
+    message: "ENHANCEMENT UPDATE - Implemented 3 visual improvements: (1) World Map Canvas - Replaced aurora canvas with animated world map featuring 17 cities (CDMX, Paris, Tokyo, etc.) connected by animated links with traveling pulses, risk-color coded (red/orange/green), includes grid, stars, orbs, mouse interaction. (2) Glitch Effect - Added CSS glitch animation on main titles (hero H1, features H2, final CTA) with color shift and distortion. (3) Semi-transparent Backgrounds - Converted section backgrounds from solid to rgba() transparency (0.70-0.80 alpha) to reveal canvas through content while maintaining readability. All changes tested and working. Screenshots confirm visual improvements."

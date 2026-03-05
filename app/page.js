@@ -91,39 +91,264 @@ function CustomCursor() {
   )
 }
 
-/* ══════════════ AURORA CANVAS ══════════════ */
-function AuroraCanvas() {
+/* ══════════════ WORLD MAP CANVAS ══════════════ */
+function WorldMapCanvas() {
   const ref = useRef(null)
+  const mouse = useRef({ x: -999, y: -999 })
+  
   useEffect(() => {
     const C = ref.current; if (!C) return
     const ctx = C.getContext('2d')
-    const resize = () => { C.width = window.innerWidth; C.height = window.innerHeight }
+    let W, H
+    
+    const resize = () => { W = C.width = window.innerWidth; H = C.height = window.innerHeight }
     resize(); window.addEventListener('resize', resize)
-    const orbs = [
-      { x: .1, y: .2, r: .5, col: '0,229,160', sp: .0002, ph: 0 },
-      { x: .88, y: .12, r: .42, col: '56,209,240', sp: .00028, ph: 2.2 },
-      { x: .5, y: .9, r: .38, col: '0,229,160', sp: .00018, ph: 4.4 },
-      { x: .9, y: .75, r: .3, col: '255,61,90', sp: .00032, ph: .9 },
+    
+    // Track mouse
+    const onMouseMove = (e) => { mouse.current = { x: e.clientX, y: e.clientY } }
+    document.addEventListener('mousemove', onMouseMove)
+    
+    // Cities data with risk color (r=red, m=orange, g=green)
+    const cities = [
+      { n:'CDMX',      rx:.12, ry:.44, k:'r' },
+      { n:'Medellín',  rx:.18, ry:.60, k:'r' },
+      { n:'São Paulo', rx:.28, ry:.72, k:'m' },
+      { n:'Bogotá',    rx:.16, ry:.52, k:'r' },
+      { n:'Lima',      rx:.14, ry:.64, k:'m' },
+      { n:'Paris',     rx:.56, ry:.24, k:'g' },
+      { n:'Londres',   rx:.52, ry:.18, k:'g' },
+      { n:'Madrid',    rx:.50, ry:.31, k:'g' },
+      { n:'Sydney',    rx:.84, ry:.68, k:'g' },
+      { n:'Lagos',     rx:.60, ry:.54, k:'r' },
+      { n:'Nairobi',   rx:.68, ry:.56, k:'m' },
+      { n:'Bangkok',   rx:.80, ry:.43, k:'m' },
+      { n:'Mumbai',    rx:.74, ry:.38, k:'m' },
+      { n:'NYC',       rx:.26, ry:.26, k:'g' },
+      { n:'Toronto',   rx:.24, ry:.20, k:'g' },
+      { n:'Tokyo',     rx:.87, ry:.31, k:'g' },
+      { n:'Cairo',     rx:.63, ry:.35, k:'m' },
     ]
-    let f = 0, raf
-    const draw = () => {
-      f++; ctx.clearRect(0, 0, C.width, C.height)
-      orbs.forEach(o => {
-        const t = f * o.sp + o.ph
-        const x = (o.x + Math.sin(t) * .2) * C.width
-        const y = (o.y + Math.cos(t * .7) * .15) * C.height
-        const r = o.r * Math.max(C.width, C.height)
-        const g = ctx.createRadialGradient(x, y, 0, x, y, r)
-        g.addColorStop(0, `rgba(${o.col},.07)`)
-        g.addColorStop(.5, `rgba(${o.col},.025)`)
-        g.addColorStop(1, `rgba(${o.col},0)`)
-        ctx.fillStyle = g; ctx.fillRect(0, 0, C.width, C.height)
+    
+    const rc = { r:'#FF3A4E', m:'#FFA040', g:'#00E5A0' }
+    
+    // Links between cities
+    const links = [
+      [0,1],[1,3],[3,2],[0,13],[5,6],[5,7],[6,13],[13,14],
+      [9,10],[10,2],[11,12],[8,11],[15,11],[5,9],[3,11],
+      [0,5],[16,10],[16,5],[4,2],[14,0],[6,7],[12,15],[3,16]
+    ]
+    
+    // Pulses traveling on links
+    const pulses = links.map(() => ({
+      t: Math.random(),
+      sp: .0005 + Math.random() * .0012,
+      jade: Math.random() > .45,
+    }))
+    
+    // Stars
+    const stars = Array.from({ length: 320 }, () => ({
+      x: Math.random(), y: Math.random(),
+      r: Math.random() * 1 + .15,
+      a: Math.random() * .2 + .03,
+      tw: Math.random() * Math.PI * 2,
+    }))
+    
+    // Orbs (keep some aurora feel)
+    const orbs = [
+      { x:.48, y:.20, r:.82, c:[0,229,160],  sp:.000130, ph:0.0, ax:.20, ay:.11 },
+      { x:.14, y:.74, r:.70, c:[50,135,255], sp:.000105, ph:2.1, ax:.24, ay:.15 },
+      { x:.86, y:.50, r:.60, c:[150,55,240], sp:.000175, ph:1.2, ax:.14, ay:.21 },
+      { x:.62, y:.85, r:.48, c:[0,200,135],  sp:.000145, ph:3.4, ax:.21, ay:.12 },
+      { x:.05, y:.28, r:.46, c:[28,115,235], sp:.000165, ph:0.8, ax:.11, ay:.18 },
+      { x:.74, y:.10, r:.42, c:[0,215,155],  sp:.000120, ph:4.2, ax:.17, ay:.09 },
+      { x:.36, y:.58, r:.36, c:[195,70,250], sp:.000190, ph:5.1, ax:.09, ay:.13 },
+    ]
+    
+    let raf
+    const draw = (ts) => {
+      ctx.clearRect(0, 0, W, H)
+      ctx.fillStyle = '#03040f'
+      ctx.fillRect(0, 0, W, H)
+      
+      // Draw orbs
+      orbs.forEach((o, i) => {
+        const mx = (mouse.current.x / W - .5) * .06
+        const my = (mouse.current.y / H - .5) * .06
+        const ox = (o.x + Math.sin(ts * o.sp + o.ph) * o.ax + mx) * W
+        const oy = (o.y + Math.cos(ts * o.sp * .72 + o.ph) * o.ay + my) * H
+        const r = o.r * Math.min(W, H) * (1 + Math.sin(ts * .0008 + i) * .04)
+        const g = ctx.createRadialGradient(ox, oy, 0, ox, oy, r)
+        const [cr, cg, cb] = o.c
+        g.addColorStop(0,   `rgba(${cr},${cg},${cb},.14)`)
+        g.addColorStop(.40, `rgba(${cr},${cg},${cb},.05)`)
+        g.addColorStop(.75, `rgba(${cr},${cg},${cb},.015)`)
+        g.addColorStop(1,   `rgba(${cr},${cg},${cb},0)`)
+        ctx.fillStyle = g
+        ctx.fillRect(0, 0, W, H)
       })
+      
+      // Horizontal waves
+      const tv = ts * .00025
+      for (let y = 0; y < H; y += 4) {
+        const a = .005 + Math.sin(y * .05 + tv * .5) * .004
+        ctx.beginPath()
+        ctx.moveTo(0, y)
+        ctx.lineTo(W, y)
+        ctx.strokeStyle = `rgba(0,229,160,${a.toFixed(3)})`
+        ctx.lineWidth = .22
+        ctx.stroke()
+      }
+      
+      // Grid dots
+      const gs = 42
+      for (let x = 0; x < W; x += gs) {
+        for (let y = 0; y < H; y += gs) {
+          const v = Math.sin(x * .017 + tv) * Math.cos(y * .013 - tv * .6)
+          const a = .014 + v * .014
+          if (a < .003) continue
+          ctx.beginPath()
+          ctx.arc(x, y, .8, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(70,140,255,${Math.max(0, a).toFixed(3)})`
+          ctx.fill()
+        }
+      }
+      
+      // Stars
+      stars.forEach(s => {
+        const a = s.a * (.55 + .45 * Math.sin(ts * .0009 + s.tw))
+        ctx.beginPath()
+        ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(58,80,135,${a.toFixed(2)})`
+        ctx.fill()
+      })
+      
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,.016)'
+      ctx.lineWidth = .5
+      for (let x = 0; x < W; x += W / 16) {
+        ctx.beginPath()
+        ctx.moveTo(x,0)
+        ctx.lineTo(x,H)
+        ctx.stroke()
+      }
+      for (let y = 0; y < H; y += H / 10) {
+        ctx.beginPath()
+        ctx.moveTo(0,y)
+        ctx.lineTo(W,y)
+        ctx.stroke()
+      }
+      
+      // Mouse glow
+      if (mouse.current.x > 0) {
+        const mg = ctx.createRadialGradient(mouse.current.x, mouse.current.y, 0, mouse.current.x, mouse.current.y, 240)
+        mg.addColorStop(0, 'rgba(0,229,160,.06)')
+        mg.addColorStop(1, 'transparent')
+        ctx.fillStyle = mg
+        ctx.fillRect(0, 0, W, H)
+      }
+      
+      // Links between cities
+      links.forEach(([a, b]) => {
+        const ca = cities[a], cb = cities[b]
+        const ax = ca.rx * W, ay = ca.ry * H
+        const bx = cb.rx * W, by = cb.ry * H
+        const mx2 = (ax + bx) / 2, my2 = (ay + by) / 2
+        const d = Math.hypot(mouse.current.x - mx2, mouse.current.y - my2)
+        const alpha = d < 180 ? .18 + (180 - d) / 180 * .25 : .055
+        ctx.beginPath()
+        ctx.moveTo(ax, ay)
+        ctx.lineTo(bx, by)
+        ctx.strokeStyle = `rgba(0,229,160,${alpha.toFixed(2)})`
+        ctx.lineWidth = d < 180 ? 1.3 : .65
+        ctx.stroke()
+      })
+      
+      // Pulses on links
+      pulses.forEach((p, i) => {
+        p.t = (p.t + p.sp) % 1
+        const [a, b] = links[i]
+        const ca = cities[a], cb = cities[b]
+        const px = ca.rx * W + (cb.rx * W - ca.rx * W) * p.t
+        const py = ca.ry * H + (cb.ry * H - ca.ry * H) * p.t
+        const col = p.jade ? '0,229,160' : '255,160,64'
+        const g = ctx.createRadialGradient(px, py, 0, px, py, 11)
+        g.addColorStop(0, `rgba(${col},.9)`)
+        g.addColorStop(.5, `rgba(${col},.3)`)
+        g.addColorStop(1, 'transparent')
+        ctx.beginPath()
+        ctx.arc(px, py, 11, 0, Math.PI * 2)
+        ctx.fillStyle = g
+        ctx.fill()
+      })
+      
+      // Cities
+      cities.forEach((c, i) => {
+        const x = c.rx * W, y = c.ry * H
+        const col = rc[c.k]
+        const pulse = (Math.sin(ts * .0011 + i * .85) + 1) * .5
+        const near = Math.hypot(mouse.current.x - x, mouse.current.y - y) < 90
+        const aR = near ? 26 + pulse * 10 : 16 + pulse * 6
+        
+        // Glow
+        const ag = ctx.createRadialGradient(x, y, 0, x, y, aR)
+        ag.addColorStop(0, col + '28')
+        ag.addColorStop(1, 'transparent')
+        ctx.beginPath()
+        ctx.arc(x, y, aR, 0, Math.PI * 2)
+        ctx.fillStyle = ag
+        ctx.fill()
+        
+        // Ring
+        ctx.beginPath()
+        ctx.arc(x, y, near ? 8 + pulse * 3 : 5.5 + pulse * 2, 0, Math.PI * 2)
+        ctx.strokeStyle = col + Math.round((.10 + pulse * .16) * 255).toString(16).padStart(2, '0')
+        ctx.lineWidth = near ? 1.8 : 1
+        ctx.stroke()
+        
+        // Dot
+        ctx.beginPath()
+        ctx.arc(x, y, near ? 5 : 3.5, 0, Math.PI * 2)
+        ctx.fillStyle = col
+        ctx.fill()
+        
+        // Center white dot
+        ctx.beginPath()
+        ctx.arc(x, y, 1.5, 0, Math.PI * 2)
+        ctx.fillStyle = 'rgba(255,255,255,.9)'
+        ctx.fill()
+        
+        // Label
+        ctx.font = `${near ? 'bold ' : ''}${near ? 9 : 8}px Courier New`
+        ctx.fillStyle = near ? col : 'rgba(110,122,160,.5)'
+        ctx.fillText(c.n, x + 9, y - 5)
+      })
+      
+      // Center light
+      const cl = ctx.createRadialGradient(W/2, H*.42, 0, W/2, H*.42, W*.38)
+      cl.addColorStop(0, 'rgba(0,229,160,.05)')
+      cl.addColorStop(1, 'transparent')
+      ctx.fillStyle = cl
+      ctx.fillRect(0, 0, W, H)
+      
+      // Vignette
+      const vg = ctx.createRadialGradient(W/2, H/2, H*.12, W/2, H/2, H*.94)
+      vg.addColorStop(0, 'transparent')
+      vg.addColorStop(1, 'rgba(1,1,12,.82)')
+      ctx.fillStyle = vg
+      ctx.fillRect(0, 0, W, H)
+      
       raf = requestAnimationFrame(draw)
     }
-    draw()
-    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize) }
+    
+    draw(0)
+    
+    return () => {
+      cancelAnimationFrame(raf)
+      window.removeEventListener('resize', resize)
+      document.removeEventListener('mousemove', onMouseMove)
+    }
   }, [])
+  
   return <canvas ref={ref} id="aurora" />
 }
 
@@ -495,7 +720,7 @@ export default function App() {
   return (
     <>
       <CustomCursor />
-      <AuroraCanvas />
+      <WorldMapCanvas />
 
       {/* ══════ COUNTDOWN BANNER ══════ */}
       <div id="cdb">
@@ -560,7 +785,7 @@ export default function App() {
       {/* ══════ HERO ══════ */}
       <section id="hero">
         <R className="urgency-pill"><span className="urgency-dot" /><span>{spots} places early bird · Ferme dans 47h</span></R>
-        <R delay={100}><h1 className="d1"><span className="h1-em">La nuit est longue.</span><span className="h1-sub">Sekura est là.</span></h1></R>
+        <R delay={100}><h1 className="d1"><span className="h1-em sk-glitch" data-text="La nuit est longue.">La nuit est longue.</span><span className="h1-sub">Sekura est là.</span></h1></R>
         <R delay={200}><p className="hero-desc">Le garde du corps numérique pour les femmes, voyageurs et familles. SOS en 3 clics, heatmap IA des zones à risque, navigation sécurisée — disponible partout dans le monde.</p></R>
         <R delay={300}>
           <div className="hero-cta-wrap">
@@ -698,7 +923,7 @@ export default function App() {
       <section className="feat-wrap" id="features" style={{ background: 'var(--ink-1)' }}>
         <div className="feat-intro">
           <R tag="span" className="eyebrow">03 / Fonctionnalités</R>
-          <R><h2 className="sec-h">La protection qu'ont les gens qui peuvent<br />se payer <span style={{ color: 'var(--jade)' }}>un garde du corps.</span></h2></R>
+          <R><h2 className="sec-h">La protection qu'ont les gens qui peuvent<br />se payer <span className="sk-glitch" data-text="un garde du corps." style={{ color: 'var(--jade)' }}>un garde du corps.</span></h2></R>
         </div>
         {features.map((f, i) => (
           <R key={i} className="feat-row">
@@ -848,7 +1073,7 @@ export default function App() {
             <div className="pb-track"><div className="pb-fill" style={{ width: (sc / 500 * 100) + '%' }} /></div>
             <div className="pb-cap">{sc} / 500 · <strong>{spots}</strong> places restantes</div>
           </R>
-          <R><h2 className="fcta-h">Sois parmi les premiers.<br /><em>Rejoins la whitelist.</em></h2></R>
+          <R><h2 className="fcta-h">Sois parmi les premiers.<br /><span className="sk-glitch" data-text="Rejoins la whitelist."><em>Rejoins la whitelist.</em></span></h2></R>
           <R><p className="fcta-sub">Les 500 premiers inscrits obtiennent 3 mois de Smart Safety gratuit + accès beta fermée. Aucune carte bancaire. Tu peux te désinscrire en 1 clic.</p></R>
           <R>
             <div className="fcta-form">
