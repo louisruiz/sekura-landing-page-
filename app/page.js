@@ -140,6 +140,7 @@ export default function App() {
   const [ttPos, setTtPos] = useState({ l: '50%', t: '10%' })
   const [liveN, setLiveN] = useState(12)
   const [signupMsg, setSignupMsg] = useState('')
+  const [isAnnual, setIsAnnual] = useState(false)
   const emailRef = useRef(null)
   const demoMapRef = useRef(null)
 
