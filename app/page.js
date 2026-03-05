@@ -147,6 +147,19 @@ export default function App() {
 
   const spots = 500 - sc
 
+  // Détection de la langue courante
+  const currentLang = typeof window !== 'undefined' && window.location.pathname.startsWith('/en') ? 'en'
+    : typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es'
+    : typeof window !== 'undefined' && window.location.pathname.startsWith('/pt') ? 'pt'
+    : 'fr'
+
+  const langData = {
+    fr: { flag: '🇫🇷', code: 'FR', name: 'Français' },
+    en: { flag: '🇬🇧', code: 'EN', name: 'English' },
+    es: { flag: '🇪🇸', code: 'ES', name: 'Español' },
+    pt: { flag: '🇧🇷', code: 'PT', name: 'Português' },
+  }
+
   // Fetch initial count
   useEffect(() => {
     fetch('/api/waitlist/count').then(r => r.json()).then(d => { if (d.count) setSc(d.count) }).catch(() => {})
