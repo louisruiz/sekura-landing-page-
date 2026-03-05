@@ -180,34 +180,6 @@ export default function App() {
     return () => clearTimeout(t)
   }, [])
 
-  // Toast
-  const toastData = [
-    { av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', name: 'Valentina R.', loc: 'Medellín' },
-    { av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)', name: 'Emma T.', loc: 'London' },
-    { av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)', name: 'Camila M.', loc: 'CDMX' },
-    { av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)', name: 'Sarah K.', loc: 'Sydney' },
-    { av: 'L', bg: 'linear-gradient(135deg,#74b9ff,#0984e3)', name: 'Lucas F.', loc: 'São Paulo' },
-    { av: 'M', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)', name: 'Marco A.', loc: 'Bogotá' },
-  ]
-  useEffect(() => {
-    let t1, t2
-    const show = () => {
-      const d = toastData[Math.floor(Math.random() * toastData.length)]
-      setToastD(d); setToastVis(true)
-      t1 = setTimeout(() => setToastVis(false), 4000)
-      t2 = setTimeout(show, Math.random() * 25000 + 15000)
-    }
-    const init = setTimeout(show, 12000)
-    return () => { clearTimeout(init); clearTimeout(t1); clearTimeout(t2) }
-  }, [])
-
-  // Exit intent
-  useEffect(() => {
-    const h = (e) => { if (e.clientY < 20 && !exitShownRef.current) { exitShownRef.current = true; setExitVis(true) } }
-    document.addEventListener('mouseleave', h)
-    return () => document.removeEventListener('mouseleave', h)
-  }, [])
-
   const scrollToCTA = useCallback(() => {
     document.getElementById('fcta')?.scrollIntoView({ behavior: 'smooth' })
     setTimeout(() => emailRef.current?.focus(), 600)
