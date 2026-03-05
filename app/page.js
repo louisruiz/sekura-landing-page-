@@ -135,6 +135,7 @@ export default function App() {
   const [navScrolled, setNavScrolled] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
   const [openFaq, setOpenFaq] = useState(null)
+  const [langMenuOpen, setLangMenuOpen] = useState(false)
   const [demoUser, setDemoUser] = useState({ x: 42, y: 40 })
   const [ttData, setTtData] = useState(null)
   const [ttPos, setTtPos] = useState({ l: '50%', t: '10%' })
