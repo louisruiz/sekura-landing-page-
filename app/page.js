@@ -402,23 +402,6 @@ export default function App() {
     },
   ]
 
-  // Testimonials
-  const testimonials = [
-    { q: "Enfin une app qui comprend vraiment les risques à Medellín. La heatmap est précise au niveau des rues — elle connaît El Centro mieux que moi après 3 ans ici. J'aurais donné n'importe quoi pour avoir ça quand je suis arrivée.", name: 'Valentina R.', loc: 'MEDELLÍN · COLOMBIE · BETA TESTER #12', av: 'V', bg: 'linear-gradient(135deg,#ff6b6b,#ee5a24)', feat: true },
-    { q: "As a solo female traveler, this is the app I've been waiting for. The discrete SOS is genius. I used it once and it worked perfectly.", name: 'Emma T.', loc: 'LONDON UK · SOLO TRAVELER', av: 'E', bg: 'linear-gradient(135deg,#a29bfe,#6c5ce7)' },
-    { q: "J'envoie des équipes en Colombie et au Mexique. Sekura va devenir un standard pour mes collaborateurs terrain dès le lancement public.", name: 'Pierre D.', loc: 'PARIS · DIRECTEUR ONG INTERNATIONALE', av: 'P', bg: 'linear-gradient(135deg,#fdcb6e,#e17055)' },
-    { q: "A heatmap atualizada em tempo real de São Paulo é exatamente o que eu precisava. O modo offline funcionou perfeitamente no interior.", name: 'Lucas F.', loc: 'SÃO PAULO · BRÉSIL · BETA TESTER #7', av: 'L', bg: 'linear-gradient(135deg,#00cec9,#00b894)' },
-    { q: "Mis padres ya no se preocupan cuando salgo de noche. El timer de seguridad les da tranquilidad. Eso cambia todo.", name: 'Camila M.', loc: 'CIUDAD DE MÉXICO · ESTUDIANTE', av: 'C', bg: 'linear-gradient(135deg,#fd79a8,#e84393)' },
-    { q: "The route planning changed how I move around CDMX. My family in Australia can see me moving safely. Absolute game changer.", name: 'Sarah K.', loc: 'SYDNEY · AUSTRALIA · DIGITAL NOMAD', av: 'S', bg: 'linear-gradient(135deg,#55efc4,#00b894)' },
-  ]
-
-  // Pricing plans
-  const plans = [
-    { name: 'Core Safety', price: 'Gratuit', per: ' · pour toujours', desc: 'Les fonctionnalités essentielles pour rester en sécurité au quotidien.', feats: ['Heatmap IA des zones à risque', 'SOS discret triple-clic', 'Timer de sécurité check-in', 'Réseau de confiance 5 contacts', 'Mode offline · SOS par SMS', "Faux appel d'extraction"], cta: 'Rejoindre la whitelist', ghost: true },
-    { name: 'Smart Safety', monthly: '2.99', annual: '2.39', annualTxt: 'Soit $28.68/an · Économise $7.20', desc: 'Pour voyageurs et personnes qui se déplacent en zones à risque.', feats: ['Tout Core Safety inclus', 'Navigation sécurisée anti-crime', "Détection déviation d'itinéraire", 'Alertes prédictives zones à venir', 'Rapport de risque destination', 'Signalements illimités'], cta: '3 mois gratuits → Whitelist', best: true },
-    { name: 'Premium Protection', monthly: '7.99', annual: '6.39', annualTxt: 'Soit $76.68/an · Économise $19.20', desc: 'Pour professionnels en mission, expats, et familles avec proches en zone à risque.', feats: ['Tout Smart Safety inclus', 'Assistant IA sécurité 24/7', 'Rapport de risque personnalisé', 'Enregistrement audio auto SOS', 'Dashboard famille complet', 'Support prioritaire 24/7'], cta: 'Rejoindre la whitelist', ghost: true },
-  ]
-
   // FAQ
   const faqs = [
     { q: "Comment fonctionne le SOS sans regarder l'écran ?", a: "Tu triple-cliques sur le bouton volume physique de ton téléphone, en mode veille ou dans ta poche. Sekura détecte ce pattern et envoie silencieusement ta position GPS exacte à tes 5 contacts de confiance, par notification push ET SMS. Rien ne s'affiche à l'écran." },
