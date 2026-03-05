@@ -851,7 +851,7 @@ export default function App() {
             <p className="ft-desc">Le garde du corps numérique pour les femmes, voyageurs et familles — en Europe, en Amérique Latine, partout où tu vas.</p>
             <div className="ft-soc"><a className="ft-soc-btn" href="#">𝕏</a><a className="ft-soc-btn" href="#">in</a><a className="ft-soc-btn" href="#">📸</a><a className="ft-soc-btn" href="#">♪</a></div>
           </div>
-          <div className="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Comment ça marche</a><a href="#">Tarifs</a><a href="#">FAQ</a></div>
+          <div className="ft-col"><h4>Produit</h4><a href="#">Fonctionnalités</a><a href="#">Comment ça marche</a><a href="#">FAQ</a></div>
           <div className="ft-col"><h4>Marchés</h4><a href="#">Mexique · CDMX</a><a href="#">Colombie · Medellín</a><a href="#">Brésil · São Paulo</a><a href="#">Europe · Voyageurs</a></div>
           <div className="ft-col"><h4>Légal</h4><a href="#">Confidentialité</a><a href="#">CGU</a><a href="#">Presse</a><a href="#">Contact</a></div>
         </div>
