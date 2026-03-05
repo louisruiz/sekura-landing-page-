@@ -39,6 +39,258 @@ function AnimCounter({ target, prefix = '', suffix = '' }) {
   return <span ref={ref}>{prefix}{val}{suffix}</span>
 }
 
+/* ══════════════ TRANSLATIONS ══════════════ */
+const translations = {
+  fr: {
+    // Nav
+    navHow: "Comment ça marche",
+    navFeatures: "Fonctionnalités",
+    navFAQ: "FAQ",
+    navJoin: "Rejoindre — Gratuit",
+    // Hero
+    heroUrgency: "places early bird · Ferme dans 47h",
+    heroH1: "La nuit est longue.",
+    heroH1Sub: "Sekura est là.",
+    heroDesc: "Le garde du corps numérique pour les femmes, voyageurs et familles. SOS en 3 clics, heatmap IA des zones à risque, navigation sécurisée — disponible partout dans le monde.",
+    heroCTA: "Rejoindre la whitelist gratuitement →",
+    heroTrust1: "🔒 Gratuit pour toujours",
+    heroTrust2: "· Aucun spam ·",
+    heroTrust3: "⚡ 3 mois Smart Safety offerts",
+    // Problem section
+    probEyebrow: "01 / Le constat",
+    probH: "L'insécurité n'est pas un problème",
+    probHSub: "\"là-bas\".",
+    probH2: "C'est ici. C'est maintenant.",
+    probDesc: "Une femme sur trois a déjà été harcelée en ville. Les applications de sécurité actuelles te localisent mais ne te protègent pas vraiment. Tu mérites mieux qu'un bouton SOS qui arrive trop tard.",
+    // Steps
+    stepsEyebrow: "02 / Comment ça marche",
+    stepsH: "En 3 étapes. Moins de 60 secondes.",
+    stepsDesc: "Tu n'as pas à changer ton comportement. Sekura s'adapte à ta vie, pas l'inverse.",
+    step1Title: "Télécharge & configure",
+    step1Desc: "Ajoute tes 5 contacts de confiance, envoie un SMS automatique avec le lien de suivi. Aucune app à installer pour eux.",
+    step2Title: "Consulte la heatmap",
+    step2Desc: "Avant de sortir, vérifie les zones à risque en temps réel autour de toi. Active la navigation sécurisée pour ton trajet.",
+    step3Title: "Voyage en confiance",
+    step3Desc: "Triple-clic sur le bouton volume = SOS silencieux instantané. Ta position GPS est envoyée à tes proches. Tu n'as rien à regarder.",
+   // Features
+    featEyebrow: "03 / Fonctionnalités",
+    featH1: "La protection qu'ont les gens qui peuvent",
+    featH1Accent: "un garde du corps.",
+    featDesc: "Sekura combine heatmap IA des zones à risque, SOS silencieux instantané, alertes prédictives et navigation sécurisée — en Europe, en Amérique Latine, partout où tu vas.",
+    // Comparison
+    compEyebrow: "04 / Comparaison",
+    compH: "Sekura vs les autres.",
+    compHAccent: "Il n'y a pas vraiment de match.",
+    // Profiles
+    profEyebrow: "05 / Pour qui ?",
+    profH: "Sekura s'adapte à ton profil.",
+    profDesc: "Trois réalités très différentes. Une seule app.",
+    // FAQ
+    faqEyebrow: "08 / Questions fréquentes",
+    faqH: "On répond à tes questions.",
+    // Final CTA
+    ctaH: "Sois parmi les premiers.",
+    ctaHAccent: "Rejoins la whitelist.",
+    ctaDesc: "Les 500 premiers inscrits obtiennent 3 mois de Smart Safety gratuit + accès beta fermée. Aucune carte bancaire. Tu peux te désinscrire en 1 clic.",
+    ctaTrust1: "🔒 Gratuit pour toujours",
+    ctaTrust2: "· Aucun spam ·",
+    ctaTrust3: "⚡ 3 mois Smart Safety offerts",
+    ctaPlaceholder: "ton@email.com",
+    ctaButton: "Rejoindre",
+    // Footer
+    footerDesc: "Le garde du corps numérique pour les femmes, voyageurs et familles — en Europe, en Amérique Latine, partout où tu vas.",
+    footerProduct: "Produit",
+    footerMarkets: "Marchés",
+    footerLegal: "Légal",
+  },
+  en: {
+    // Nav
+    navHow: 'How it works',
+    navFeatures: 'Features',
+    navFAQ: 'FAQ',
+    navJoin: 'Join — Free',
+    // Hero
+    heroUrgency: 'early bird spots · Closes in 47h',
+    heroH1: 'The night is long.',
+    heroH1Sub: 'Sekura is here.',
+    heroDesc: 'The digital bodyguard for women, travelers and families. 3-tap SOS, AI risk heatmap, secure navigation — available worldwide.',
+    heroCTA: 'Join the waitlist for free →',
+    heroTrust1: '🔒 Free forever',
+    heroTrust2: '· No spam ·',
+    heroTrust3: '⚡ 3 months Smart Safety free',
+    // Problem
+    probEyebrow: '01 / The Reality',
+    probH: "Insecurity isn't a problem",
+    probHSub: '"over there".',
+    probH2: "It's here. It's now.",
+    probDesc: "One in three women has been harassed in the city. Current safety apps track you but don't really protect you. You deserve better than an SOS button that arrives too late.",
+    // Steps
+    stepsEyebrow: '02 / How it works',
+    stepsH: 'In 3 steps. Less than 60 seconds.',
+    stepsDesc: "You don't have to change your behavior. Sekura adapts to your life, not the other way around.",
+    step1Title: 'Download & configure',
+    step1Desc: "Add your 5 trusted contacts, send an automatic SMS with tracking link. No app to install for them.",
+    step2Title: 'Check the heatmap',
+    step2Desc: "Before going out, check real-time risk zones around you. Activate secure navigation for your trip.",
+    step3Title: 'Travel with confidence',
+    step3Desc: "Triple-click on volume button = instant silent SOS. Your GPS position is sent to your loved ones. You don't have to look.",
+    // Features
+    featEyebrow: '03 / Features',
+    featH1: 'The protection that people who can afford',
+    featH1Accent: 'a bodyguard.',
+    featDesc: 'Sekura combines AI risk zone heatmap, instant silent SOS, predictive alerts and secure navigation — in Europe, Latin America, wherever you go.',
+    // Comparison
+    compEyebrow: '04 / Comparison',
+    compH: 'Sekura vs others.',
+    compHAccent: "There's really no match.",
+    // Profiles
+    profEyebrow: '05 / Who is it for?',
+    profH: 'Sekura adapts to your profile.',
+    profDesc: 'Three very different realities. One app.',
+    // FAQ
+    faqEyebrow: '08 / Frequently asked questions',
+    faqH: 'We answer your questions.',
+    // Final CTA
+    ctaH: 'Be among the first.',
+    ctaHAccent: 'Join the waitlist.',
+    ctaDesc: "The first 500 registrants get 3 months of Smart Safety free + closed beta access. No credit card. You can unsubscribe in 1 click.",
+    ctaTrust1: '🔒 Free forever',
+    ctaTrust2: '· No spam ·',
+    ctaTrust3: '⚡ 3 months Smart Safety free',
+    ctaPlaceholder: 'your@email.com',
+    ctaButton: 'Join',
+    // Footer
+    footerDesc: "The digital bodyguard for women, travelers and families — in Europe, Latin America, wherever you go.",
+    footerProduct: 'Product',
+    footerMarkets: 'Markets',
+    footerLegal: 'Legal',
+  },
+  es: {
+    // Nav
+    navHow: 'Cómo funciona',
+    navFeatures: 'Funcionalidades',
+    navFAQ: 'FAQ',
+    navJoin: 'Unirse — Gratis',
+    // Hero
+    heroUrgency: 'lugares early bird · Cierra en 47h',
+    heroH1: 'La noche es larga.',
+    heroH1Sub: 'Sekura está aquí.',
+    heroDesc: 'El guardaespaldas digital para mujeres, viajeros y familias. SOS en 3 toques, mapa de calor IA de zonas de riesgo, navegación segura — disponible en todo el mundo.',
+    heroCTA: 'Unirse a la whitelist gratis →',
+    heroTrust1: '🔒 Gratis para siempre',
+    heroTrust2: '· Sin spam ·',
+    heroTrust3: '⚡ 3 meses Smart Safety gratis',
+    // Problem
+    probEyebrow: '01 / La realidad',
+    probH: "La inseguridad no es un problema",
+    probHSub: '"de allá".',
+    probH2: "Es aquí. Es ahora.",
+    probDesc: "Una de cada tres mujeres ha sido acosada en la ciudad. Las apps de seguridad actuales te rastrean pero no te protegen realmente. Mereces más que un botón SOS que llega demasiado tarde.",
+    // Steps
+    stepsEyebrow: '02 / Cómo funciona',
+    stepsH: 'En 3 pasos. Menos de 60 segundos.',
+    stepsDesc: "No tienes que cambiar tu comportamiento. Sekura se adapta a tu vida, no al revés.",
+    step1Title: 'Descarga y configura',
+    step1Desc: "Agrega tus 5 contactos de confianza, envía un SMS automático con el enlace de seguimiento. Sin app para instalar para ellos.",
+    step2Title: 'Consulta el mapa de calor',
+    step2Desc: "Antes de salir, verifica las zonas de riesgo en tiempo real cerca de ti. Activa la navegación segura para tu viaje.",
+    step3Title: 'Viaja con confianza',
+    step3Desc: "Triple clic en el botón de volumen = SOS silencioso instantáneo. Tu posición GPS se envía a tus seres queridos. No tienes que mirar.",
+    // Features
+    featEyebrow: '03 / Funcionalidades',
+    featH1: 'La protección que tienen las personas que pueden pagar',
+    featH1Accent: 'un guardaespaldas.',
+    featDesc: 'Sekura combina mapa de calor IA de zonas de riesgo, SOS silencioso instantáneo, alertas predictivas y navegación segura — en Europa, América Latina, donde sea que vayas.',
+    // Comparison
+    compEyebrow: '04 / Comparación',
+    compH: 'Sekura vs los demás.',
+    compHAccent: "No hay realmente competencia.",
+    // Profiles
+    profEyebrow: '05 / ¿Para quién?',
+    profH: 'Sekura se adapta a tu perfil.',
+    profDesc: 'Tres realidades muy diferentes. Una sola app.',
+    // FAQ
+    faqEyebrow: '08 / Preguntas frecuentes',
+    faqH: 'Respondemos a tus preguntas.',
+    // Final CTA
+    ctaH: 'Sé de los primeros.',
+    ctaHAccent: 'Únete a la whitelist.',
+    ctaDesc: "Los primeros 500 inscritos obtienen 3 meses de Smart Safety gratis + acceso beta cerrado. Sin tarjeta de crédito. Puedes darte de baja en 1 clic.",
+    ctaTrust1: '🔒 Gratis para siempre',
+    ctaTrust2: '· Sin spam ·',
+    ctaTrust3: '⚡ 3 meses Smart Safety gratis',
+    ctaPlaceholder: 'tu@email.com',
+    ctaButton: 'Unirse',
+    // Footer
+    footerDesc: "El guardaespaldas digital para mujeres, viajeros y familias — en Europa, América Latina, donde sea que vayas.",
+    footerProduct: 'Producto',
+    footerMarkets: 'Mercados',
+    footerLegal: 'Legal',
+  },
+  pt: {
+    // Nav
+    navHow: 'Como funciona',
+    navFeatures: 'Funcionalidades',
+    navFAQ: 'FAQ',
+    navJoin: 'Participar — Grátis',
+    // Hero
+    heroUrgency: 'vagas early bird · Fecha em 47h',
+    heroH1: 'A noite é longa.',
+    heroH1Sub: 'Sekura está aqui.',
+    heroDesc: 'O guarda-costas digital para mulheres, viajantes e famílias. SOS em 3 toques, mapa de calor IA de zonas de risco, navegação segura — disponível em todo o mundo.',
+    heroCTA: 'Entrar na whitelist grátis →',
+    heroTrust1: '🔒 Grátis para sempre',
+    heroTrust2: '· Sem spam ·',
+    heroTrust3: '⚡ 3 meses Smart Safety grátis',
+    // Problem
+    probEyebrow: '01 / A realidade',
+    probH: "A insegurança não é um problema",
+    probHSub: '"de lá".',
+    probH2: "É aqui. É agora.",
+    probDesc: "Uma em cada três mulheres já foi assediada na cidade. Os apps de segurança atuais te rastreiam mas não te protegem realmente. Você merece mais que um botão SOS que chega tarde demais.",
+    // Steps
+    stepsEyebrow: '02 / Como funciona',
+    stepsH: 'Em 3 etapas. Menos de 60 segundos.',
+    stepsDesc: "Você não precisa mudar seu comportamento. Sekura se adapta à sua vida, não o contrário.",
+    step1Title: 'Baixe e configure',
+    step1Desc: "Adicione seus 5 contatos de confiança, envie um SMS automático com o link de rastreamento. Sem app para instalar para eles.",
+    step2Title: 'Consulte o mapa de calor',
+    step2Desc: "Antes de sair, verifique as zonas de risco em tempo real ao seu redor. Ative a navegação segura para sua viagem.",
+    step3Title: 'Viaje com confiança',
+    step3Desc: "Triplo clique no botão de volume = SOS silencioso instantâneo. Sua posição GPS é enviada aos seus entes queridos. Você não precisa olhar.",
+    // Features
+    featEyebrow: '03 / Funcionalidades',
+    featH1: 'A proteção que têm as pessoas que podem pagar',
+    featH1Accent: 'um guarda-costas.',
+    featDesc: 'Sekura combina mapa de calor IA de zonas de risco, SOS silencioso instantâneo, alertas preditivos e navegação segura — na Europa, América Latina, onde quer que você vá.',
+    // Comparison
+    compEyebrow: '04 / Comparação',
+    compH: 'Sekura vs os outros.',
+    compHAccent: "Não há realmente competição.",
+    // Profiles
+    profEyebrow: '05 / Para quem?',
+    profH: 'Sekura se adapta ao seu perfil.',
+    profDesc: 'Três realidades muito diferentes. Um só app.',
+    // FAQ
+    faqEyebrow: '08 / Perguntas frequentes',
+    faqH: 'Respondemos suas perguntas.',
+    // Final CTA
+    ctaH: 'Seja um dos primeiros.',
+    ctaHAccent: 'Entre na whitelist.',
+    ctaDesc: "Os primeiros 500 inscritos ganham 3 meses de Smart Safety grátis + acesso beta fechado. Sem cartão de crédito. Você pode se desinscrever em 1 clique.",
+    ctaTrust1: '🔒 Grátis para sempre',
+    ctaTrust2: '· Sem spam ·',
+    ctaTrust3: '⚡ 3 meses Smart Safety grátis',
+    ctaPlaceholder: 'seu@email.com',
+    ctaButton: 'Participar',
+    // Footer
+    footerDesc: "O guarda-costas digital para mulheres, viajantes e famílias — na Europa, América Latina, onde quer que você vá.",
+    footerProduct: 'Produto',
+    footerMarkets: 'Mercados',
+    footerLegal: 'Legal',
+  }
+}
+
 /* ══════════════ LOGO SVG ══════════════ */
 function LogoSVG({ size = 32 }) {
   return (
@@ -389,6 +641,9 @@ export default function App() {
     : typeof window !== 'undefined' && window.location.pathname.startsWith('/es') ? 'es'
     : typeof window !== 'undefined' && window.location.pathname.startsWith('/pt') ? 'pt'
     : 'fr'
+
+  // Shortcut to current translations
+  const t = translations[currentLang]
 
   const langData = {
     fr: { flag: '🇫🇷', code: 'FR', name: 'Français' },
