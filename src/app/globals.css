@@ -434,3 +434,18 @@ body {
   0%, 100% { transform: translateY(0) scale(1); }
   50% { transform: translateY(-30px) scale(1.02); }
 }
+
+/* ═══════════════════════════════════════════
+   SPLINE LOGO REMOVAL
+   ═══════════════════════════════════════════ */
+
+#spline-container a,
+#spline-container div[style*="position: absolute"] {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+spline-viewer::part(logo) {
+  display: none !important;
+}

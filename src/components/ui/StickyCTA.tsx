@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-export default function StickyCTA() {
+export default function StickyCTA({ dict }: { dict: any }) {
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function StickyCTA() {
           className="bg-[#00ff88] text-[#070c09] font-mono font-bold text-[14px] tracking-wide px-8 py-4 rounded-xl shadow-[0_0_40px_rgba(0,255,136,0.4)] hover:shadow-[0_0_60px_rgba(0,255,136,0.6)] hover:scale-105 transition-all flex items-center gap-3"
         >
           <span className="w-2.5 h-2.5 rounded-full bg-[#070c09] animate-pulse" />
-          Rejoindre · 3 mois offerts →
+          {dict.cta.button_sticky}
         </button>
       </div>
 
@@ -68,7 +68,7 @@ export default function StickyCTA() {
           className="w-full bg-[#00ff88] text-[#070c09] font-mono font-bold text-[14px] tracking-wide py-5 shadow-[0_0_40px_rgba(0,255,136,0.4)] flex items-center justify-center gap-3"
         >
           <span className="w-2 h-2 rounded-full bg-[#070c09] animate-pulse" />
-          Rejoindre · 3 mois offerts →
+          {dict.cta.button_sticky}
         </button>
       </div>
     </div>

@@ -5,7 +5,7 @@ import { useInView } from "@/hooks/useInView";
 import { Plane, Users, Briefcase } from "lucide-react";
 import Image from "next/image";
 
-export default function PersonasSection() {
+export default function PersonasSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [activeCard, setActiveCard] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -24,37 +24,37 @@ export default function PersonasSection() {
       id: 0,
       name: "Sofia",
       age: "28 ans",
-      tag: "VOYAGEUSE SOLO",
+      tag: dict.personas.p1_tag,
       avatar: "/avatars/sofia.png",
       color: "#00E5A0",
       icon: <Plane className="w-3 h-3" />,
-      desc: "Je voyage seule en Amérique du Sud pour mon boulot. Je rentre souvent tard de réunions.",
-      fear: "La peur : rentrer à l'hôtel sans savoir si le quartier est sûr.",
-      gain: "Avec Sekura : elle sait exactement où marcher. 3 clics si urgence."
+      desc: dict.personas.p1_desc,
+      fear: dict.personas.p1_fear,
+      gain: dict.personas.p1_gain
     },
     {
       id: 1,
       name: "Lucas & Emma",
       age: "32 & 30 ans",
-      tag: "COUPLE EXPATRIÉ",
+      tag: dict.personas.p2_tag,
       avatar: "/avatars/couple.png",
       color: "#3DD6F5",
       icon: <Users className="w-3 h-3" />,
-      desc: "On s'est installés à Medellín. On adore la ville mais on ne maîtrise pas encore toutes les zones.",
-      fear: "La peur : prendre la mauvaise rue par habitude.",
-      gain: "Avec Sekura : routing automatique. La famille sait où ils sont."
+      desc: dict.personas.p2_desc,
+      fear: dict.personas.p2_fear,
+      gain: dict.personas.p2_gain
     },
     {
       id: 2,
       name: "Inès",
       age: "45 ans",
-      tag: "DIRIGEANTE EN DÉPLACEMENT",
+      tag: dict.personas.p3_tag,
       avatar: "/avatars/ines.png",
       color: "#FF4D6A",
       icon: <Briefcase className="w-3 h-3" />,
-      desc: "Je voyage 10 jours/mois en Amérique Latine. Mon entreprise s'inquiète pour ma sécurité.",
-      fear: "La peur : un incident qui bloque tout un voyage d'affaires.",
-      gain: "Avec Sekura : les équipes RH voient sa position. Elle se concentre."
+      desc: dict.personas.p3_desc,
+      fear: dict.personas.p3_fear,
+      gain: dict.personas.p3_gain
     }
   ];
 
@@ -64,7 +64,7 @@ export default function PersonasSection() {
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full overflow-hidden">
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          // 06 &middot; PROFILS
+          {dict.personas.label}
         </div>
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-r from-[#00E5A0]/40 to-transparent" />
       </div>
@@ -84,8 +84,8 @@ export default function PersonasSection() {
         {/* Titre */}
         <div className={`mb-20 text-center lg:text-left transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h2 className="text-[clamp(28px,4vw,52px)] font-[900] leading-[1.1] uppercase tracking-tight mb-4">
-            <span className="text-white block">Sekura, c&#39;est pour qui ?</span>
-            <span className="text-[#00E5A0] block">Pour toi.</span>
+            <span className="text-white block">{dict.personas.title_1}</span>
+            <span className="text-[#00E5A0] block">{dict.personas.title_2}</span>
           </h2>
         </div>
 
@@ -107,6 +107,7 @@ export default function PersonasSection() {
                 isInView={isInView}
                 idx={idx}
                 onClick={() => setActiveCard(p.id)}
+                dict={dict}
               />
             )
           })}
@@ -116,12 +117,13 @@ export default function PersonasSection() {
   )
 }
 
-function PersonaCard({ persona: p, isActive, isInView, idx, onClick }: {
+function PersonaCard({ persona: p, isActive, isInView, idx, onClick, dict }: {
   persona: any;
   isActive: boolean;
   isInView: boolean;
   idx: number;
   onClick: () => void;
+  dict: any;
 }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
@@ -216,12 +218,12 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick }: {
       <div className={`flex flex-col gap-4 overflow-hidden transition-all duration-[600ms] origin-top ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isActive ? 'max-h-[300px] opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
          
          <div className="pl-4 py-1 text-[13px] text-white/60 leading-[1.6]" style={{ borderLeft: '2px solid rgba(255,77,106,0.6)' }}>
-           <span className="font-bold text-[#FF4D6A] font-mono text-[10px] tracking-wide block mb-1">PROBLÈME :</span>
+           <span className="font-bold text-[#FF4D6A] font-mono text-[10px] tracking-wide block mb-1">{dict.personas.problem_label}</span>
            {p.fear}
          </div>
          
          <div className="pl-4 py-1 text-[13px] text-white/90 leading-[1.6]" style={{ borderLeft: `2px solid ${p.color}` }}>
-           <span className="font-bold font-mono text-[10px] tracking-wide block mb-1 uppercase" style={{ color: p.color }}>SOLUTION SEKURA :</span>
+           <span className="font-bold font-mono text-[10px] tracking-wide block mb-1 uppercase" style={{ color: p.color }}>{dict.personas.solution_label}</span>
            {p.gain}
          </div>
 
@@ -230,7 +232,7 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick }: {
       {/* Mobile expand hint if not active */}
       {!isActive && (
          <div className="md:hidden text-center mt-2 font-mono text-[9px] text-white/20 tracking-widest animate-pulse">
-           APPUYER POUR DÉCOUVRIR
+           TAP TO EXPAND
          </div>
       )}
     </div>

@@ -36,7 +36,7 @@ const testimonials = [
   }
 ];
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -108,13 +108,13 @@ export default function TestimonialsSection() {
       <div className="absolute top-0 right-0 flex items-center justify-end w-full overflow-hidden">
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-l from-[#00E5A0]/40 to-transparent" />
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          TÉMOIGNAGES &middot; 07 //
+          {dict.testimonials?.label || "TÉMOIGNAGES · 07 //"}
         </div>
       </div>
 
       {/* Badge compteur */}
       <div className="absolute top-16 left-1/2 -translate-x-1/2 font-mono text-[10px] text-white/30 tracking-widest">
-        ★ {testimonials.length} AVIS VÉRIFIÉS
+        ★ {testimonials.length} {dict.testimonials?.verified || "AVIS VÉRIFIÉS"}
       </div>
 
       <div ref={ref as any} className={`max-w-7xl mx-auto px-6 lg:px-12 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
@@ -179,7 +179,7 @@ export default function TestimonialsSection() {
                 ))}
               </div>
               <a href="#cta-final" className="font-mono text-[9px] text-white/30 tracking-widest hover:text-[#00E5A0] transition-colors">
-                PLUS DE TÉMOIGNAGES →
+                {dict.testimonials?.more || "PLUS DE TÉMOIGNAGES →"}
               </a>
             </div>
           </div>

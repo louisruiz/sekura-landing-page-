@@ -79,15 +79,12 @@ function ConfettiCanvas() {
   );
 }
 
-export default function CTAFinalSection() {
+export default function CTAFinalSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.15 });
   const [barWidth, setBarWidth] = useState(0);
   const [barPulsed, setBarPulsed] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [typingIdx, setTypingIdx] = useState(0);
   const [places, setPlaces] = useState(253);
-  
-  const etToiText = "Et toi ?";
 
   // Bar animation with pulse
   useEffect(() => {
@@ -101,23 +98,7 @@ export default function CTAFinalSection() {
     }
   }, [isInView]);
 
-  // Typing "Et toi ?" effect
-  useEffect(() => {
-    if (!isInView) return;
-    if (typingIdx < etToiText.length) {
-      const timer = setTimeout(() => setTypingIdx(prev => prev + 1), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, typingIdx]);
 
-  // Typing "Et toi ?" effect
-  useEffect(() => {
-    if (!isInView) return;
-    if (typingIdx < etToiText.length) {
-      const timer = setTimeout(() => setTypingIdx(prev => prev + 1), 100);
-      return () => clearTimeout(timer);
-    }
-  }, [isInView, typingIdx]);
 
   return (
     <section id="cta-final" className="bg-[#0d1410] py-32 lg:py-40 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
@@ -156,21 +137,16 @@ export default function CTAFinalSection() {
 
       <div ref={ref as any} className={`max-w-3xl mx-auto px-6 text-center relative z-10 transition-all duration-1000 ${isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
         
-        {/* Titre principal with typing effect */}
+        {/* Titre principal */}
         <h2 className="text-[clamp(36px,6vw,72px)] font-[900] leading-[1.05] uppercase tracking-tight mb-16">
-          <span className="text-white block">247 personnes</span>
-          <span className="text-[#00E5A0] block">dorment mieux.</span>
-          <span className="text-white/50 block italic text-[0.7em] mt-2 font-normal normal-case">
-            {etToiText.substring(0, typingIdx)}
-            <span className="animate-[blink_1s_step-end_infinite] text-[#00E5A0] font-light">|</span>
-          </span>
+          <span className="text-white block">{dict.cta.title_1}</span>
+          <span className="text-[#00E5A0] block">{dict.cta.title_2}</span>
         </h2>
 
         {/* Barre de progression */}
         <div className="mb-16 max-w-lg mx-auto">
-          <div className="flex justify-between font-mono text-[11px] text-white/40 tracking-widest uppercase mb-3">
-            <span>247 protégées</span>
-            <span>{places} places restantes</span>
+          <div className="flex justify-between font-mono text-[11px] text-white/40 tracking-widest uppercase mb-3 text-center w-full block">
+            <span>{dict.cta.count_text}</span>
           </div>
           <div className="w-full h-[4px] bg-white/10 rounded-full overflow-hidden">
             <div 
@@ -181,14 +157,12 @@ export default function CTAFinalSection() {
               }} 
             />
           </div>
-          <div className="font-mono text-[10px] text-[#00E5A0]/60 mt-2 tracking-widest">
-            ACCÈS GRATUIT &middot; 3 MOIS OFFERTS
-          </div>
+
         </div>
 
         {/* Formulaire email */}
         <div className="max-w-[480px] mx-auto mb-8">
-          <WaitlistForm onSuccess={() => {
+          <WaitlistForm dict={dict} onSuccess={() => {
             setShowConfetti(true);
             setPlaces(prev => prev - 1);
             setTimeout(() => setShowConfetti(false), 2500);
@@ -197,7 +171,7 @@ export default function CTAFinalSection() {
 
         {/* Réassurance */}
         <p className="font-mono text-[11px] text-white/25 tracking-[1px]">
-          Aucune carte bancaire. Aucun engagement. Juste ton email.
+          {dict.cta.disclaimer}
         </p>
 
       </div>
@@ -209,7 +183,10 @@ export default function CTAFinalSection() {
           <span className="font-mono font-bold tracking-[0.14em] text-[13px]">SEKURA</span>
         </div>
         <div className="font-mono text-[10px] text-white/30 tracking-widest">
-          © 2026 SEKURA &middot; BUILT DIFFERENT
+          {dict.footer.copy}
+        </div>
+        <div className="font-mono text-[10px] text-white/30 tracking-widest">
+          {dict.footer.tagline}
         </div>
         <div className="flex gap-8 font-mono text-[10px] text-white/40 tracking-widest">
           <a href="#" className="hover:text-[#00E5A0] transition-colors relative group">

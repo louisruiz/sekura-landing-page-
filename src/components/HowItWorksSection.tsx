@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { useInView } from "@/hooks/useInView";
 import { Download, Map, Shield } from "lucide-react";
 
-export default function HowItWorksSection() {
+export default function HowItWorksSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [activeStep, setActiveStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -14,24 +14,24 @@ export default function HowItWorksSection() {
 
   const steps = [
     {
-      id: "01",
-      title: "Télécharge & configure",
-      time: "2 min",
-      desc: "Crée ton compte, définis tes contacts de confiance, paramètre ta zone de confort. Ton réseau de protection est prêt.",
+      id: dict.how.step1_id,
+      title: dict.how.step1_title,
+      time: dict.how.step1_time,
+      desc: dict.how.step1_desc,
       icon: <Download className="w-5 h-5" />
     },
     {
-      id: "02",
-      title: "Active ta protection",
-      time: "30 sec",
-      desc: "Lance une session sécurisée en un tap. L'IA heatmap s'active, tes contacts sont notifiés silencieusement.",
+      id: dict.how.step2_id,
+      title: dict.how.step2_title,
+      time: dict.how.step2_time,
+      desc: dict.how.step2_desc,
       icon: <Map className="w-5 h-5" />
     },
     {
-      id: "03",
-      title: "Voyage en sérénité",
-      time: "∞",
-      desc: "Alertes zones à risque en temps réel. En cas d'urgence : 3 clics, SOS envoyé. Simple. Discret. Efficace.",
+      id: dict.how.step3_id,
+      title: dict.how.step3_title,
+      time: dict.how.step3_time,
+      desc: dict.how.step3_desc,
       icon: <Shield className="w-5 h-5" />
     }
   ];
@@ -84,7 +84,7 @@ export default function HowItWorksSection() {
       <div className="absolute top-0 right-0 flex items-center justify-end w-full overflow-hidden">
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-l from-[#00E5A0]/40 to-transparent" />
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          COMMENT ÇA MARCHE &middot; 03 //
+          {dict.how.label}
         </div>
       </div>
 
@@ -93,8 +93,8 @@ export default function HowItWorksSection() {
         {/* Titre */}
         <div className="mb-20">
           <h2 className="text-[clamp(28px,4vw,52px)] font-[900] leading-[1.1] uppercase tracking-tight">
-            <span className="text-white block">Trois étapes. Moins de 5 minutes.</span>
-            <span className="text-[#00E5A0] block">Une vie plus sereine.</span>
+            <span className="text-white block">{dict.how.title_1}</span>
+            <span className="text-[#00E5A0] block">{dict.how.title_2}</span>
           </h2>
         </div>
 
@@ -165,7 +165,7 @@ export default function HowItWorksSection() {
               {/* CTA contextuel */}
               <div className={`transition-all duration-500 overflow-hidden ${activeStep === 2 ? 'max-h-[80px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
                 <a href="#cta-final" className="inline-flex items-center gap-2 font-mono text-[11px] text-[#00E5A0] tracking-widest hover:text-white transition-colors group border border-[#00E5A0]/30 px-5 py-3 hover:bg-[#00E5A0]/10">
-                  COMMENCER MAINTENANT <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                  {dict.how.cta.replace('→', '').trim()} <span className="group-hover:translate-x-1 transition-transform">&rarr;</span>
                 </a>
               </div>
             </div>
@@ -206,7 +206,7 @@ export default function HowItWorksSection() {
                 
                 {/* Step 1 UI */}
                 <div className={`absolute inset-0 transition-all duration-500 flex flex-col gap-4 ${activeStep === 0 ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
-                  <div className="text-[#00E5A0] font-mono text-[10px] mb-4 text-center">CONFIGURATION</div>
+                  <div className="text-[#00E5A0] font-mono text-[10px] mb-4 text-center">{dict.how.mockup_config}</div>
                   <div className="w-full h-[40px] bg-white/5 border border-white/10 rounded-md px-3 py-2">
                     <div className="w-16 h-2 bg-white/20 rounded-full mb-2"></div>
                     <div className="w-24 h-1 bg-white/10 rounded-full"></div>
@@ -236,14 +236,14 @@ export default function HowItWorksSection() {
                     </div>
                   </div>
                   <div className="absolute bottom-4 left-4 right-4 bg-[#0d1410]/90 backdrop-blur-md border border-[#00E5A0]/20 rounded-lg p-3">
-                     <div className="font-mono text-[9px] text-[#00E5A0] mb-1">// SESSION ACTIVE</div>
+                     <div className="font-mono text-[9px] text-[#00E5A0] mb-1">{dict.how.mockup_session}</div>
                      <div className="w-3/4 h-2 bg-white/20 rounded-full"></div>
                   </div>
                 </div>
 
                 {/* Step 3 UI */}
                 <div className={`absolute inset-0 transition-all duration-500 flex flex-col justify-center items-center gap-6 ${activeStep === 2 ? 'opacity-100 pointer-events-auto translate-y-0' : 'opacity-0 pointer-events-none translate-y-4'}`}>
-                  <div className="font-mono text-[10px] text-white/50 mb-4 tracking-widest text-center">MODE URGENCE</div>
+                  <div className="font-mono text-[10px] text-white/50 mb-4 tracking-widest text-center">{dict.how.mockup_emergency}</div>
                   
                   <div className="w-full flex justify-between px-4">
                      <div className="w-12 h-12 rounded-lg border border-white/20 bg-white/5 flex items-center justify-center">
@@ -258,7 +258,7 @@ export default function HowItWorksSection() {
                   </div>
                   
                   <div className="mt-8 text-center">
-                    <div className="font-mono text-[12px] text-red-400 font-bold tracking-widest animate-pulse mb-2">SOS ACTIVÉ</div>
+                    <div className="font-mono text-[12px] text-red-400 font-bold tracking-widest animate-pulse mb-2">{dict.how.mockup_sos}</div>
                     <div className="w-32 h-1 bg-white/10 rounded-full mx-auto"></div>
                   </div>
                 </div>

@@ -5,7 +5,7 @@ import { useInView } from "@/hooks/useInView";
 
 const logos = ["TechCrunch", "Forbes", "Product Hunt", "Le Monde", "Wired", "L'Express"];
 
-export default function SocialProofSection() {
+export default function SocialProofSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView();
   const [count, setCount] = useState(0);
 
@@ -43,7 +43,7 @@ export default function SocialProofSection() {
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full max-w-[100vw] overflow-hidden">
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          // 02 &middot; PREUVE SOCIALE
+          {dict.social_proof.label}
         </div>
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-r from-[#00E5A0]/40 to-transparent" />
       </div>
@@ -51,7 +51,7 @@ export default function SocialProofSection() {
       <div className="max-w-7xl mx-auto px-6 pt-12 flex flex-col items-center">
         {/* Phrase d'accroche */}
         <h3 className="font-mono uppercase text-[13px] text-white/40 tracking-[2px] text-center mb-12">
-          Ils en parlent. Et ce n&apos;est que le début.
+          {dict.social_proof.title}
         </h3>
 
         {/* Row 1: Marquee left to right */}
@@ -101,7 +101,7 @@ export default function SocialProofSection() {
         {/* Compteur animé */}
         <div ref={ref as any} className="flex flex-col items-center">
           <div className="font-mono text-[12px] text-white/40 mb-4 tracking-widest uppercase">
-            // personnes protégées
+            {dict.social_proof.count_label}
           </div>
           
           <div className="relative p-8">
@@ -118,7 +118,7 @@ export default function SocialProofSection() {
 
           <a href="#cta-final" className="group font-mono text-[12px] text-[#00E5A0] mt-8 tracking-widest hover:text-white transition-colors flex items-center gap-2 p-2 relative">
             <span className="relative">
-              Rejoignez-les
+              {dict.social_proof.cta}
               <span className="absolute bottom-0 left-0 h-[1px] bg-[#00E5A0] transition-all duration-500 w-0 group-hover:w-full" />
             </span>
             <span className="group-hover:translate-x-1 transition-transform inline-block">&rarr;</span>

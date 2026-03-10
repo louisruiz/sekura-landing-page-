@@ -126,6 +126,7 @@ export async function POST(request, { params }) {
           {
             email: email.toLowerCase(),
             lang,
+            locale: locale || lang,
             source,
             ip_address: ip,
             user_agent: userAgent
@@ -135,7 +136,7 @@ export async function POST(request, { params }) {
 
       if (insertError) {
         console.error('Supabase insert error:', insertError)
-        return NextResponse.json({ error: 'Erreur serveur. Réessaie dans un instant.', details: insertError }, { status: 500 })
+        return NextResponse.json({ error: 'Erreur serveur. Réessaie dans un instant.' }, { status: 500 })
       }
 
       const { count } = await supabase

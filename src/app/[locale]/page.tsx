@@ -1,3 +1,4 @@
+import { getDictionary } from "@/dictionaries";
 import Hero from "@/components/Hero";
 import SocialProofSection from "@/components/SocialProofSection";
 import ProblemSection from "@/components/ProblemSection";
@@ -11,21 +12,23 @@ import CTAFinalSection from "@/components/CTAFinalSection";
 import GlobalEnhancements from "@/components/GlobalEnhancements";
 import StickyCTA from "@/components/ui/StickyCTA";
 
-export default function Home() {
+export default async function Home({ params }: { params: { locale: string } }) {
+  const dict = await getDictionary(params.locale);
+
   return (
     <main>
       <GlobalEnhancements />
-      <Hero />
-      <SocialProofSection />
-      <ProblemSection />
-      <HowItWorksSection />
-      <FeaturesSection />
-      <ComparatifSection />
-      <PersonasSection />
-      <TestimonialsSection />
-      <FAQSection />
-      <CTAFinalSection />
-      <StickyCTA />
+      <Hero dict={dict} />
+      <SocialProofSection dict={dict} />
+      <ProblemSection dict={dict} />
+      <HowItWorksSection dict={dict} />
+      <FeaturesSection dict={dict} />
+      <ComparatifSection dict={dict} />
+      <PersonasSection dict={dict} />
+      <TestimonialsSection dict={dict} />
+      <FAQSection dict={dict} />
+      <CTAFinalSection dict={dict} />
+      <StickyCTA dict={dict} />
     </main>
   );
 }

@@ -36,49 +36,45 @@ function HighlightAnswer({ text }: { text: string }) {
     }
   }
 
+
+
   return <>{parts}</>;
 }
 
-const faqs = [
-  {
-    q: "Sekura fonctionne sans connexion internet ?",
-    a: "Les heatmaps sont mises en cache localement. L'essentiel fonctionne offline — y compris le SOS qui passe par SMS si le data est indisponible.",
-    num: "01",
-    icon: <Wifi className="w-4 h-4" />
-  },
-  {
-    q: "Mes données de position sont-elles partagées ?",
-    a: "Ta position n'est JAMAIS vendue ni partagée avec des tiers. Elle est transmise uniquement à tes contacts de confiance, quand tu le décides.",
-    num: "02",
-    icon: <Shield className="w-4 h-4" />
-  },
-  {
-    q: "L'app consomme beaucoup de batterie ?",
-    a: "Mode optimisé par défaut : moins de 3% de batterie par heure. Le tracking GPS s'adapte à ta vitesse de déplacement.",
-    num: "03",
-    icon: <Battery className="w-4 h-4" />
-  },
-  {
-    q: "Disponible dans quels pays ?",
-    a: "Mexique, Colombie, Brésil, Argentine, Pérou, Chili et 12 autres pays au lancement. Europe dès Q2 2025.",
-    num: "04",
-    icon: <Globe className="w-4 h-4" />
-  },
-  {
-    q: "Que se passe-t-il après les 3 mois gratuits ?",
-    a: "Tu choisis de continuer (membres fondateurs = tarif préférentiel à vie) ou tu arrêtes. Sans friction. Aucun engagement.",
-    num: "05",
-    icon: <CreditCard className="w-4 h-4" />
-  },
-  {
-    q: "La heatmap est mise à jour à quelle fréquence ?",
-    a: "Données rafraîchies toutes les 6h depuis sources officielles + signalements communauté vérifiés. Toujours plus précis qu'hier.",
-    num: "06",
-    icon: <RefreshCw className="w-4 h-4" />
-  }
-];
+export default function FAQSection({ dict }: { dict: any }) {
+  const faqs = [
+    {
+      q: dict.faq.q1,
+      a: dict.faq.a1,
+      num: "01",
+      icon: <Wifi className="w-4 h-4" />
+    },
+    {
+      q: dict.faq.q2,
+      a: dict.faq.a2,
+      num: "02",
+      icon: <Shield className="w-4 h-4" />
+    },
+    {
+      q: dict.faq.q3,
+      a: dict.faq.a3,
+      num: "03",
+      icon: <Battery className="w-4 h-4" />
+    },
+    {
+      q: dict.faq.q4,
+      a: dict.faq.a4,
+      num: "04",
+      icon: <Globe className="w-4 h-4" />
+    },
+    {
+      q: dict.faq.q5,
+      a: dict.faq.a5,
+      num: "05",
+      icon: <CreditCard className="w-4 h-4" />
+    }
+  ];
 
-export default function FAQSection() {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [openIndices, setOpenIndices] = useState<Set<number>>(new Set());
   const [searchQuery, setSearchQuery] = useState("");
@@ -105,7 +101,7 @@ export default function FAQSection() {
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full overflow-hidden">
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          // 08 &middot; FAQ
+          {dict.faq.label}
         </div>
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-r from-[#00E5A0]/40 to-transparent" />
       </div>
@@ -115,8 +111,8 @@ export default function FAQSection() {
         {/* Titre */}
         <div className="mb-12 text-center">
           <h2 className="text-[clamp(28px,4vw,52px)] font-[900] leading-[1.1] uppercase tracking-tight mb-2">
-            <span className="text-white block">Les vraies questions.</span>
-            <span className="text-[#00E5A0] block">Les vraies réponses.</span>
+            <span className="text-white block">{dict.faq.title_1}</span>
+            <span className="text-[#00E5A0] block">{dict.faq.title_2}</span>
           </h2>
         </div>
 

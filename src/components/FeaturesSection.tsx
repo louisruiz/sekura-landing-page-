@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useInView } from "@/hooks/useInView";
 
-export default function FeaturesSection() {
+export default function FeaturesSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [activeTab, setActiveTab] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -12,32 +12,32 @@ export default function FeaturesSection() {
 
   const features = [
     {
-      id: "HEATMAP IA",
-      badge: "CRITIQUE",
-      title: "Tu vois les zones dangereuses. Avant d'y entrer.",
-      desc: "Notre IA analyse en temps réel les incidents déclarés, les données de criminalité et les comportements suspects. Le résultat : une carte thermique qui te dit où aller — et où éviter.",
-      fearRemoved: "Parce que l'intuition, c'est bien. L'intelligence artificielle, c'est mieux."
+      id: dict.features.f1_id,
+      badge: dict.features.f1_badge,
+      title: dict.features.f1_title,
+      desc: dict.features.f1_desc,
+      fearRemoved: dict.features.f1_fear
     },
     {
-      id: "SOS DISCRET",
-      badge: "CRITIQUE",
-      title: "Une alerte silencieuse. Personne ne voit. Tout le monde reçoit.",
-      desc: "3 clics. Sans déverrouiller. Sans que personne ne remarque. Tes contacts reçoivent ta position exacte, une alerte et un lien pour suivre ton trajet en direct.",
-      fearRemoved: "Dans une situation tendue, la discrétion peut tout changer."
+      id: dict.features.f2_id,
+      badge: dict.features.f2_badge,
+      title: dict.features.f2_title,
+      desc: dict.features.f2_desc,
+      fearRemoved: dict.features.f2_fear
     },
     {
-      id: "NAVIGATION ANTI-CRIME",
-      badge: "ESSENTIEL",
-      title: "L'itinéraire le plus court n'est pas toujours le meilleur.",
-      desc: "Sekura calcule le chemin le plus sûr — pas le plus rapide. En intégrant les zones à risque, les incidents récents et l'heure de ta sortie. Parce que 10 minutes de plus valent mieux qu'une mauvaise rencontre.",
-      fearRemoved: "La navigation repensée pour ceux qui pensent à leur sécurité."
+      id: dict.features.f3_id,
+      badge: dict.features.f3_badge,
+      title: dict.features.f3_title,
+      desc: dict.features.f3_desc,
+      fearRemoved: dict.features.f3_fear
     },
     {
-      id: "ASSISTANT IA",
-      badge: "ESSENTIEL",
-      title: "Un conseiller de sécurité dans ta poche. 24h/24.",
-      desc: '"Je rentre seule à 2h du matin, c\'est sûr ?" Pose la question. L\'IA analyse ton contexte, la zone, l\'heure et te donne une réponse honnête — avec les alternatives si besoin.',
-      fearRemoved: "Pas un chatbot. Un copilote de sécurité personnelle."
+      id: dict.features.f4_id,
+      badge: dict.features.f4_badge,
+      title: dict.features.f4_title,
+      desc: dict.features.f4_desc,
+      fearRemoved: dict.features.f4_fear
     }
   ];
 
@@ -86,7 +86,7 @@ export default function FeaturesSection() {
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full overflow-hidden">
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          // 04 &middot; FONCTIONNALITÉS
+          {dict.features.label}
         </div>
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-r from-[#00E5A0]/40 to-transparent" />
       </div>
@@ -101,8 +101,8 @@ export default function FeaturesSection() {
         {/* Titre */}
         <div className="mb-20">
           <h2 className="text-[clamp(28px,4vw,52px)] font-[900] leading-[1.1] uppercase tracking-tight">
-            <span className="text-white block">Quatre outils.</span>
-            <span className="text-[#00E5A0] block">Une seule obsession.</span>
+            <span className="text-white block">{dict.features.title_1}</span>
+            <span className="text-[#00E5A0] block">{dict.features.title_2}</span>
           </h2>
         </div>
 
@@ -133,7 +133,7 @@ export default function FeaturesSection() {
           
           {/* Texte - Gauche */}
           <div className="w-full lg:w-1/2 flex flex-col items-start min-h-[300px]">
-            <div className={`font-mono text-[10px] tracking-widest px-3 py-1 mb-6 border uppercase rounded-none transition-colors duration-300 ${features[activeTab].badge === 'CRITIQUE' ? 'animate-[badgePulse_2s_ease-in-out_infinite]' : ''}`} style={{ borderColor: features[activeTab].badge === 'CRITIQUE' ? 'rgba(239,68,68,0.5)' : 'rgba(0,229,160,0.3)', backgroundColor: features[activeTab].badge === 'CRITIQUE' ? 'rgba(239,68,68,0.1)' : 'rgba(0,229,160,0.1)', color: features[activeTab].badge === 'CRITIQUE' ? '#ef4444' : '#00E5A0' }}>
+            <div className={`font-mono text-[10px] tracking-widest px-3 py-1 mb-6 border uppercase rounded-none transition-colors duration-300 ${activeTab < 2 ? 'animate-[badgePulse_2s_ease-in-out_infinite]' : ''}`} style={{ borderColor: activeTab < 2 ? 'rgba(239,68,68,0.5)' : 'rgba(0,229,160,0.3)', backgroundColor: activeTab < 2 ? 'rgba(239,68,68,0.1)' : 'rgba(0,229,160,0.1)', color: activeTab < 2 ? '#ef4444' : '#00E5A0' }}>
               ● {features[activeTab].badge}
             </div>
             
@@ -147,7 +147,7 @@ export default function FeaturesSection() {
             
             <div className={`border-l-2 border-[#00E5A0] pl-6 py-2 mt-auto transition-all duration-500 ${showFear ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
               <div className="font-mono text-[10px] text-[#00E5A0] tracking-widest uppercase mb-1">
-                // La peur éliminée
+                // SEKURA IMPACT
               </div>
               <div className="text-[13px] text-white/70 italic">
                 &ldquo;{features[activeTab].fearRemoved}&rdquo;
@@ -182,13 +182,13 @@ export default function FeaturesSection() {
                  </div>
                  {/* Incident counter */}
                  <div className="absolute top-6 left-6 bg-[#070c09]/80 backdrop-blur border border-red-500/20 px-3 py-2 font-mono text-[9px] text-red-400 tracking-widest">
-                    ⚠ 12 INCIDENTS SIGNALÉS
+                    {dict.features.mockup_heatmap_incidents}
                  </div>
                  {/* Floating UI */}
                  <div className="absolute bottom-6 right-6 bg-[#070c09]/80 backdrop-blur border border-white/10 p-3 flex flex-col gap-2 font-mono text-[9px] tracking-widest">
-                    <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-red-500"/> ALTO</div>
-                    <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-orange-500"/> MED</div>
-                    <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#00E5A0]"/> BAJO</div>
+                    <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-red-500"/> {dict.features.mockup_heatmap_level1}</div>
+                    <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-orange-500"/> {dict.features.mockup_heatmap_level2}</div>
+                    <div className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-[#00E5A0]"/> {dict.features.mockup_heatmap_level3}</div>
                  </div>
                </div>
 
@@ -209,8 +209,8 @@ export default function FeaturesSection() {
                     </div>
                  </div>
                  <div className="text-center font-mono text-[10px] text-white/40 leading-loose tracking-widest border border-white/5 bg-white/5 px-6 py-4 rounded-md">
-                   &uarr; POSITION GPS PARTAGÉE<br/>
-                   <span className="text-[#00E5A0]">LUCAS</span> &middot; <span className="text-[#00E5A0]">EMMA</span> NOTIFIÉS
+                   &uarr; {dict.features.mockup_sos_shared}<br/>
+                   <span className="text-[#00E5A0]">LUCAS</span> &middot; <span className="text-[#00E5A0]">EMMA</span> {dict.features.mockup_sos_notified}
                  </div>
                </div>
 
@@ -255,12 +255,12 @@ export default function FeaturesSection() {
                  
                  <div className="absolute bottom-8 left-8 right-8 flex flex-col gap-3">
                     <div className="bg-[#070c09]/90 backdrop-blur border border-[#00E5A0]/30 py-2 px-3 rounded text-[10px] font-mono tracking-wide text-[#00E5A0] shadow-[0_4px_20px_rgba(0,229,160,0.15)] flex items-center justify-between">
-                       <span>✓ Contournement sécurisé</span>
+                       <span>{dict.features.mockup_nav_safe}</span>
                        <span className="bg-[#00E5A0]/20 px-2 py-0.5 rounded-sm">+4 MIN</span>
                     </div>
                     <div className="bg-[#070c09]/90 backdrop-blur border border-red-500/20 py-2 px-3 rounded text-[10px] font-mono tracking-wide text-white/40 flex items-center justify-between line-through decoration-red-500/50">
-                       <span>✗ Chemin direct</span>
-                       <span className="text-red-400">ZONE À RISQUE</span>
+                       <span>{dict.features.mockup_nav_danger}</span>
+                       <span className="text-red-400">{dict.features.mockup_nav_risk}</span>
                     </div>
                  </div>
                </div>
@@ -269,7 +269,7 @@ export default function FeaturesSection() {
                <div className={`absolute inset-0 transition-all duration-500 ease-in-out bg-[#070c09] p-6 flex flex-col ${activeTab === 3 ? 'opacity-100 z-10 pointer-events-auto scale-100' : 'opacity-0 z-0 pointer-events-none scale-95'}`}>
                  <div className="flex-1 flex flex-col justify-end gap-4 pb-4 font-sans text-[13px]">
                     <div className="self-end bg-white/10 text-white/90 px-4 py-2 rounded-2xl rounded-br-sm max-w-[85%] border border-white/5">
-                      Je rentre seule à 2h du matin à l&#39;hôtel, c&#39;est sûr de marcher ?
+                      {dict.features.mockup_ai_q}
                     </div>
                     {typingDots ? (
                       <div className="self-start bg-[#00E5A0]/10 border border-[#00E5A0]/20 px-4 py-3 rounded-2xl rounded-bl-sm flex gap-1 items-center">
@@ -280,12 +280,12 @@ export default function FeaturesSection() {
                     ) : (
                       <div className="self-start bg-[#00E5A0]/10 text-[#00E5A0] px-4 py-3 rounded-2xl rounded-bl-sm max-w-[90%] border border-[#00E5A0]/20 relative">
                          <span className="absolute -top-3 left-2 font-mono text-[8px] bg-[#00E5A0] text-[#0A0C14] px-1.5 py-0.5 rounded-sm tracking-widest font-bold">◈ SEKURA AI</span>
-                         Je te déconseille fortement de marcher. La zone autour de Calle 14 a enregistré 2 incidents signalés dans l&#39;heure. Prends plutôt un Uber vérifié, je peux t&#39;indiquer le point de prise en charge le plus sécure et éclairé.
+                         {dict.features.mockup_ai_a}
                       </div>
                     )}
                  </div>
                  <div className="h-10 border border-white/10 rounded-full flex items-center px-4 mt-auto">
-                   <div className="font-mono text-[10px] text-white/30 tracking-widest">Poser une question...</div>
+                   <div className="font-mono text-[10px] text-white/30 tracking-widest">{dict.features.mockup_ai_placeholder}</div>
                    <div className="ml-auto w-4 h-4 rounded-full bg-[#00E5A0] opacity-50 flex items-center justify-center">
                      <div className="w-1.5 h-1.5 rounded-full bg-[#0A0C14]"/>
                    </div>

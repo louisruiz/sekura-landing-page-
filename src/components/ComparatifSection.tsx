@@ -2,18 +2,18 @@
 
 import { useInView } from "@/hooks/useInView";
 
-export default function ComparatifSection() {
+export default function ComparatifSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
 
   const criteria = [
-    { name: "Heatmap zones criminelles IA", sekura: true, mb: false, wa: false, others: false, exclusive: true },
-    { name: "SOS 3 clics (sans déverrouiller)", sekura: true, mb: false, wa: false, others: false, exclusive: true },
-    { name: "Routing anti-crime temps réel", sekura: true, mb: false, wa: false, others: false, exclusive: true },
-    { name: "Conçu pour l'Amérique Latine", sekura: true, mb: false, wa: false, others: false, exclusive: true },
-    { name: "Assistant IA sécurité locale", sekura: true, mb: false, wa: false, others: false, exclusive: true },
-    { name: "Navigation GPS", sekura: true, mb: true, wa: false, others: false, exclusive: false },
-    { name: "Partage de position", sekura: true, mb: true, wa: true, others: true, exclusive: false },
-    { name: "Gratuit 3 mois", sekura: true, mb: true, wa: true, others: false, exclusive: false },
+    { name: dict.comparatif.c1, sekura: true, mb: false, wa: false, others: false, exclusive: true },
+    { name: dict.comparatif.c2, sekura: true, mb: false, wa: false, others: false, exclusive: true },
+    { name: dict.comparatif.c3, sekura: true, mb: false, wa: false, others: false, exclusive: true },
+    { name: dict.comparatif.c4, sekura: true, mb: false, wa: false, others: false, exclusive: true },
+    { name: dict.comparatif.c5, sekura: true, mb: false, wa: false, others: false, exclusive: true },
+    { name: dict.comparatif.c6, sekura: true, mb: true, wa: false, others: false, exclusive: false },
+    { name: dict.comparatif.c7, sekura: true, mb: true, wa: true, others: true, exclusive: false },
+    { name: dict.comparatif.c8, sekura: true, mb: true, wa: true, others: false, exclusive: false },
   ];
 
   const exclusiveCount = criteria.filter(c => c.exclusive).length;
@@ -40,7 +40,7 @@ export default function ComparatifSection() {
       <div className="absolute top-0 right-0 flex items-center justify-end w-full overflow-hidden">
         <div className="h-[1px] w-full max-w-2xl bg-gradient-to-l from-[#00E5A0]/40 to-transparent" />
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
-          COMPARATIF &middot; 05 //
+          {dict.comparatif.label}
         </div>
       </div>
 
@@ -49,11 +49,11 @@ export default function ComparatifSection() {
         {/* Titres */}
         <div className="col-span-12 mb-20 text-center lg:text-left flex flex-col items-center lg:items-start">
           <h2 className="text-[clamp(28px,4vw,52px)] font-[900] leading-[1.1] uppercase tracking-tight mb-4">
-            <span className="text-white block">Les autres apps protègent tes données.</span>
-            <span className="text-[#00E5A0] block">Sekura protège ta vie.</span>
+            <span className="text-white block">{dict.comparatif.title_1}</span>
+            <span className="text-[#00E5A0] block">{dict.comparatif.title_2}</span>
           </h2>
           <p className="font-mono text-[11px] sm:text-[13px] text-white/40 tracking-widest uppercase">
-            Ce que personne d&#39;autre ne fait — et pourquoi ça compte.
+            {dict.comparatif.subtitle}
           </p>
         </div>
 
@@ -63,7 +63,7 @@ export default function ComparatifSection() {
             
             {/* Headers */}
             <div className="font-mono text-[10px] text-white/30 tracking-widest uppercase pb-4 px-4">
-               // CRITÈRE
+               {dict.comparatif.header_critere}
             </div>
             <div className="font-mono text-[12px] font-bold text-[#00E5A0] tracking-widest uppercase pb-4 text-center border-b-2 border-[#00E5A0] bg-[#00E5A0]/5 pt-4 rounded-t-md shadow-[0_0_30px_-10px_rgba(0,229,160,0.2)] sticky top-0 z-10">
                SEKURA
@@ -75,7 +75,7 @@ export default function ComparatifSection() {
                WhatsApp
             </div>
             <div className="font-mono text-[10px] text-white/40 tracking-widest uppercase pb-4 text-center border-b border-[#00E5A0]/15 pt-4 sticky top-0 z-10">
-               Autres (Life360)
+               {dict.comparatif.header_others}
             </div>
 
             {/* Rows */}
@@ -83,7 +83,7 @@ export default function ComparatifSection() {
               <div key={idx} className="contents group">
                  <div className={`py-4 px-4 font-mono text-[11px] sm:text-[12px] uppercase text-white/80 tracking-wide border-b border-white/5 transition-colors group-hover:bg-white/[0.08] ${idx % 2 === 0 ? 'bg-white/5' : ''}`}>
                     {row.name}
-                    {row.exclusive && <span className="ml-2 text-[8px] text-[#00E5A0] opacity-0 group-hover:opacity-100 transition-opacity">EXCLUSIF</span>}
+                    {row.exclusive && <span className="ml-2 text-[8px] text-[#00E5A0] opacity-0 group-hover:opacity-100 transition-opacity">{dict.comparatif.exclusive}</span>}
                  </div>
                  <div className={`py-4 text-center border-b border-[#00E5A0]/10 transition-colors group-hover:bg-[#00E5A0]/[0.12] ${idx % 2 === 0 ? 'bg-[#00E5A0]/10' : 'bg-[#00E5A0]/5'}`} style={{ background: `linear-gradient(180deg, ${idx % 2 === 0 ? 'rgba(0,229,160,0.1)' : 'rgba(0,229,160,0.05)'}, rgba(0,229,160,${0.02 + idx * 0.008}))` }}>
                     <Check active={row.sekura} delay={idx * 80} isSekura />
@@ -118,7 +118,7 @@ export default function ComparatifSection() {
             >
               <div className="font-mono text-[12px] text-white/80 uppercase tracking-wide mb-4 flex items-center gap-2">
                 {row.name}
-                {row.exclusive && <span className="text-[8px] text-[#00E5A0] border border-[#00E5A0]/30 px-1.5 py-0.5 rounded-sm">EXCLUSIF</span>}
+                {row.exclusive && <span className="text-[8px] text-[#00E5A0] border border-[#00E5A0]/30 px-1.5 py-0.5 rounded-sm">{dict.comparatif.exclusive}</span>}
               </div>
               <div className="grid grid-cols-4 gap-2">
                 {[
@@ -142,10 +142,10 @@ export default function ComparatifSection() {
         {/* Badge Bottom with counter */}
         <div className="mt-12 text-center lg:text-left flex flex-col sm:flex-row items-center gap-4">
            <div className={`inline-block bg-[#00E5A0]/10 border border-[#00E5A0]/40 font-mono text-[11px] sm:text-[12px] text-[#00E5A0] tracking-[2px] px-6 py-3 uppercase transition-all duration-700 ${isInView ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`} style={{ transitionDelay: '600ms' }}>
-              ◈ LE SEUL CONÇU POUR LES RÉALITÉS D&#39;AMÉRIQUE LATINE
+              {dict.comparatif.badge}
            </div>
            <div className={`font-mono text-[11px] text-white/40 tracking-widest transition-all duration-700 ${isInView ? 'opacity-100' : 'opacity-0'}`} style={{ transitionDelay: '800ms' }}>
-              {exclusiveCount} fonctionnalités exclusives sur {criteria.length}
+              {exclusiveCount} {dict.comparatif.count_text_1} {criteria.length}
            </div>
         </div>
 

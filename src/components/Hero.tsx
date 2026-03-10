@@ -7,7 +7,7 @@ const Spline = dynamic(() => import("@splinetool/react-spline").then(mod => ({ d
 
 const SPLINE_URL = "https://prod.spline.design/2Qbo-zAjo5qfNMss/scene.splinecode";
 
-export default function Hero() {
+export default function Hero({ dict }: { dict: any }) {
   const [splineLoaded, setSplineLoaded] = useState(false);
   const [count, setCount] = useState(0);
   const [scrolled, setScrolled] = useState(false);
@@ -220,6 +220,10 @@ export default function Hero() {
         </div>
       )}
 
+      {/* SPLINE LOGO OVERLAY COVER */}
+      <div className="absolute bottom-4 right-4 w-32 h-10 bg-[#0A0C14]/50 backdrop-blur-md rounded z-[1] pointer-events-none md:hidden" />
+      <div className="hidden md:block absolute bottom-4 right-4 w-32 h-10 bg-[#0A0C14]/50 backdrop-blur-md rounded z-[1] pointer-events-none" />
+
       {/* FOREGROUND UI */}
       <div className="absolute inset-0 z-10 pointer-events-none">
         
@@ -233,7 +237,7 @@ export default function Hero() {
         <div className="absolute top-[72px] left-1/2 -translate-x-1/2 animate-fadeDown pointer-events-auto" style={{ animationDelay: '0.3s' }}>
           <div className="flex items-center gap-2 px-3 py-1.5 border border-[#00E5A0]/20 bg-[#00E5A0]/5 backdrop-blur-md">
             <div className="w-1.5 h-1.5 rounded-full bg-[#00E5A0] animate-pulse shadow-[0_0_8px_#00E5A0]" />
-            <span className="font-mono text-[10px] text-[#00E5A0] leading-none mt-px">{count} personnes inscrites</span>
+            <span className="font-mono text-[10px] text-[#00E5A0] leading-none mt-px">{count} {dict.hero.count}</span>
           </div>
         </div>
 
@@ -245,14 +249,14 @@ export default function Hero() {
           </div>
           
           <nav className="hidden lg:flex justify-center flex-1 gap-12 font-mono text-[11px] tracking-[0.14em] text-[#8892B0]">
-            <a href="#features" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>Features</a>
-            <a href="#how-it-works" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>Comment ça marche</a>
-            <a href="#comparatif" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>Comparatif</a>
-            <a href="#faq" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>FAQ</a>
+            <a href="#features" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>{dict.nav.features}</a>
+            <a href="#how-it-works" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>{dict.nav.how}</a>
+            <a href="#comparatif" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>{dict.nav.comparatif}</a>
+            <a href="#faq" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>{dict.nav.faq}</a>
           </nav>
           
           <a href="#cta-final" className="group font-mono text-[11px] tracking-[0.14em] text-[#00E5A0] flex items-center transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
-            // REJOINDRE <span className="ml-2 group-hover:ml-4 transition-all">&rarr;</span>
+            {dict.nav.cta.replace('->', '')} <span className="ml-2 group-hover:ml-4 transition-all">&rarr;</span>
           </a>
         </header>
 
@@ -262,51 +266,51 @@ export default function Hero() {
           style={{ transform: `translateY(calc(-50% + ${parallaxOffset}px))` }}
         >
           <div className="text-[clamp(28px,4.5vw,72px)] leading-[0.9] font-[900] uppercase animate-slideInLeft block pl-6 md:pl-[48px]" style={{ animationDelay: '0.2s', color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>
-            Ton garde
+            {dict.hero.h1_1}
           </div>
           <div 
             className="text-[clamp(42px,7vw,110px)] leading-[0.9] font-[900] uppercase animate-slideInLeft text-[#F0F2FF] block pl-6 md:pl-[48px]" 
             style={{ animationDelay: '0.4s' }}
           >
-            DU <span 
+            <span 
               className={`text-gradient-corps inline-block cursor-default ${glitching ? 'glitch-active' : ''}`}
               onMouseEnter={() => { setGlitching(true); setIsHovering(true); }}
               onMouseLeave={() => { setGlitching(false); setIsHovering(false); }}
               style={{ pointerEvents: 'auto' }}
-            >CORPS</span>
+            >{dict.hero.h1_2}</span>
           </div>
           <div className="text-[clamp(28px,4.5vw,72px)] leading-[0.9] font-[900] uppercase animate-slideInLeft block pl-6 md:pl-[48px]" style={{ animationDelay: '0.6s', color: 'transparent', WebkitTextStroke: '1px rgba(255,255,255,0.2)' }}>
-            Numérique.
+            {dict.hero.h1_3}
           </div>
         </div>
 
         {/* CTA ZONE (BOTTOM LEFT) */}
         <div className="absolute bottom-[48px] left-6 md:left-[48px] animate-fadeUp flex flex-col items-start gap-[12px] pointer-events-auto" style={{ animationDelay: '0.8s' }}>
           <div className="border border-[#00E5A0]/30 bg-[#00E5A0]/10 px-3 py-1 font-mono tracking-widest text-[#F0F2FF] text-[10px] uppercase">
-            ● ACCÈS GRATUIT &middot; 3 MOIS OFFERTS
+            {dict.hero.badge}
           </div>
           <div className="flex flex-col sm:flex-row gap-[12px]">
             <button className="cta-shimmer bg-[#00E5A0] text-[#0A0C14] px-[28px] py-[14px] rounded-[4px] font-bold font-mono tracking-widest shadow-[0_0_30px_rgba(0,229,160,0.25)] hover:bg-white hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all text-[11px]" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
-              REJOINDRE GRATUITEMENT &rarr;
+              {dict.hero.cta_1}
             </button>
             <button className="hidden sm:block border border-white/10 text-[#8892B0] px-[28px] py-[14px] rounded-[4px] font-mono tracking-widest hover:border-white/30 hover:text-white transition-colors text-[11px]" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
-              VOIR LA DÉMO &darr;
+              {dict.hero.cta_2}
             </button>
           </div>
         </div>
 
-        {/* MOBILE STICKY CTA */}
-        <div className="sm:hidden fixed bottom-0 left-0 right-0 z-[60] p-4 bg-gradient-to-t from-[#0A0C14] via-[#0A0C14]/95 to-transparent pointer-events-auto">
+        {/* MOBILE STICKY CTA - Absolute to Hero section, disappears on scroll */}
+        <div className="sm:hidden absolute bottom-0 left-0 right-0 z-[60] p-4 bg-gradient-to-t from-[#0A0C14] via-[#0A0C14]/95 to-transparent pointer-events-auto pb-8">
           <a href="#cta-final" className="cta-shimmer block w-full bg-[#00E5A0] text-[#0A0C14] text-center py-4 rounded-md font-mono font-bold text-[12px] tracking-widest shadow-[0_0_30px_rgba(0,229,160,0.3)]">
-            REJOINDRE GRATUITEMENT →
+            {dict.hero.cta_1}
           </a>
         </div>
 
         {/* INFO ZONE (BOTTOM RIGHT) */}
         <div className="hidden md:flex absolute bottom-[48px] right-[48px] flex-col animate-fadeUp text-right font-mono text-[10px] text-[#8892B0] leading-[1.8]" style={{ animationDelay: '1s' }}>
-          <div><span className="text-[#00E5A0] mr-2">//</span> SOS EN 3 CLICS</div>
-          <div><span className="text-[#00E5A0] mr-2">//</span> HEATMAP IA &middot; ZONES À RISQUE</div>
-          <div><span className="text-[#00E5A0] mr-2">//</span> NAVIGATION SÛRE &middot; PARTOUT</div>
+          <div><span className="text-[#00E5A0] mr-2">//</span> {dict.hero.info_1}</div>
+          <div><span className="text-[#00E5A0] mr-2">//</span> {dict.hero.info_2}</div>
+          <div><span className="text-[#00E5A0] mr-2">//</span> {dict.hero.info_3}</div>
         </div>
 
         {/* SCROLL HINT — animated mouse */}
@@ -314,7 +318,7 @@ export default function Hero() {
           <div className="w-[22px] h-[34px] rounded-full border-2 border-[#00E5A0]/40 flex justify-center pt-2">
             <div className="w-[3px] h-[8px] bg-[#00E5A0] rounded-full animate-[scrollBall_1.5s_ease-in-out_infinite]" />
           </div>
-          <span className="font-mono text-[9px] tracking-[0.2em] text-[#8892B0]">SCROLL</span>
+          <span className="font-mono text-[9px] tracking-[0.2em] text-[#8892B0]">{dict.hero.scroll}</span>
         </div>
 
       </div>

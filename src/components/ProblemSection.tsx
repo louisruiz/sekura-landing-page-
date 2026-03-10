@@ -25,13 +25,13 @@ function AnimatedNumber({ value, suffix = "", inView }: { value: number; suffix?
   return <>{display}{suffix}</>;
 }
 
-export default function ProblemSection() {
+export default function ProblemSection({ dict }: { dict: any }) {
   const { ref: titleRef, isInView: titleInView } = useInView({ threshold: 0.1 });
   const { ref: statsRef, isInView: statsInView } = useInView({ threshold: 0.2 });
   const [zeroFlashed, setZeroFlashed] = useState(false);
   const [typingIdx, setTypingIdx] = useState(0);
 
-  const titleLines = ["Ce soir.", "En rentrant.", "Pas là-bas."];
+  const titleLines = [dict.problem.title_1, dict.problem.title_2, dict.problem.title_3];
   const fullTitle = titleLines.join("\n");
 
   // Typewriter effect (Le Problème #6)
@@ -91,7 +91,7 @@ export default function ProblemSection() {
         {/* Titre Principal — Sticky (Le Problème #10) */}
         <div ref={titleRef as any} className="lg:w-1/3 lg:sticky lg:top-32 self-start">
           <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] mb-8 uppercase">
-            // 03 &middot; LA RÉALITÉ
+            {dict.problem.label}
           </div>
 
           <h2 className="text-[clamp(40px,5vw,72px)] font-[900] leading-[1.05] mb-10 uppercase tracking-tight min-h-[160px]">
@@ -104,7 +104,7 @@ export default function ProblemSection() {
           </h2>
 
           <p className="text-white/50 text-[16px] md:text-[18px] leading-[1.6] mb-12">
-            Sekura ne règle pas le problème de l&#39;insécurité dans le monde. Il règle <span className="text-white font-medium">le tien</span>.
+            {dict.problem.desc_1} <span className="text-white font-medium">{dict.problem.desc_2}</span>.
           </p>
 
           {/* Animated separator line */}
@@ -121,7 +121,7 @@ export default function ProblemSection() {
                 1/<AnimatedNumber value={3} inView={statsInView} />
               </div>
               <div className="font-mono text-[11px] xl:text-[12px] text-white/40 uppercase tracking-[2px] leading-[1.6] pr-4">
-                des voyageurs victimes d&#39;incident sécurité en LATAM
+                {dict.problem.stat1_label}
               </div>
             </div>
 
@@ -130,7 +130,7 @@ export default function ProblemSection() {
                 <AnimatedNumber value={8} inView={statsInView} /> min
               </div>
               <div className="font-mono text-[11px] xl:text-[12px] text-white/40 uppercase tracking-[2px] leading-[1.6] pr-4">
-                délai moyen avant qu&#39;une alerte soit traitée
+                {dict.problem.stat2_label}
               </div>
             </div>
 
@@ -139,7 +139,7 @@ export default function ProblemSection() {
                 <AnimatedNumber value={73} inView={statsInView} suffix="%" />
               </div>
               <div className="font-mono text-[11px] xl:text-[12px] text-white/40 uppercase tracking-[2px] leading-[1.6] pr-4">
-                n&#39;osent pas sortir seul·e le soir dans certaines zones
+                {dict.problem.stat3_label}
               </div>
             </div>
 
@@ -148,7 +148,7 @@ export default function ProblemSection() {
               <div className="absolute inset-0 bg-gradient-to-br from-[#00E5A0]/10 to-transparent pointer-events-none group-hover:from-[#00E5A0]/20 transition-colors duration-500" />
               <div className="text-[52px] xl:text-[64px] font-[900] text-[#00E5A0] leading-none mb-3 relative z-10 drop-shadow-[0_0_15px_rgba(0,229,160,0.4)]">0</div>
               <div className="font-mono text-[11px] xl:text-[12px] text-[#00E5A0] uppercase tracking-[2px] leading-[1.6] pr-4 relative z-10 font-bold">
-                app de sécurité conçue pour la réalité terrain en LATAM
+                {dict.problem.stat4_label}
               </div>
             </div>
 
@@ -164,7 +164,7 @@ export default function ProblemSection() {
 
           {/* Sources stats (Le Problème #8) */}
           <div className={`mt-8 font-mono text-[9px] text-white/20 uppercase tracking-widest text-center sm:text-right transition-opacity duration-1000 delay-500 ${statsInView ? 'opacity-100' : 'opacity-0'}`}>
-            *Sources: Observatoire LATAM Sécurité (2024), Étude Mobilité Urbaine.
+            {dict.problem.source}
           </div>
         </div>
 

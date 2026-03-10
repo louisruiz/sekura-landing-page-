@@ -4,9 +4,11 @@ import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 
 export default function WaitlistForm({ 
-  onSuccess 
+  onSuccess,
+  dict 
 }: { 
-  onSuccess?: () => void 
+  onSuccess?: () => void,
+  dict: any
 }) {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -65,7 +67,7 @@ export default function WaitlistForm({
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="ton@email.com"
+              placeholder={dict.cta.placeholder}
               required
               aria-label="Adresse email"
               disabled={isLoading}
@@ -88,15 +90,13 @@ export default function WaitlistForm({
             disabled={!isValidEmail || isLoading}
             className="bg-[#00E5A0] text-[#070c09] font-mono font-bold text-[12px] tracking-widest px-8 py-4 rounded-md hover:bg-white hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all shadow-[0_0_30px_rgba(0,229,160,0.3)] whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed cta-shimmer"
           >
-            {isLoading ? 'EN COURS...' : 'REJOINDRE →'}
+            {isLoading ? dict.cta.button_loading : dict.cta.button}
           </button>
         </form>
       ) : (
         <div className="bg-[#00E5A0]/10 border border-[#00E5A0]/30 rounded-md px-8 py-6 flex items-center justify-center gap-3 animate-[fadeUp_0.5s_ease-out] w-full">
           <div className="w-3 h-3 rounded-full bg-[#00E5A0] animate-pulse shadow-[0_0_10px_#00E5A0]" />
-          <span className="font-mono text-[13px] text-[#00E5A0] tracking-widest">
-            BIENVENUE PARMI LES INSCRITS ✓
-          </span>
+            {dict.cta.button_success}
         </div>
       )}
     </>
