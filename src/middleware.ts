@@ -40,9 +40,11 @@ export function middleware(request: NextRequest) {
   if (pathnameHasLocale) return NextResponse.next()
 
   const locale = getLocale(request)
-  if (locale === defaultLocale) return NextResponse.next()
 
-  const newUrl = new URL(`/${locale}${pathname}`, request.url)
+  const newUrl = new URL(
+    pathname === '/' ? `/${locale}` : `/${locale}${pathname}`,
+    request.url
+  )
   return NextResponse.redirect(newUrl, { status: 302 })
 }
 
