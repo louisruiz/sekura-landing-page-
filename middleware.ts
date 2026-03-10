@@ -3,14 +3,14 @@ import { NextRequest, NextResponse } from 'next/server'
 const locales = ['fr', 'en', 'es', 'pt']
 const defaultLocale = 'fr'
 
-const localeMap = {
+const localeMap: Record<string, string> = {
   'fr': 'fr', 'fr-FR': 'fr', 'fr-BE': 'fr', 'fr-CH': 'fr', 'fr-CA': 'fr',
   'en': 'en', 'en-US': 'en', 'en-GB': 'en', 'en-AU': 'en',
   'es': 'es', 'es-ES': 'es', 'es-CO': 'es', 'es-MX': 'es', 'es-AR': 'es',
   'pt': 'pt', 'pt-BR': 'pt', 'pt-PT': 'pt',
 }
 
-function getLocale(request) {
+function getLocale(request: NextRequest) {
   const acceptLang = request.headers.get('accept-language') || ''
   const langs = acceptLang.split(',').map(l => l.split(';')[0].trim())
   for (const lang of langs) {
@@ -21,7 +21,7 @@ function getLocale(request) {
   return defaultLocale
 }
 
-export function middleware(request) {
+export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   
   if (
