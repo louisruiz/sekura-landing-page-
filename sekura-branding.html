@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEKURA — Brand Identity</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink: #0A0C14;
+    --ink-soft: #141720;
+    --ink-mid: #1E2130;
+    --sekura-jade: #00E5A0;
+    --sekura-jade-dim: #00C48A;
+    --sekura-night: #0D1424;
+    --sekura-pulse: #FF4D6A;
+    --sekura-gold: #FFB830;
+    --sekura-sky: #3DD6F5;
+    --text-primary: #F0F2FF;
+    --text-secondary: #8892B0;
+    --text-muted: #4A5568;
+    --border: rgba(255,255,255,0.06);
+    --glow-jade: rgba(0,229,160,0.15);
+    --glow-pulse: rgba(255,77,106,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--ink);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--sekura-jade);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, width 0.2s, height 0.2s, opacity 0.2s;
+    mix-blend-mode: screen;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(0,229,160,0.4);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease-out, width 0.3s, height 0.3s;
+  }
+
+  /* NOISE TEXTURE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.4;
+  }
+
+  /* SECTION BASICS */
+  section { position: relative; }
+
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+
+  /* ========================
+     SECTION 0 — COVER
+  ======================== */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--sekura-night);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,229,160,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,229,160,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  .cover-orb {
+    position: absolute;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,229,160,0.08) 0%, transparent 65%);
+    border-radius: 50%;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: breathe 6s ease-in-out infinite;
+  }
+
+  .cover-orb-2 {
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(61,214,245,0.06) 0%, transparent 65%);
+    border-radius: 50%;
+    top: 20%; right: 10%;
+    animation: breathe 9s ease-in-out infinite reverse;
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+    50% { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+  }
+
+  .cover-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--sekura-jade);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.3s forwards;
+  }
+
+  .cover-logo-group {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.5s forwards;
+  }
+
+  .cover-icon {
+    width: 80px; height: 80px;
+    position: relative;
+  }
+
+  .cover-icon svg { width: 100%; height: 100%; }
+
+  .cover-wordmark {
+    font-family: 'Outfit', sans-serif;
+    font-size: 96px;
+    font-weight: 800;
+    letter-spacing: -4px;
+    line-height: 1;
+    background: linear-gradient(135deg, #F0F2FF 0%, rgba(0,229,160,0.9) 60%, #3DD6F5 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .cover-tagline {
+    font-size: 18px;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+    font-weight: 300;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+
+  .cover-tagline span {
+    color: var(--sekura-jade);
+    font-weight: 500;
+  }
+
+  .cover-meta {
+    display: flex;
+    gap: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+
+  .cover-meta-item {
+    text-align: center;
+  }
+
+  .cover-meta-item .val {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--sekura-jade);
+    display: block;
+  }
+
+  .cover-meta-item .lbl {
+    font-size: 11px;
+    color: var(--text-secondary);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .cover-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.2s forwards;
+  }
+
+  .cover-scroll span {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px; height: 48px;
+    background: linear-gradient(to bottom, var(--sekura-jade), transparent);
+    animation: scrollAnim 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollAnim {
+    0% { opacity: 0; transform: scaleY(0); transform-origin: top; }
+    50% { opacity: 1; transform: scaleY(1); }
+    100% { opacity: 0; transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SECTION HEADER */
+  .sec-header {
+    padding: 120px 0 80px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .sec-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--sekura-jade);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 16px;
+  }
+
+  .sec-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 52px;
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--text-primary);
+  }
+
+  .sec-title em {
+    font-style: italic;
+    color: var(--sekura-jade);
+  }
+
+  /* ========================
+     SECTION 1 — LOGO SYSTEM
+  ======================== */
+  .logo-section {
+    background: var(--ink);
+    padding-bottom: 120px;
+  }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .logo-card {
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .logo-card:hover { transform: scale(1.01); }
+
+  .logo-card.dark { background: var(--ink-soft); }
+  .logo-card.light { background: #F0F2FF; }
+  .logo-card.jade { background: var(--sekura-jade); }
+  .logo-card.night { background: var(--sekura-night); }
+  .logo-card.pulse-bg { background: var(--ink-mid); }
+
+  .logo-card-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: 20px;
+    left: 0; right: 0;
+    text-align: center;
+  }
+
+  .logo-card.light .logo-card-label { color: #8892B0; }
+  .logo-card.jade .logo-card-label { color: rgba(10,12,20,0.5); }
+
+  /* SEKURA LOGO MARK */
+  .sekura-mark {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .sekura-mark.sm { gap: 10px; }
+  .sekura-mark.lg { gap: 20px; }
+
+  .s-icon {
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .s-icon svg { display: block; }
+
+  .sekura-text {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+
+  .sekura-text.on-dark { color: #F0F2FF; }
+  .sekura-text.on-light { color: var(--ink); }
+  .sekura-text.on-jade { color: var(--ink); }
+  .sekura-text.grad {
+    background: linear-gradient(135deg, #F0F2FF 0%, var(--sekura-jade) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ========================
+     SECTION 2 — COLOR PALETTE
+  ======================== */
+  .palette-section {
+    background: var(--ink-soft);
+    padding: 0 0 120px;
+  }
+
+  .palette-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0;
+    margin-top: 60px;
+    border-radius: 16px;
+    overflow: hidden;
+    height: 320px;
+  }
+
+  .color-swatch {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px 20px;
+    position: relative;
+    cursor: default;
+    transition: flex 0.4s ease;
+  }
+
+  .color-swatch:hover { flex: 2; }
+
+  .swatch-name {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+
+  .swatch-hex {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    opacity: 0.6;
+  }
+
+  .swatch-role {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    opacity: 0.5;
+  }
+
+  .c1 { background: #00E5A0; color: #0A0C14; }
+  .c2 { background: #0D1424; color: #F0F2FF; }
+  .c3 { background: #0A0C14; color: #F0F2FF; }
+  .c4 { background: #FF4D6A; color: #F0F2FF; }
+  .c5 { background: #FFB830; color: #0A0C14; }
+  .c6 { background: #3DD6F5; color: #0A0C14; }
+
+  .palette-semantics {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .semantic-chip {
+    background: var(--ink-mid);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+  }
+
+  .semantic-chip .role {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .semantic-chip .meaning {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  .semantic-chip .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  /* ========================
+     SECTION 3 — TYPOGRAPHY
+  ======================== */
+  .typo-section {
+    background: var(--ink);
+    padding: 0 0 120px;
+  }
+
+  .typo-showcase {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .typo-card {
+    background: var(--ink-soft);
+    padding: 48px;
+  }
+
+  .typo-specimen {
+    margin-bottom: 24px;
+  }
+
+  .typo-family {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sekura-jade);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .type-scale {
+    margin-top: 40px;
+    background: var(--ink-mid);
+    padding: 40px;
+    border-left: 2px solid var(--sekura-jade);
+  }
+
+  .type-row {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .type-row:last-child { border-bottom: none; }
+
+  .type-size-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-muted);
+    width: 60px;
+    flex-shrink: 0;
+  }
+
+  /* ========================
+     SECTION 4 — ICONOGRAPHY & UI ELEMENTS
+  ======================== */
+  .ui-section {
+    background: var(--ink-soft);
+    padding: 0 0 120px;
+  }
+
+  .ui-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .ui-card {
+    background: var(--ink-mid);
+    padding: 40px;
+  }
+
+  .ui-card-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sekura-jade);
+    margin-bottom: 32px;
+  }
+
+  /* BUTTONS */
+  .btn-row { display: flex; flex-direction: column; gap: 12px; }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 10px;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+
+  .btn-primary {
+    background: var(--sekura-jade);
+    color: var(--ink);
+    box-shadow: 0 0 24px rgba(0,229,160,0.25);
+  }
+
+  .btn-primary:hover {
+    background: #00F5AD;
+    box-shadow: 0 0 40px rgba(0,229,160,0.45);
+    transform: translateY(-1px);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--sekura-jade);
+    color: var(--sekura-jade);
+  }
+
+  .btn-danger {
+    background: rgba(255,77,106,0.15);
+    color: var(--sekura-pulse);
+    border: 1px solid rgba(255,77,106,0.3);
+  }
+
+  .btn-danger:hover {
+    background: rgba(255,77,106,0.25);
+    box-shadow: 0 0 20px rgba(255,77,106,0.2);
+  }
+
+  .btn-sm { padding: 8px 16px; font-size: 13px; border-radius: 8px; }
+
+  /* STATUS BADGES */
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-dot { width: 6px; height: 6px; border-radius: 50%; }
+
+  .badge-safe { background: rgba(0,229,160,0.1); color: var(--sekura-jade); }
+  .badge-safe .badge-dot { background: var(--sekura-jade); box-shadow: 0 0 8px var(--sekura-jade); animation: pulse-dot 2s infinite; }
+
+  .badge-alert { background: rgba(255,77,106,0.1); color: var(--sekura-pulse); }
+  .badge-alert .badge-dot { background: var(--sekura-pulse); box-shadow: 0 0 8px var(--sekura-pulse); animation: pulse-dot 1s infinite; }
+
+  .badge-warn { background: rgba(255,184,48,0.1); color: var(--sekura-gold); }
+  .badge-warn .badge-dot { background: var(--sekura-gold); }
+
+  .badge-info { background: rgba(61,214,245,0.1); color: var(--sekura-sky); }
+  .badge-info .badge-dot { background: var(--sekura-sky); }
+
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(0.7); }
+  }
+
+  /* INPUT */
+  .input-row { display: flex; flex-direction: column; gap: 12px; }
+
+  .input-group { display: flex; flex-direction: column; gap: 6px; }
+
+  .input-label {
+    font-size: 12px;
+    color: var(--text-secondary);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .input {
+    background: var(--ink-soft);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: var(--text-primary);
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    outline: none;
+    transition: border-color 0.2s;
+    width: 100%;
+  }
+
+  .input:focus { border-color: var(--sekura-jade); box-shadow: 0 0 0 3px rgba(0,229,160,0.1); }
+
+  .input.danger { border-color: var(--sekura-pulse); }
+
+  /* ========================
+     SECTION 5 — APP UI MOCKUP
+  ======================== */
+  .mockup-section {
+    background: var(--ink);
+    padding: 0 0 120px;
+    overflow: hidden;
+  }
+
+  .mockup-layout {
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 80px;
+    align-items: center;
+    margin-top: 60px;
+  }
+
+  .mockup-copy { }
+
+  .mockup-copy h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 40px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .mockup-copy p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 32px;
+  }
+
+  .feature-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .feature-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 15px;
+    color: var(--text-secondary);
+  }
+
+  .feature-item .fi-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: var(--ink-mid);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 16px;
+  }
+
+  /* PHONE MOCKUP */
+  .phone-wrap {
+    display: flex;
+    justify-content: center;
+  }
+
+  .phone {
+    width: 320px;
+    background: var(--ink-soft);
+    border-radius: 44px;
+    border: 2px solid rgba(255,255,255,0.08);
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,0.04),
+      0 60px 120px rgba(0,0,0,0.6),
+      0 0 80px rgba(0,229,160,0.08);
+    position: relative;
+  }
+
+  .phone-notch {
+    width: 120px;
+    height: 28px;
+    background: var(--ink-soft);
+    border-radius: 0 0 18px 18px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .phone-camera {
+    width: 10px; height: 10px;
+    background: #1E2130;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .phone-screen {
+    padding: 16px;
+    background: var(--sekura-night);
+    min-height: 600px;
+  }
+
+  .app-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .app-greeting {
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .app-greeting strong {
+    display: block;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-top: 2px;
+  }
+
+  .app-avatar {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sekura-jade), var(--sekura-sky));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    color: var(--ink);
+  }
+
+  .app-map-card {
+    background: var(--ink-mid);
+    border-radius: 18px;
+    height: 180px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .map-dots {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(0,229,160,0.12) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .map-pulse {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .map-pulse-ring {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    border: 2px solid var(--sekura-jade);
+    border-radius: 50%;
+    animation: mapPulse 2s ease-out infinite;
+  }
+
+  .map-pulse-ring:nth-child(2) { animation-delay: 0.7s; }
+  .map-pulse-ring:nth-child(3) { animation-delay: 1.4s; }
+
+  @keyframes mapPulse {
+    0% { transform: translate(-50%, -50%) scale(0.3); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(2.5); opacity: 0; }
+  }
+
+  .map-center-dot {
+    width: 14px; height: 14px;
+    background: var(--sekura-jade);
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--sekura-jade);
+    position: relative;
+    z-index: 2;
+  }
+
+  .map-zone-red {
+    position: absolute;
+    width: 60px; height: 40px;
+    background: rgba(255,77,106,0.2);
+    border-radius: 50%;
+    top: 40px; right: 60px;
+    border: 1px solid rgba(255,77,106,0.3);
+  }
+
+  .map-zone-warn {
+    position: absolute;
+    width: 50px; height: 30px;
+    background: rgba(255,184,48,0.15);
+    border-radius: 50%;
+    bottom: 40px; left: 50px;
+    border: 1px solid rgba(255,184,48,0.2);
+  }
+
+  .map-status {
+    position: absolute;
+    bottom: 12px; left: 12px;
+    background: rgba(0,229,160,0.1);
+    border: 1px solid rgba(0,229,160,0.2);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--sekura-jade);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    backdrop-filter: blur(8px);
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    background: var(--sekura-jade);
+    border-radius: 50%;
+    animation: pulse-dot 1.5s infinite;
+  }
+
+  .app-score-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .score-card {
+    background: var(--ink-mid);
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid var(--border);
+  }
+
+  .score-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Space Mono', monospace;
+    margin-bottom: 6px;
+  }
+
+  .score-val {
+    font-size: 22px;
+    font-weight: 800;
+  }
+
+  .score-val.safe { color: var(--sekura-jade); }
+  .score-val.warn { color: var(--sekura-gold); }
+
+  .score-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .app-sos-btn {
+    width: 100%;
+    height: 72px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,77,106,0.2), rgba(255,77,106,0.1));
+    border: 1.5px solid rgba(255,77,106,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+
+  .app-sos-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255,77,106,0.15), transparent);
+    animation: sosPulse 3s ease-in-out infinite;
+  }
+
+  @keyframes sosPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .sos-text {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 2px;
+    color: var(--sekura-pulse);
+  }
+
+  .sos-icon { font-size: 22px; }
+
+  .app-alerts {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .alert-item {
+    background: var(--ink-mid);
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .alert-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  .alert-icon.warn { background: rgba(255,184,48,0.15); }
+  .alert-icon.info { background: rgba(61,214,245,0.1); }
+
+  .alert-text { flex: 1; }
+  .alert-title { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+  .alert-sub { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  .alert-time { font-family: 'Space Mono', monospace; font-size: 9px; color: var(--text-muted); }
+
+  /* ========================
+     SECTION 6 — TONE OF VOICE
+  ======================== */
+  .voice-section {
+    background: var(--ink-soft);
+    padding: 0 0 120px;
+  }
+
+  .voice-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2px;
+  }
+
+  .voice-card {
+    background: var(--ink-mid);
+    padding: 48px;
+  }
+
+  .voice-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .voice-type.yes { color: var(--sekura-jade); }
+  .voice-type.no { color: var(--sekura-pulse); }
+
+  .voice-example {
+    font-size: 20px;
+    font-weight: 300;
+    line-height: 1.6;
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+  }
+
+  .voice-note {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .voice-principles {
+    margin-top: 2px;
+    background: var(--ink);
+    padding: 48px;
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+  }
+
+  .principle {
+    text-align: center;
+  }
+
+  .principle-icon {
+    font-size: 32px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .principle-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--sekura-jade);
+    margin-bottom: 8px;
+  }
+
+  .principle-desc {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ========================
+     SECTION 7 — MARKETING COPY
+  ======================== */
+  .copy-section {
+    background: var(--ink);
+    padding: 0 0 120px;
+  }
+
+  .copy-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .copy-card {
+    background: var(--ink-soft);
+    padding: 48px;
+  }
+
+  .copy-type {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--sekura-jade);
+    margin-bottom: 24px;
+  }
+
+  .copy-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: 36px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .copy-headline em {
+    font-style: italic;
+    color: var(--sekura-jade);
+  }
+
+  .copy-body {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .copy-cta {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--sekura-jade);
+    cursor: pointer;
+  }
+
+  .copy-cta::after {
+    content: '→';
+    transition: transform 0.2s;
+  }
+
+  .copy-cta:hover::after { transform: translateX(4px); }
+
+  .tagline-wall {
+    margin-top: 2px;
+    background: var(--sekura-night);
+    padding: 80px 48px;
+    grid-column: span 2;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .tagline-wall::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 20% 50%, rgba(0,229,160,0.06) 0%, transparent 60%);
+  }
+
+  .tagline-item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: default;
+    transition: padding-left 0.3s ease;
+  }
+
+  .tagline-item:hover { padding-left: 16px; }
+  .tagline-item:last-child { border-bottom: none; }
+
+  .tagline-audience {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    width: 160px;
+    flex-shrink: 0;
+  }
+
+  .tagline-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 28px;
+    font-weight: 400;
+    line-height: 1.2;
+    color: var(--text-primary);
+    flex: 1;
+  }
+
+  .tagline-text em {
+    font-style: italic;
+    color: var(--sekura-jade);
+  }
+
+  .tagline-arrow {
+    color: var(--text-muted);
+    font-size: 20px;
+    transition: color 0.2s, transform 0.2s;
+  }
+
+  .tagline-item:hover .tagline-arrow {
+    color: var(--sekura-jade);
+    transform: translateX(8px);
+  }
+
+  /* ========================
+     SECTION 8 — BRAND IMAGERY
+  ======================== */
+  .imagery-section {
+    background: var(--ink-soft);
+    padding: 0 0 120px;
+  }
+
+  .imagery-grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    grid-template-rows: 300px 300px;
+    gap: 2px;
+  }
+
+  .imagery-panel {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .imagery-panel:first-child {
+    grid-row: span 2;
+  }
+
+  .img-bg {
+    width: 100%; height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .img-1 { background: linear-gradient(135deg, #0D1424 0%, #0A1F1A 100%); }
+  .img-2 { background: linear-gradient(135deg, #1A0E24 0%, #140A1E 100%); }
+  .img-3 { background: linear-gradient(135deg, #0A0C14 0%, #141420 100%); }
+  .img-4 { background: linear-gradient(135deg, #1A1408 0%, #1E1A0A 100%); }
+  .img-5 { background: linear-gradient(135deg, #0A1420 0%, #0E1A2A 100%); }
+
+  .img-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .img-quote {
+    font-family: 'DM Serif Display', serif;
+    font-size: 24px;
+    font-style: italic;
+    text-align: center;
+    color: rgba(240,242,255,0.8);
+    max-width: 80%;
+    line-height: 1.4;
+  }
+
+  .img-quote em { color: var(--sekura-jade); font-style: italic; }
+
+  .img-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+  }
+
+  .geometric-bg {
+    position: absolute;
+    inset: 0;
+  }
+
+  /* ========================
+     FOOTER
+  ======================== */
+  .brand-footer {
+    background: var(--ink);
+    padding: 80px 0;
+    border-top: 1px solid var(--border);
+    text-align: center;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 24px;
+  }
+
+  .footer-tagline {
+    font-size: 16px;
+    color: var(--text-secondary);
+    margin-bottom: 40px;
+  }
+
+  .footer-meta {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+  }
+
+  /* DIVIDERS */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SCROLL ANIMATIONS */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* GLOW LINES */
+  .glow-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--sekura-jade), transparent);
+    margin: 0;
+    opacity: 0.3;
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- ============================
+     COVER
+============================ -->
+<section class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-orb"></div>
+  <div class="cover-orb-2"></div>
+
+  <span class="cover-label">Brand Identity System — Février 2026</span>
+
+  <div class="cover-logo-group">
+    <div class="cover-icon">
+      <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Shield base -->
+        <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z"
+          fill="rgba(0,229,160,0.08)" stroke="rgba(0,229,160,0.3)" stroke-width="1.5"/>
+        <!-- Inner shield glow -->
+        <path d="M40 14L18 24V42C18 54 27.5 64.5 40 68C52.5 64.5 62 54 62 42V24L40 14Z"
+          fill="rgba(0,229,160,0.05)" stroke="rgba(0,229,160,0.15)" stroke-width="1"/>
+        <!-- S letterform stylized as signal -->
+        <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50"
+          stroke="#00E5A0" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <!-- Pulse rings -->
+        <circle cx="40" cy="40" r="30" stroke="rgba(0,229,160,0.1)" stroke-width="0.5"/>
+        <circle cx="40" cy="40" r="22" stroke="rgba(0,229,160,0.15)" stroke-width="0.5"/>
+      </svg>
+    </div>
+    <div class="cover-wordmark">SEKURA</div>
+  </div>
+
+  <p class="cover-tagline">Le <span>Waze de la sécurité</span> — Amérique Latine</p>
+
+  <div class="cover-meta">
+    <div class="cover-meta-item">
+      <span class="val">8+</span>
+      <span class="lbl">Pays Cibles</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="val">700M</span>
+      <span class="lbl">Habitants</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="val">$2.8Md</span>
+      <span class="lbl">Marché 2024</span>
+    </div>
+    <div class="cover-meta-item">
+      <span class="val">16%</span>
+      <span class="lbl">CAGR LATAM</span>
+    </div>
+  </div>
+
+  <div class="cover-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     1. LOGO SYSTEM
+============================ -->
+<section class="logo-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">01 / Système de Logo</span>
+      <h2 class="sec-title">Un signe fort.<br><em>Reconnaissable</em> au premier regard.</h2>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="logo-grid reveal">
+
+      <!-- Dark bg — full logo -->
+      <div class="logo-card dark">
+        <div class="sekura-mark lg">
+          <div class="s-icon">
+            <svg width="52" height="52" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z"
+                fill="rgba(0,229,160,0.08)" stroke="rgba(0,229,160,0.35)" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50"
+                stroke="#00E5A0" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sekura-text on-dark" style="font-size:40px;">SEKURA</span>
+        </div>
+        <div class="logo-card-label" style="color:#4A5568;">Logo Principal — Sur fond sombre</div>
+      </div>
+
+      <!-- Night bg — gradient logo -->
+      <div class="logo-card night">
+        <div class="sekura-mark lg">
+          <div class="s-icon">
+            <svg width="52" height="52" viewBox="0 0 80 80" fill="none">
+              <defs>
+                <linearGradient id="grd1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00E5A0"/>
+                  <stop offset="100%" stop-color="#3DD6F5"/>
+                </linearGradient>
+              </defs>
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z"
+                fill="url(#grd1)" fill-opacity="0.08" stroke="url(#grd1)" stroke-opacity="0.4" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50"
+                stroke="url(#grd1)" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sekura-text grad" style="font-size:40px;">SEKURA</span>
+        </div>
+        <div class="logo-card-label" style="color:#4A5568;">Version Gradient — Présentation Premium</div>
+      </div>
+
+      <!-- Light bg -->
+      <div class="logo-card light">
+        <div class="sekura-mark lg">
+          <div class="s-icon">
+            <svg width="52" height="52" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z"
+                fill="rgba(0,180,100,0.08)" stroke="rgba(0,180,100,0.4)" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50"
+                stroke="#009966" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sekura-text on-light" style="font-size:40px;">SEKURA</span>
+        </div>
+        <div class="logo-card-label" style="color:#8892B0;">Version Monochrome — Sur fond clair</div>
+      </div>
+
+      <!-- Jade bg — inverse -->
+      <div class="logo-card jade">
+        <div class="sekura-mark lg">
+          <div class="s-icon">
+            <svg width="52" height="52" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z"
+                fill="rgba(0,0,0,0.1)" stroke="rgba(0,0,0,0.3)" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50"
+                stroke="rgba(10,12,20,0.8)" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <span class="sekura-text on-jade" style="font-size:40px;">SEKURA</span>
+        </div>
+        <div class="logo-card-label">Version Inverse — Sur couleur primaire</div>
+      </div>
+
+      <!-- Icon only sizes -->
+      <div class="logo-card dark" style="grid-column: span 2;">
+        <div style="display:flex; align-items:center; justify-content:space-around; width:100%;">
+          <!-- Sizes -->
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z" fill="rgba(0,229,160,0.1)" stroke="rgba(0,229,160,0.6)" stroke-width="3"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50" stroke="#00E5A0" stroke-width="4" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-muted);">16px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="32" height="32" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z" fill="rgba(0,229,160,0.08)" stroke="rgba(0,229,160,0.4)" stroke-width="2"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50" stroke="#00E5A0" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-muted);">32px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="64" height="64" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z" fill="rgba(0,229,160,0.08)" stroke="rgba(0,229,160,0.35)" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50" stroke="#00E5A0" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-muted);">64px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="96" height="96" viewBox="0 0 80 80" fill="none">
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z" fill="rgba(0,229,160,0.08)" stroke="rgba(0,229,160,0.3)" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50" stroke="#00E5A0" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-muted);">96px</span>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;gap:12px;">
+            <svg width="128" height="128" viewBox="0 0 80 80" fill="none">
+              <defs>
+                <linearGradient id="grd2" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00E5A0"/>
+                  <stop offset="100%" stop-color="#3DD6F5"/>
+                </linearGradient>
+              </defs>
+              <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z" fill="url(#grd2)" fill-opacity="0.08" stroke="url(#grd2)" stroke-opacity="0.35" stroke-width="1.5"/>
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50" stroke="url(#grd2)" stroke-width="3" stroke-linecap="round" fill="none"/>
+            </svg>
+            <span style="font-family:'Space Mono',monospace;font-size:9px;color:var(--text-muted);">128px</span>
+          </div>
+        </div>
+        <div class="logo-card-label" style="color:#4A5568;">Icône seule — App Icon, Favicon, Stamps</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     2. COLOR PALETTE
+============================ -->
+<section class="palette-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">02 / Palette de Couleurs</span>
+      <h2 class="sec-title">Des couleurs qui <em>signifient</em> quelque chose.</h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="palette-grid">
+      <div class="color-swatch c1">
+        <span class="swatch-name">Sekura Jade</span>
+        <span class="swatch-hex">#00E5A0</span>
+        <span class="swatch-role">Primaire — Sécurité</span>
+      </div>
+      <div class="color-swatch c2">
+        <span class="swatch-name">Sekura Night</span>
+        <span class="swatch-hex">#0D1424</span>
+        <span class="swatch-role">Fond App</span>
+      </div>
+      <div class="color-swatch c3">
+        <span class="swatch-name">Ink Deep</span>
+        <span class="swatch-hex">#0A0C14</span>
+        <span class="swatch-role">Fond Principal</span>
+      </div>
+      <div class="color-swatch c4">
+        <span class="swatch-name">Danger Red</span>
+        <span class="swatch-hex">#FF4D6A</span>
+        <span class="swatch-role">Urgence — SOS</span>
+      </div>
+      <div class="color-swatch c5">
+        <span class="swatch-name">Alert Gold</span>
+        <span class="swatch-hex">#FFB830</span>
+        <span class="swatch-role">Avertissement</span>
+      </div>
+      <div class="color-swatch c6">
+        <span class="swatch-name">Data Sky</span>
+        <span class="swatch-hex">#3DD6F5</span>
+        <span class="swatch-role">Info — Tech</span>
+      </div>
+    </div>
+
+    <div class="palette-semantics">
+      <div class="semantic-chip">
+        <div class="role">Zone Sûre</div>
+        <div class="meaning"><span class="dot" style="background:#00E5A0;box-shadow:0 0 8px #00E5A0;"></span>Score 80-100</div>
+      </div>
+      <div class="semantic-chip">
+        <div class="role">Zone à Surveiller</div>
+        <div class="meaning"><span class="dot" style="background:#FFB830;"></span>Score 50-79</div>
+      </div>
+      <div class="semantic-chip">
+        <div class="role">Zone Dangereuse</div>
+        <div class="meaning"><span class="dot" style="background:#FF4D6A;box-shadow:0 0 8px #FF4D6A;"></span>Score 0-49</div>
+      </div>
+      <div class="semantic-chip">
+        <div class="role">Information Neutre</div>
+        <div class="meaning"><span class="dot" style="background:#3DD6F5;"></span>Données & Stats</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     3. TYPOGRAPHY
+============================ -->
+<section class="typo-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">03 / Typographie</span>
+      <h2 class="sec-title"><em>Deux familles.</em><br>Une voix cohérente.</h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="typo-showcase">
+      <div class="typo-card">
+        <span class="typo-family">Outfit — Sans-Serif Principale</span>
+        <div class="typo-specimen">
+          <div style="font-family:'Outfit',sans-serif; font-size:72px; font-weight:800; line-height:1; letter-spacing:-3px; color:var(--text-primary);">SEKURA</div>
+          <div style="font-family:'Outfit',sans-serif; font-size:36px; font-weight:700; line-height:1.2; color:var(--text-primary); margin-top:16px;">Votre sécurité,<br>en temps réel.</div>
+          <div style="font-family:'Outfit',sans-serif; font-size:18px; font-weight:400; line-height:1.6; color:var(--text-secondary); margin-top:16px;">Interface, UI, boutons, données, corps de texte. L'efficacité avant tout.</div>
+        </div>
+        <div style="display:flex; gap:24px; flex-wrap:wrap; margin-top:8px;">
+          <span style="font-weight:300;font-size:14px;color:var(--text-muted);">300 Light</span>
+          <span style="font-weight:400;font-size:14px;color:var(--text-secondary);">400 Regular</span>
+          <span style="font-weight:500;font-size:14px;color:var(--text-primary);">500 Medium</span>
+          <span style="font-weight:600;font-size:14px;color:var(--text-primary);">600 Semibold</span>
+          <span style="font-weight:700;font-size:14px;color:var(--text-primary);">700 Bold</span>
+          <span style="font-weight:800;font-size:14px;color:var(--sekura-jade);">800 ExtraBold</span>
+        </div>
+      </div>
+
+      <div class="typo-card">
+        <span class="typo-family">DM Serif Display — Headlines Éditoriales</span>
+        <div class="typo-specimen">
+          <div style="font-family:'DM Serif Display',serif; font-size:56px; font-weight:400; line-height:1.1; color:var(--text-primary);">Rentre chez toi,<br><em style="color:var(--sekura-jade);">en sécurité.</em></div>
+          <div style="font-family:'DM Serif Display',serif; font-size:28px; font-weight:400; font-style:italic; line-height:1.3; color:var(--text-secondary); margin-top:24px;">"Le danger ne prévient pas. Sekura, si."</div>
+        </div>
+        <div style="display:flex; gap:24px; flex-wrap:wrap; margin-top:24px;">
+          <span style="font-family:'DM Serif Display',serif; font-weight:400; font-size:14px; color:var(--text-secondary);">400 Regular</span>
+          <span style="font-family:'DM Serif Display',serif; font-weight:400; font-style:italic; font-size:14px; color:var(--sekura-jade);">Italic — Accent émotionnel</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="type-scale reveal" style="margin-top:2px;">
+      <div class="type-row">
+        <span class="type-size-label">H1 / 72px</span>
+        <span style="font-family:'Outfit',sans-serif;font-size:48px;font-weight:800;letter-spacing:-2px;color:var(--text-primary);">Sécurité intelligente</span>
+      </div>
+      <div class="type-row">
+        <span class="type-size-label">H2 / 48px</span>
+        <span style="font-family:'DM Serif Display',serif;font-size:36px;color:var(--text-primary);">Protection en temps réel</span>
+      </div>
+      <div class="type-row">
+        <span class="type-size-label">H3 / 32px</span>
+        <span style="font-family:'Outfit',sans-serif;font-size:26px;font-weight:700;color:var(--text-primary);">Alertes géolocalisées</span>
+      </div>
+      <div class="type-row">
+        <span class="type-size-label">Body / 16px</span>
+        <span style="font-family:'Outfit',sans-serif;font-size:16px;font-weight:400;color:var(--text-secondary);">Suivez vos proches, partagez votre itinéraire, activez votre bouton SOS en un geste.</span>
+      </div>
+      <div class="type-row">
+        <span class="type-size-label">Caption / 11px</span>
+        <span style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--text-muted);">Zone analysée • Risque faible • Il y a 2 minutes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     4. UI ELEMENTS
+============================ -->
+<section class="ui-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">04 / Composants UI</span>
+      <h2 class="sec-title">Chaque élément<br>parle le <em>même langage.</em></h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="ui-grid">
+      <div class="ui-card">
+        <div class="ui-card-title">Boutons</div>
+        <div class="btn-row">
+          <button class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 80 80" fill="none">
+              <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50" stroke="#0A0C14" stroke-width="4" stroke-linecap="round" fill="none"/>
+            </svg>
+            Télécharger Sekura
+          </button>
+          <button class="btn btn-ghost">Voir les fonctionnalités</button>
+          <button class="btn btn-danger">⚠ Déclencher SOS</button>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="btn btn-primary btn-sm">Gratuit</button>
+            <button class="btn btn-ghost btn-sm">Premium</button>
+            <button class="btn btn-ghost btn-sm" style="border-color:rgba(61,214,245,0.3);color:var(--sekura-sky);">Entreprise</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <div class="ui-card-title">Statuts & Badges</div>
+        <div class="badge-row" style="flex-direction:column;gap:12px;">
+          <div class="badge badge-safe"><span class="badge-dot"></span>Zone sûre • Score 87</div>
+          <div class="badge badge-alert"><span class="badge-dot"></span>ALERTE ACTIVE</div>
+          <div class="badge badge-warn"><span class="badge-dot"></span>Surveiller • 2 incidents</div>
+          <div class="badge badge-info"><span class="badge-dot"></span>Données actualisées</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+            <div class="badge badge-safe" style="font-size:10px;padding:4px 10px;"><span class="badge-dot"></span>LIVE</div>
+            <div class="badge badge-alert" style="font-size:10px;padding:4px 10px;"><span class="badge-dot"></span>SOS</div>
+            <div class="badge badge-warn" style="font-size:10px;padding:4px 10px;"><span class="badge-dot"></span>⚠</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ui-card">
+        <div class="ui-card-title">Champs de Saisie</div>
+        <div class="input-row">
+          <div class="input-group">
+            <label class="input-label">Votre zone géographique</label>
+            <input class="input" type="text" value="Mexico City, CDMX" readonly>
+          </div>
+          <div class="input-group">
+            <label class="input-label">Contacts d'urgence</label>
+            <input class="input" type="text" placeholder="+52 55 XXXX XXXX" readonly>
+          </div>
+          <div class="input-group">
+            <label class="input-label" style="color:var(--sekura-pulse);">Zone à risque détectée</label>
+            <input class="input danger" type="text" value="Tepito, CDMX — Éviter" readonly>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     5. APP MOCKUP
+============================ -->
+<section class="mockup-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">05 / Interface App</span>
+      <h2 class="sec-title">L'expérience<br><em>dans la poche.</em></h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="mockup-layout">
+      <div class="mockup-copy">
+        <h3>Votre tour de contrôle<br>personnelle.</h3>
+        <p>Une interface pensée pour l'urgence réelle. Pas de friction, pas de menus cachés. Ce dont vous avez besoin, en un geste, même sous pression.</p>
+        <div class="feature-list">
+          <div class="feature-item">
+            <div class="fi-icon">🛡️</div>
+            Heatmap criminelle en temps réel, mise à jour toutes les 5 minutes
+          </div>
+          <div class="feature-item">
+            <div class="fi-icon">📡</div>
+            Score de sécurité dynamique pour votre position actuelle
+          </div>
+          <div class="feature-item">
+            <div class="fi-icon">🔴</div>
+            Bouton SOS discret — triple-clic sans allumer l'écran
+          </div>
+          <div class="feature-item">
+            <div class="fi-icon">👁️</div>
+            Détection d'anomalie de parcours automatique
+          </div>
+          <div class="feature-item">
+            <div class="fi-icon">🤝</div>
+            Réseau de confiance — famille & voisinage
+          </div>
+        </div>
+      </div>
+
+      <div class="phone-wrap">
+        <div class="phone">
+          <div class="phone-notch"><div class="phone-camera"></div></div>
+          <div class="phone-screen">
+
+            <div class="app-topbar">
+              <div class="app-greeting">
+                Bienvenida, <strong>María 👋</strong>
+              </div>
+              <div class="app-avatar">M</div>
+            </div>
+
+            <div class="app-map-card">
+              <div class="map-dots"></div>
+              <div class="map-zone-red"></div>
+              <div class="map-zone-warn"></div>
+              <div class="img-content">
+                <div class="map-pulse">
+                  <div class="map-pulse-ring"></div>
+                  <div class="map-pulse-ring"></div>
+                  <div class="map-pulse-ring"></div>
+                  <div class="map-center-dot"></div>
+                </div>
+              </div>
+              <div class="map-status">
+                <div class="live-dot"></div>
+                ZONA ANALIZADA
+              </div>
+            </div>
+
+            <div class="app-score-row">
+              <div class="score-card">
+                <div class="score-label">Seguridad</div>
+                <div class="score-val safe">87<span style="font-size:14px;font-weight:400">/100</span></div>
+                <div class="score-sub">Zona segura ✓</div>
+              </div>
+              <div class="score-card">
+                <div class="score-label">Alertas Cerca</div>
+                <div class="score-val warn">3</div>
+                <div class="score-sub">2km alrededor</div>
+              </div>
+            </div>
+
+            <div class="app-sos-btn">
+              <span class="sos-icon">🔴</span>
+              <span class="sos-text">SOS</span>
+              <span style="font-size:11px;color:rgba(255,77,106,0.6);position:relative;">Mantener 3 seg.</span>
+            </div>
+
+            <div class="app-alerts">
+              <div class="alert-item">
+                <div class="alert-icon warn">⚠️</div>
+                <div class="alert-text">
+                  <div class="alert-title">Bloqueo carretera</div>
+                  <div class="alert-sub">Av. Insurgentes Norte • 1.2km</div>
+                </div>
+                <div class="alert-time">8min</div>
+              </div>
+              <div class="alert-item">
+                <div class="alert-icon info">📡</div>
+                <div class="alert-text">
+                  <div class="alert-title">Zona actualizada</div>
+                  <div class="alert-sub">3 reportes nuevos</div>
+                </div>
+                <div class="alert-time">14min</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     6. TONE OF VOICE
+============================ -->
+<section class="voice-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">06 / Ton & Voix de Marque</span>
+      <h2 class="sec-title"><em>Empowerment,</em><br>jamais alarmisme.</h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="voice-grid">
+      <div class="voice-card">
+        <div class="voice-type yes">✓ Sekura dit</div>
+        <div class="voice-example">"Tu mérites de rentrer chez toi en sécurité, chaque soir."</div>
+        <div class="voice-note">Direct, personnel, chaleureux. S'adresse à une personne réelle dans une situation réelle.</div>
+
+        <div class="voice-example" style="margin-top:24px;">"Zona analizada. Score 87. ¡Vas bien!"</div>
+        <div class="voice-note">Court, rassurant, actionnable. Pas de jargon technique inutile.</div>
+
+        <div class="voice-example" style="margin-top:24px;">"3 contacts sécurisés vous attendent. Ils sauront si quelque chose tourne mal."</div>
+        <div class="voice-note">Communautaire, humain, la technologie au service du lien.</div>
+      </div>
+
+      <div class="voice-card">
+        <div class="voice-type no">✗ Sekura ne dit jamais</div>
+        <div class="voice-example" style="color:rgba(240,242,255,0.5); text-decoration:line-through;">"DANGER DÉTECTÉ. ZONE CRITIQUE. RISQUE ÉLEVÉ."</div>
+        <div class="voice-note">Trop alarmiste. Crée la panique au lieu de l'action.</div>
+
+        <div class="voice-example" style="color:rgba(240,242,255,0.5); text-decoration:line-through; margin-top:24px;">"Anomalie comportementale détectée dans le périmètre géospatial."</div>
+        <div class="voice-note">Jargon froid. Détache l'utilisateur au lieu de le connecter.</div>
+
+        <div class="voice-example" style="color:rgba(240,242,255,0.5); text-decoration:line-through; margin-top:24px;">"Notre algorithme de sécurité avancé vous protège."</div>
+        <div class="voice-note">Focus produit. Sekura parle toujours de l'humain, pas de la tech.</div>
+      </div>
+
+      <div class="voice-principles">
+        <div class="principle">
+          <span class="principle-icon">💪</span>
+          <div class="principle-name">Empowerment</div>
+          <div class="principle-desc">Sekura donne du pouvoir aux utilisateurs, ne les met pas en état de peur constante.</div>
+        </div>
+        <div class="principle">
+          <span class="principle-icon">🤝</span>
+          <div class="principle-name">Communauté</div>
+          <div class="principle-desc">La sécurité est collective. Sekura parle "nous", "tes proches", "ton quartier".</div>
+        </div>
+        <div class="principle">
+          <span class="principle-icon">⚡</span>
+          <div class="principle-name">Clarté</div>
+          <div class="principle-desc">En situation d'urgence, chaque mot compte. Court, clair, actionnable.</div>
+        </div>
+        <div class="principle">
+          <span class="principle-icon">🌱</span>
+          <div class="principle-name">Respect Local</div>
+          <div class="principle-desc">Sekura parle espagnol et portugais nativement. Pas de traduction froide.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     7. MARKETING COPY
+============================ -->
+<section class="copy-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">07 / Copy Marketing</span>
+      <h2 class="sec-title">Des mots qui<br><em>résonnent.</em></h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="copy-grid">
+      <div class="copy-card">
+        <div class="copy-type">Headline App Store</div>
+        <div class="copy-headline">Le <em>Waze</em> de ta sécurité<br>personnelle.</div>
+        <div class="copy-body">Sekura analyse ta zone en temps réel, t'alerte avant que le danger arrive, et connecte ta famille en un seul geste. Disponible partout en Amérique Latine.</div>
+        <div class="copy-cta">Télécharger gratuitement</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-type">Publicité Digitale — Femmes Urbaines</div>
+        <div class="copy-headline">Ton trajet du soir <em>ne devrait pas</em> te faire peur.</div>
+        <div class="copy-body">Des millions de femmes rentrent seules chaque nuit. Sekura t'envoie par les rues les plus sûres, alerte tes proches si tu dévies de ton chemin, et déclenche un SOS discret d'un triple-clic.</div>
+        <div class="copy-cta">Essayer gratuitement</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-type">Campagne B2B — Entreprises</div>
+        <div class="copy-headline">Vos équipes sur le <em>terrain</em> méritent mieux que 911.</div>
+        <div class="copy-body">Temps de réponse police : 45 minutes en moyenne dans les grandes villes LATAM. Avec Sekura Enterprise, chaque employé est connecté à votre équipe RH en temps réel.</div>
+        <div class="copy-cta">Découvrir l'offre Pro</div>
+      </div>
+
+      <div class="copy-card">
+        <div class="copy-type">Campagne Tourisme — Expats</div>
+        <div class="copy-headline"><em>Explore</em> avec confiance. Pars avec un garde du corps numérique.</div>
+        <div class="copy-body">Tu visites Mexico, Bogotá, São Paulo ? Sekura t'affiche la carte des zones à éviter, vérifie l'identité de tes contacts locaux, et te connecte à la communauté expat de confiance.</div>
+        <div class="copy-cta">Activer le mode voyageur</div>
+      </div>
+
+      <div class="tagline-wall">
+        <div class="tagline-item">
+          <span class="tagline-audience">Femmes Urbaines</span>
+          <span class="tagline-text">Tu mérites de rentrer chez toi <em>en sécurité</em>, chaque soir.</span>
+          <span class="tagline-arrow">→</span>
+        </div>
+        <div class="tagline-item">
+          <span class="tagline-audience">Familles</span>
+          <span class="tagline-text">Sache toujours où sont <em>ceux que tu aimes.</em></span>
+          <span class="tagline-arrow">→</span>
+        </div>
+        <div class="tagline-item">
+          <span class="tagline-audience">Entrepreneurs</span>
+          <span class="tagline-text">Protège ton business. <em>Protège ta vie.</em></span>
+          <span class="tagline-arrow">→</span>
+        </div>
+        <div class="tagline-item">
+          <span class="tagline-audience">Touristes / Expats</span>
+          <span class="tagline-text">Explore avec confiance. <em>Ton garde du corps numérique.</em></span>
+          <span class="tagline-arrow">→</span>
+        </div>
+        <div class="tagline-item">
+          <span class="tagline-audience">Jeunes</span>
+          <span class="tagline-text"><em>Ne laisse jamais</em> tes amis rentrer seuls.</span>
+          <span class="tagline-arrow">→</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     8. BRAND IMAGERY DIRECTION
+============================ -->
+<section class="imagery-section">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-number">08 / Direction Artistique Photo</span>
+      <h2 class="sec-title">Des images qui<br><em>racontent la vie réelle.</em></h2>
+    </div>
+  </div>
+
+  <div class="container reveal">
+    <div class="imagery-grid">
+
+      <div class="imagery-panel">
+        <div class="img-bg img-1">
+          <svg style="position:absolute;inset:0;width:100%;height:100%;opacity:0.15" viewBox="0 0 600 600">
+            <defs>
+              <radialGradient id="city" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stop-color="#00E5A0" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="transparent"/>
+              </radialGradient>
+            </defs>
+            <circle cx="300" cy="300" r="280" fill="url(#city)" opacity="0.4"/>
+            <!-- City grid abstract -->
+            <g stroke="rgba(0,229,160,0.15)" stroke-width="1" fill="none">
+              <rect x="100" y="200" width="40" height="80"/>
+              <rect x="150" y="160" width="50" height="120"/>
+              <rect x="210" y="180" width="35" height="100"/>
+              <rect x="255" y="140" width="60" height="140"/>
+              <rect x="325" y="170" width="45" height="110"/>
+              <rect x="380" y="190" width="40" height="90"/>
+              <rect x="430" y="150" width="55" height="130"/>
+            </g>
+            <!-- Pulse lines -->
+            <circle cx="300" cy="300" r="100" stroke="rgba(0,229,160,0.2)" stroke-width="1" fill="none"/>
+            <circle cx="300" cy="300" r="160" stroke="rgba(0,229,160,0.1)" stroke-width="1" fill="none"/>
+            <circle cx="300" cy="300" r="220" stroke="rgba(0,229,160,0.06)" stroke-width="1" fill="none"/>
+          </svg>
+          <div class="img-content">
+            <div style="font-size:40px;margin-bottom:8px;">🌆</div>
+            <div class="img-quote">Photos urbaines<br>de nuit. <em>Contraste<br>sécurité / danger.</em></div>
+          </div>
+          <div class="img-tag">Direction 01 — Urbain Nocturne</div>
+        </div>
+      </div>
+
+      <div class="imagery-panel">
+        <div class="img-bg img-2">
+          <div class="img-content">
+            <div style="font-size:32px;margin-bottom:8px;">👩‍💼</div>
+            <div class="img-quote" style="font-size:16px;">Femmes actives,<br><em>ton téléphone<br>à la main.</em></div>
+          </div>
+          <div class="img-tag">Direction 02 — Portraits</div>
+        </div>
+      </div>
+
+      <div class="imagery-panel">
+        <div class="img-bg img-3">
+          <div class="img-content">
+            <div style="font-size:32px;margin-bottom:8px;">👨‍👩‍👧</div>
+            <div class="img-quote" style="font-size:16px;">Familles réelles,<br><em>moments<br>de connexion.</em></div>
+          </div>
+          <div class="img-tag">Direction 03 — Famille</div>
+        </div>
+      </div>
+
+      <div class="imagery-panel">
+        <div class="img-bg img-4">
+          <div class="img-content">
+            <div style="font-size:32px;margin-bottom:8px;">🗺️</div>
+            <div class="img-quote" style="font-size:16px;">Vues de villes<br>LATAM. <em>Mexico,<br>Bogotá, São Paulo.</em></div>
+          </div>
+          <div class="img-tag">Direction 04 — Contextuel</div>
+        </div>
+      </div>
+
+      <div class="imagery-panel">
+        <div class="img-bg img-5">
+          <div class="img-content">
+            <div style="font-size:32px;margin-bottom:8px;">📱</div>
+            <div class="img-quote" style="font-size:16px;">App en situation<br><em>réelle. Mains,<br>contexte de rue.</em></div>
+          </div>
+          <div class="img-tag">Direction 05 — Product</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="reveal" style="margin-top:40px; background:var(--ink-mid); padding:40px; display:grid; grid-template-columns:repeat(3,1fr); gap:32px;">
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--sekura-jade);margin-bottom:16px;">✓ Utiliser</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+          Personnes réelles, latin-américaines<br>
+          Lumière naturelle nocturne<br>
+          Expressions de confiance, pas de peur<br>
+          Compositions avec téléphone<br>
+          Ambiance urbaine authentique
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--sekura-pulse);margin-bottom:16px;">✗ Éviter</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+          Images de violence ou crime<br>
+          Stock photos génériques USA<br>
+          Expressions de peur ou panique<br>
+          Policiers / militaires<br>
+          Clichés touristiques
+        </div>
+      </div>
+      <div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--sekura-gold);margin-bottom:16px;">⚡ Filtres Photo</div>
+        <div style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
+          Tons sombres désaturés<br>
+          Touches vertes dans les ombres<br>
+          Contraste fort lumière/nuit<br>
+          Légère vignette<br>
+          Grain cinématographique subtil
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="glow-line"></div>
+
+<!-- ============================
+     FOOTER
+============================ -->
+<footer class="brand-footer">
+  <div class="footer-logo">
+    <svg width="40" height="40" viewBox="0 0 80 80" fill="none">
+      <defs>
+        <linearGradient id="grd-footer" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#00E5A0"/>
+          <stop offset="100%" stop-color="#3DD6F5"/>
+        </linearGradient>
+      </defs>
+      <path d="M40 8L12 20V42C12 57 24.5 69.5 40 74C55.5 69.5 68 57 68 42V20L40 8Z"
+        fill="url(#grd-footer)" fill-opacity="0.08" stroke="url(#grd-footer)" stroke-opacity="0.4" stroke-width="1.5"/>
+      <path d="M32 30C32 27.8 33.8 26 36 26H44C46.2 26 48 27.8 48 30C48 32.2 46.2 34 44 34H36C33.8 34 32 35.8 32 38V42C32 44.2 33.8 46 36 46H44C46.2 46 48 47.8 48 50C48 52.2 46.2 54 44 54H36C33.8 54 32 52.2 32 50"
+        stroke="url(#grd-footer)" stroke-width="3" stroke-linecap="round" fill="none"/>
+    </svg>
+    <span style="font-family:'Outfit',sans-serif;font-size:28px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#F0F2FF,#00E5A0);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">SEKURA</span>
+  </div>
+  <div class="footer-tagline">Le Waze de la sécurité personnelle — Amérique Latine</div>
+  <div style="display:flex;justify-content:center;gap:40px;margin-bottom:40px;flex-wrap:wrap;">
+    <span style="font-size:13px;color:var(--text-secondary);">📱 iOS & Android</span>
+    <span style="font-size:13px;color:var(--text-secondary);">🌎 8 pays LATAM</span>
+    <span style="font-size:13px;color:var(--text-secondary);">🇪🇸 Español • 🇧🇷 Português</span>
+    <span style="font-size:13px;color:var(--text-secondary);">🔒 Privacy-first</span>
+  </div>
+  <div class="footer-meta">Brand Identity System — Confidentiel — Février 2026</div>
+</footer>
+
+<script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('button, a, .tagline-item, .logo-card, .color-swatch').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width = '20px';
+      cursor.style.height = '20px';
+      ring.style.width = '52px';
+      ring.style.height = '52px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width = '12px';
+      cursor.style.height = '12px';
+      ring.style.width = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 60);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  reveals.forEach(r => obs.observe(r));
+</script>
+</body>
+</html>
