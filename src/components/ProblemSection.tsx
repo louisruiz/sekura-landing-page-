@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useInView } from "@/hooks/useInView";
+import CityNetwork from "./CityNetwork";
 
 function AnimatedNumber({ value, suffix = "", inView }: { value: number; suffix?: string; inView: boolean }) {
   const [display, setDisplay] = useState(0);
@@ -54,7 +55,8 @@ export default function ProblemSection({ dict }: { dict: any }) {
   const typedLines = fullTitle.substring(0, typingIdx).split("\n");
 
   return (
-    <section className="bg-[#070c09] relative pt-32 pb-48 overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+    <section className="relative pt-32 pb-48 overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+      <CityNetwork id="problem-city-network" className="opacity-12" />
       {/* Simulation Glitch Mesh (Le Problème #1) */}
       <div className="absolute top-0 right-0 w-[600px] h-[600px] pointer-events-none opacity-20 hidden lg:block mix-blend-screen overflow-hidden">
          {/* Noise overlay specific to glitch */}

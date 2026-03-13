@@ -1,6 +1,7 @@
 "use client";
 
 import { useInView } from "@/hooks/useInView";
+import CityNetwork from "./CityNetwork";
 
 export default function ComparatifSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
@@ -34,7 +35,8 @@ export default function ComparatifSection({ dict }: { dict: any }) {
   );
 
   return (
-    <section id="comparatif" className="bg-[#0d1410] py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+    <section id="comparatif" className="py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+      <CityNetwork id="comparatif-city-network" className="opacity-10" />
       
       {/* Label de section */}
       <div className="absolute top-0 right-0 flex items-center justify-end w-full overflow-hidden">

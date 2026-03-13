@@ -4,29 +4,22 @@
     "how": "Comment ça marche",
     "comparatif": "Comparatif",
     "faq": "FAQ",
-    "cta": "// REJOINDRE ->"
+    "cta": "// EN SAVOIR PLUS ->"
   },
   "hero": {
-    "count": "personnes inscrites",
     "h1_1": "Ton garde",
     "h1_2": "du corps numérique",
     "h1_3": "personnel.",
-    "badge": "● ACCÈS GRATUIT · 3 MOIS OFFERTS",
-    "cta_1": "REJOINDRE GRATUITEMENT →",
+    "badge": "● BIENTÔT DISPONIBLE · APP MOBILE",
+    "cta_1": "EN SAVOIR PLUS →",
     "cta_2": "VOIR LA DÉMO ↓",
     "info_1": "SOS EN 3 CLICS",
     "info_2": "HEATMAP IA · ZONES À RISQUE",
     "info_3": "NAVIGATION SÛRE · PARTOUT",
     "scroll": "SCROLL"
   },
-  "social_proof": {
-    "label": "// 02 · PREUVE SOCIALE",
-    "title": "Ils en parlent. Et ce n'est que le début.",
-    "count_label": "// personnes protégées",
-    "cta": "Rejoignez-les"
-  },
   "problem": {
-    "label": "// 03 · LA RÉALITÉ",
+    "label": "// 02 · LA RÉALITÉ",
     "title_1": "Ce soir.",
     "title_2": "En rentrant.",
     "title_3": "Pas là-bas.",
@@ -54,7 +47,7 @@
     "step3_time": "∞",
     "step3_title": "Voyage en sérénité",
     "step3_desc": "Alertes zones à risque en temps réel. En cas d'urgence : 3 clics, SOS envoyé. Simple. Discret. Efficace.",
-    "cta": "COMMENCER MAINTENANT →",
+    "cta": "DÉCOUVRIR →",
     "mockup_config": "CONFIGURATION",
     "mockup_session": "// SESSION ACTIVE",
     "mockup_emergency": "MODE URGENCE",
@@ -120,18 +113,18 @@
     "label": "// 06 · PROFILS",
     "title_1": "Sekura, c'est pour qui ?",
     "title_2": "Pour toi.",
-    "p1_tag": "VOYAGEUSE SOLO",
-    "p1_desc": "Je voyage seule en Amérique du Sud pour mon boulot. Je rentre souvent tard de réunions.",
-    "p1_fear": "La peur : rentrer à l'hôtel sans savoir si le quartier est sûr.",
-    "p1_gain": "Avec Sekura : elle sait exactement où marcher. 3 clics si urgence.",
-    "p2_tag": "COUPLE EXPATRIÉ",
-    "p2_desc": "On s'est installés à Medellín. On adore la ville mais on ne maîtrise pas encore toutes les zones.",
-    "p2_fear": "La peur : prendre la mauvaise rue par habitude.",
-    "p2_gain": "Avec Sekura : routing automatique. La famille sait où ils sont.",
-    "p3_tag": "DIRIGEANTE EN DÉPLACEMENT",
-    "p3_desc": "Je voyage 10 jours/mois en Amérique Latine. Mon entreprise s'inquiète pour ma sécurité.",
-    "p3_fear": "La peur : un incident qui bloque tout un voyage d'affaires.",
-    "p3_gain": "Avec Sekura : les équipes RH voient sa position. Elle se concentre.",
+    "p1_tag": "VOYAGEUSE D'AFFAIRES",
+    "p1_desc": "Je voyage tous les mois seule en Amérique Latine pour des meetings internationaux. Je rentre souvent tard le soir.",
+    "p1_fear": "La peur : devoir prendre un taxi de nuit dans un quartier inconnu.",
+    "p1_gain": "Avec Sekura : elle sait exactement où marcher. 3 clics en cas d'urgence.",
+    "p2_tag": "EN INSÉCURITÉ DANS SA VILLE",
+    "p2_desc": "Je travaille comme infirmière de nuit. Le trajet retour à 3h du matin me terrorise.",
+    "p2_fear": "La peur : marcher seule dans des rues sombres sans que personne sache où je suis.",
+    "p2_gain": "Avec Sekura : ma famille suit mon trajet. Un SOS silencieux si quelque chose arrive.",
+    "p3_tag": "ÉTUDIANTE À L'ÉTRANGER",
+    "p3_desc": "Je fais mon Erasmus à Bogotá. Mes parents à Paris s'inquiètent en permanence.",
+    "p3_fear": "La peur : sortir dans un quartier que mes amis jugent sûr mais qui est risqué la nuit.",
+    "p3_gain": "Avec Sekura : la heatmap IA me montre les zones dangereuses. Mes parents sont rassurés.",
     "problem_label": "PROBLÈME :",
     "solution_label": "SOLUTION SEKURA :"
   },
@@ -147,24 +140,29 @@
     "a3": "Les heatmaps nécessitent une connexion. Mais le SOS fonctionne en mode SMS si tu n'as pas de data — parce que c'est exactement quand tu en as le plus besoin.",
     "q4": "C'est disponible dans quels pays ?",
     "a4": "Au lancement : France, Mexique, Colombie, Brésil, Espagne. Puis déploiement progressif dans 20 pays d'ici fin 2025.",
-    "q5": "Je m'inscris maintenant mais l'app n'est pas sortie ?",
-    "a5": "Exactement. Tu rejoins la whitelist early bird. Tu reçois l'accès en avant-première avec les 3 mois offerts, et tu shapes le produit via nos sondages."
+    "q5": "L'app n'est pas encore sortie ?",
+    "a5": "Pas encore. Sekura sera bientôt disponible. Tu peux nous suivre pour être prévenu en avant-première du lancement."
   },
   "cta": {
-    "label": "// 09 · ACCÈS ANTICIPÉ",
-    "title_1": "247 personnes",
-    "title_2": "dorment mieux.",
-    "count_text": "247 protégées",
-    "placeholder": "ton@email.com",
-    "button": "REJOINDRE →",
-    "button_loading": "EN COURS...",
-    "button_success": "BIENVENUE PARMI LES INSCRITS ✓",
-    "button_sticky": "Rejoindre · 3 mois offerts →",
-    "disclaimer": "Aucune carte bancaire. Aucun engagement. Juste ton email — et la priorité sur le lancement."
+    "label": "// 09 · BIENTÔT DISPONIBLE",
+    "title_1": "Ta sécurité.",
+    "title_2": "Bientôt dans ta poche.",
+    "button": "NOUS SUIVRE SUR X →",
+    "button_sticky": "Bientôt disponible · En savoir plus →",
+    "disclaimer": "Sekura sera bientôt disponible en tant qu'app. Suivez-nous sur X (Twitter) pour les mises à jour."
   },
   "footer": {
     "tagline": "Ton Garde du Corps Numérique.",
     "copy": "Sekura.space · Tous droits réservés. Outil de dissuasion, ne remplace pas les urgences médicales ou policières.",
     "lang_label": "Langue"
+  },
+  "lang_selector": {
+    "label": "Langue"
+  },
+  "meta": {
+    "title": "Sekura — Ton garde du corps numérique",
+    "description": "Sekura protège ta sécurité physique en Amérique Latine.",
+    "og_title": "Sekura — Ton garde du corps numérique",
+    "og_description": "Heatmap IA · SOS discret · Navigation anti-crime · Assistant IA."
   }
 }

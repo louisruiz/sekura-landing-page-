@@ -2,15 +2,16 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useInView } from "@/hooks/useInView";
-import { Plane, Users, Briefcase } from "lucide-react";
-import Image from "next/image";
+import { Briefcase, Shield, GraduationCap } from "lucide-react";
+import { MagneticCard } from "@/components/ui/MagneticCard";
+import CityNetwork from "./CityNetwork";
 
 export default function PersonasSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [activeCard, setActiveCard] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
-  // Auto-rotation (Personas #9)
+  // Auto-rotation
   useEffect(() => {
     if (isPaused || !isInView) return;
     const timer = setInterval(() => {
@@ -23,44 +24,47 @@ export default function PersonasSection({ dict }: { dict: any }) {
     {
       id: 0,
       name: "Sofia",
-      age: "28 ans",
+      age: "34",
       tag: dict.personas.p1_tag,
-      avatar: "/avatars/sofia.png",
       color: "#00E5A0",
-      icon: <Plane className="w-3 h-3" />,
+      icon: <Briefcase className="w-3 h-3" />,
       desc: dict.personas.p1_desc,
       fear: dict.personas.p1_fear,
-      gain: dict.personas.p1_gain
+      gain: dict.personas.p1_gain,
+      emoji: "✈️"
     },
     {
       id: 1,
-      name: "Lucas & Emma",
-      age: "32 & 30 ans",
+      name: "Clara",
+      age: "27",
       tag: dict.personas.p2_tag,
-      avatar: "/avatars/couple.png",
-      color: "#3DD6F5",
-      icon: <Users className="w-3 h-3" />,
+      color: "#FF4D6A",
+      icon: <Shield className="w-3 h-3" />,
       desc: dict.personas.p2_desc,
       fear: dict.personas.p2_fear,
-      gain: dict.personas.p2_gain
+      gain: dict.personas.p2_gain,
+      emoji: "🏙️"
     },
     {
       id: 2,
-      name: "Inès",
-      age: "45 ans",
+      name: "Léa",
+      age: "22",
       tag: dict.personas.p3_tag,
-      avatar: "/avatars/ines.png",
-      color: "#FF4D6A",
-      icon: <Briefcase className="w-3 h-3" />,
+      color: "#3DD6F5",
+      icon: <GraduationCap className="w-3 h-3" />,
       desc: dict.personas.p3_desc,
       fear: dict.personas.p3_fear,
-      gain: dict.personas.p3_gain
+      gain: dict.personas.p3_gain,
+      emoji: "🎓"
     }
   ];
 
   return (
-    <section className="bg-[#070c09] py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+    <section className="py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
       
+      {/* Animated Background - City Network */}
+      <CityNetwork id="personas-city-network" className="opacity-30" />
+
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full overflow-hidden">
         <div className="font-mono text-[11px] text-[#00E5A0] tracking-[3px] px-8 py-4 whitespace-nowrap">
@@ -71,12 +75,11 @@ export default function PersonasSection({ dict }: { dict: any }) {
 
       <div 
         ref={ref as any} 
-        className="max-w-7xl mx-auto px-6 lg:px-12"
+        className="max-w-7xl mx-auto px-6 lg:px-12 relative z-10"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         onTouchStart={() => setIsPaused(true)}
         onTouchEnd={() => {
-           // Small delay before unpausing on touch end
            setTimeout(() => setIsPaused(false), 3000);
         }}
       >
@@ -125,11 +128,9 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick, dict }: {
   onClick: () => void;
   dict: any;
 }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [typewriterText, setTypewriterText] = useState("");
 
-  // Typewriter effect (Personas #10)
+  // Typewriter effect
   useEffect(() => {
     if (isActive) {
       setTypewriterText("");
@@ -138,32 +139,19 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick, dict }: {
         setTypewriterText(p.desc.substring(0, i + 1));
         i++;
         if (i >= p.desc.length) clearInterval(interval);
-      }, 20); // typing speed
+      }, 20);
       return () => clearInterval(interval);
     } else {
       setTypewriterText(p.desc);
     }
   }, [isActive, p.desc]);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -12, y: x * 12 });
-  };
-
-  const handleMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-  };
-
   return (
-    <div 
-      ref={cardRef}
+    <MagneticCard 
       onClick={onClick}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className={`flex flex-col rounded-2xl p-6 md:p-8 cursor-pointer transition-all duration-500 transform backdrop-blur-xl group ${
+      tiltScale={8}
+      spotlightColor={`${p.color}30`}
+      className={`flex flex-col p-6 md:p-8 cursor-pointer transition-all duration-500 transform backdrop-blur-xl group ${
         isActive 
           ? '-translate-y-2 shadow-[0_20px_40px_rgba(0,0,0,0.5)] z-20' 
           : 'hover:-translate-y-1 z-10'
@@ -174,27 +162,22 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick, dict }: {
           ? `linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01))`
           : `linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01))`,
         backdropFilter: 'blur(12px)',
-        transitionDelay: `${idx * 100}ms`,
-        transform: `perspective(800px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg) translateY(${isActive ? -8 : 0}px)`,
-        transformStyle: 'preserve-3d',
+        transitionDelay: `${idx * 100}ms`
       }}
     >
       {/* Header */}
       <div className="flex items-center gap-4 mb-6">
-        <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center relative overflow-hidden"
-          style={{ boxShadow: isActive ? `0 0 20px ${p.color}40` : '' }}
+        <div className="w-14 h-14 rounded-full border border-white/10 flex items-center justify-center relative overflow-hidden text-[24px]"
+          style={{ 
+            boxShadow: isActive ? `0 0 20px ${p.color}40` : '',
+            background: isActive ? `${p.color}15` : 'rgba(255,255,255,0.03)'
+          }}
         >
-          {/* Avatar image (Personas #2) */}
-          <Image 
-            src={p.avatar} 
-            alt={p.name} 
-            fill 
-            className={`object-cover transition-transform duration-700 ${isActive ? 'scale-110' : 'scale-100'}`} 
-          />
+          {p.emoji}
         </div>
         <div>
           <div className="font-bold text-white text-[18px] group-hover:text-[#00E5A0] transition-colors">{p.name}</div>
-          <div className="font-mono text-[10px] text-white/40 tracking-widest">{p.age}</div>
+          <div className="font-mono text-[10px] text-white/40 tracking-widest">{p.age} ans</div>
         </div>
       </div>
 
@@ -214,7 +197,7 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick, dict }: {
         <span className={`text-[20px] font-serif inline-block ml-1 transition-all duration-500`} style={{ color: p.color, opacity: isActive ? 1 : 0.4, transform: isActive ? 'scale(1)' : 'scale(0.7)' }}>&rdquo;</span>
       </p>
 
-      {/* Accordion Fear/Gain (Personas #7 mobile expansion) */}
+      {/* Accordion Fear/Gain */}
       <div className={`flex flex-col gap-4 overflow-hidden transition-all duration-[600ms] origin-top ease-[cubic-bezier(0.34,1.56,0.64,1)] ${isActive ? 'max-h-[300px] opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
          
          <div className="pl-4 py-1 text-[13px] text-white/60 leading-[1.6]" style={{ borderLeft: '2px solid rgba(255,77,106,0.6)' }}>
@@ -235,6 +218,6 @@ function PersonaCard({ persona: p, isActive, isInView, idx, onClick, dict }: {
            TAP TO EXPAND
          </div>
       )}
-    </div>
+    </MagneticCard>
   )
 }

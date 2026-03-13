@@ -3,13 +3,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useInView } from "@/hooks/useInView";
 import { Download, Map, Shield } from "lucide-react";
+import CityNetwork from "./CityNetwork";
+import { MagneticCard } from "@/components/ui/MagneticCard";
 
 export default function HowItWorksSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
   const [activeStep, setActiveStep] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [tilt, setTilt] = useState({ x: 0, y: 0 });
-  const phoneRef = useRef<HTMLDivElement>(null);
   const touchStart = useRef<number | null>(null);
 
   const steps = [
@@ -45,19 +45,6 @@ export default function HowItWorksSection({ dict }: { dict: any }) {
     return () => clearInterval(timer);
   }, [isPaused]);
 
-  // Phone 3D tilt on mouse move
-  const handlePhoneMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!phoneRef.current) return;
-    const rect = phoneRef.current.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setTilt({ x: y * -12, y: x * 12 });
-  };
-
-  const handlePhoneMouseLeave = () => {
-    setTilt({ x: 0, y: 0 });
-  };
-
   // Touch handlers for mobile swipe (Comment Ça Marche #9)
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStart.current = e.touches[0].clientX;
@@ -78,7 +65,8 @@ export default function HowItWorksSection({ dict }: { dict: any }) {
   const timelineProgress = ((activeStep + 1) / steps.length) * 100;
 
   return (
-    <section id="how-it-works" className="bg-[#0d1410] py-32 px-6 lg:px-12 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+    <section id="how-it-works" className="py-32 px-6 lg:px-12 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+      <CityNetwork id="how-network" className="opacity-10" />
       
       {/* Label de section */}
       <div className="absolute top-0 right-0 flex items-center justify-end w-full overflow-hidden">
@@ -174,19 +162,12 @@ export default function HowItWorksSection({ dict }: { dict: any }) {
           {/* Colonne droite : Mockup téléphone avec tilt 3D et Swipe */}
           <div 
             className="w-full lg:w-1/2 flex justify-center lg:justify-end" 
-            style={{ perspective: '800px' }}
             onTouchStart={handleTouchStart}
             onTouchEnd={handleTouchEnd}
           >
-            <div 
-              ref={phoneRef}
-              onMouseMove={handlePhoneMouseMove}
-              onMouseLeave={handlePhoneMouseLeave}
+            <MagneticCard 
+              tiltScale={12}
               className="w-[260px] h-[520px] rounded-[36px] border-[2px] border-[#00E5A0] bg-[#0a100d] shadow-[0_0_50px_rgba(0,229,160,0.15)] relative overflow-hidden flex flex-col items-center justify-start p-6 transition-transform duration-300 ease-out"
-              style={{
-                transform: `rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
-                transformStyle: 'preserve-3d',
-              }}
             >
               
               {/* Notch realistic */}
@@ -274,7 +255,7 @@ export default function HowItWorksSection({ dict }: { dict: any }) {
                   />
                 ))}
               </div>
-            </div>
+            </MagneticCard>
           </div>
 
         </div>

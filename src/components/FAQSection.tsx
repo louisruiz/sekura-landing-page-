@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useInView } from "@/hooks/useInView";
-import { Wifi, Shield, Battery, Globe, CreditCard, RefreshCw, ThumbsUp, ThumbsDown } from "lucide-react";
+import { Wifi, Shield, Battery, Globe, CreditCard, ThumbsUp, ThumbsDown } from "lucide-react";
+import CityNetwork from "./CityNetwork";
 
 // Helper to highlight keywords in jade
 function HighlightAnswer({ text }: { text: string }) {
@@ -96,7 +97,8 @@ export default function FAQSection({ dict }: { dict: any }) {
   );
 
   return (
-    <section id="faq" className="bg-[#070c09] py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+    <section id="faq" className="py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+      <CityNetwork id="faq-city-network" className="opacity-10" />
       
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full overflow-hidden">
@@ -132,7 +134,7 @@ export default function FAQSection({ dict }: { dict: any }) {
 
         {/* Accordion */}
         <div className="flex flex-col">
-          {filteredFaqs.map((faq, idx) => {
+          {filteredFaqs.map((faq) => {
             const originalIdx = faqs.indexOf(faq);
             const isOpen = openIndices.has(originalIdx);
             return (

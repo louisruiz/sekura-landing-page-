@@ -2,14 +2,15 @@
 
 import { useEffect, useState, useRef } from "react";
 import dynamic from "next/dynamic";
+import LanguageSelector from "./LanguageSelector";
+import CityNetwork from "./CityNetwork";
 
 const Spline = dynamic(() => import("@splinetool/react-spline").then(mod => ({ default: mod.default })), { ssr: false });
 
 const SPLINE_URL = "https://prod.spline.design/2Qbo-zAjo5qfNMss/scene.splinecode";
 
-export default function Hero({ dict }: { dict: any }) {
+export default function Hero({ dict, locale }: { dict: any; locale: string }) {
   const [splineLoaded, setSplineLoaded] = useState(false);
-  const [count, setCount] = useState(0);
   const [scrolled, setScrolled] = useState(false);
   const [scrollY, setScrollY] = useState(0);
   const splineRef = useRef<HTMLDivElement>(null);
@@ -25,19 +26,6 @@ export default function Hero({ dict }: { dict: any }) {
   // SOS Easter egg
   const sosBufferRef = useRef("");
   const [sosFlash, setSosFlash] = useState(false);
-
-  // Count-up animation for badge
-  useEffect(() => {
-    const end = 247;
-    const duration = 2000;
-    const startTime = performance.now();
-    const animate = (now: number) => {
-      const p = Math.min((now - startTime) / duration, 1);
-      setCount(Math.floor((1 - Math.pow(1 - p, 3)) * end));
-      if (p < 1) requestAnimationFrame(animate); else setCount(end);
-    };
-    requestAnimationFrame(animate);
-  }, []);
 
   // Scroll detection for sticky navbar + parallax
   useEffect(() => {
@@ -162,7 +150,13 @@ export default function Hero({ dict }: { dict: any }) {
         }}
       />
 
-      {/* SPLINE 3D CANVAS */}
+      {/* GALAXY NETWORK CANVAS (Background) */}
+      <CityNetwork 
+        id="hero-galaxy" 
+        className="z-[0] opacity-50 mix-blend-screen" 
+      />
+
+      {/* SPLINE 3D CANVAS (Robot - Foreground) */}
       <div
         style={{
           position: "absolute",
@@ -233,14 +227,6 @@ export default function Hero({ dict }: { dict: any }) {
         <div className="absolute bottom-[20px] left-[20px] w-5 h-5 border-b-2 border-l-2 border-[#00E5A0]/35" />
         <div className="absolute bottom-[20px] right-[20px] w-5 h-5 border-b-2 border-r-2 border-[#00E5A0]/35" />
 
-        {/* STATUS BAR (TOP CENTER) */}
-        <div className="absolute top-[72px] left-1/2 -translate-x-1/2 animate-fadeDown pointer-events-auto" style={{ animationDelay: '0.3s' }}>
-          <div className="flex items-center gap-2 px-3 py-1.5 border border-[#00E5A0]/20 bg-[#00E5A0]/5 backdrop-blur-md">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#00E5A0] animate-pulse shadow-[0_0_8px_#00E5A0]" />
-            <span className="font-mono text-[10px] text-[#00E5A0] leading-none mt-px">{count} {dict.hero.count}</span>
-          </div>
-        </div>
-
         {/* NAVBAR — sticky with blur on scroll */}
         <header className={`fixed top-0 left-0 w-full px-6 md:px-12 py-4 md:py-6 flex justify-between items-center animate-fadeDown pointer-events-auto z-[50] transition-all duration-500 ${scrolled ? 'bg-[#0A0C14]/80 backdrop-blur-xl shadow-[0_1px_0_rgba(0,229,160,0.1)]' : 'bg-transparent'}`} style={{ animationDelay: '0s' }}>
           <div className="flex items-center gap-3">
@@ -255,9 +241,12 @@ export default function Hero({ dict }: { dict: any }) {
             <a href="#faq" className="hover:text-[#F0F2FF] hover:border-b hover:border-[#00E5A0] pb-1 transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>{dict.nav.faq}</a>
           </nav>
           
-          <a href="#cta-final" className="group font-mono text-[11px] tracking-[0.14em] text-[#00E5A0] flex items-center transition-all" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
-            {dict.nav.cta.replace('->', '')} <span className="ml-2 group-hover:ml-4 transition-all">&rarr;</span>
-          </a>
+          <div className="flex items-center gap-4">
+            <LanguageSelector currentLocale={locale} />
+            <a href="#cta-final" className="group font-mono text-[11px] tracking-[0.14em] text-[#00E5A0] flex items-center transition-all hidden sm:flex" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+              {dict.nav.cta.replace('->', '')} <span className="ml-2 group-hover:ml-4 transition-all">&rarr;</span>
+            </a>
+          </div>
         </header>
 
         {/* MAIN TYPOGRAPHY with parallax */}
@@ -290,12 +279,12 @@ export default function Hero({ dict }: { dict: any }) {
             {dict.hero.badge}
           </div>
           <div className="flex flex-col sm:flex-row gap-[12px]">
-            <button className="cta-shimmer bg-[#00E5A0] text-[#0A0C14] px-[28px] py-[14px] rounded-[4px] font-bold font-mono tracking-widest shadow-[0_0_30px_rgba(0,229,160,0.25)] hover:bg-white hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all text-[11px]" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+            <a href="#cta-final" className="cta-shimmer bg-[#00E5A0] text-[#0A0C14] px-[28px] py-[14px] rounded-[4px] font-bold font-mono tracking-widest shadow-[0_0_30px_rgba(0,229,160,0.25)] hover:bg-white hover:shadow-[0_0_40px_rgba(255,255,255,0.4)] transition-all text-[11px] text-center" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
               {dict.hero.cta_1}
-            </button>
-            <button className="hidden sm:block border border-white/10 text-[#8892B0] px-[28px] py-[14px] rounded-[4px] font-mono tracking-widest hover:border-white/30 hover:text-white transition-colors text-[11px]" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
+            </a>
+            <a href="#features" className="hidden sm:block border border-white/10 text-[#8892B0] px-[28px] py-[14px] rounded-[4px] font-mono tracking-widest hover:border-white/30 hover:text-white transition-colors text-[11px] text-center" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)}>
               {dict.hero.cta_2}
-            </button>
+            </a>
           </div>
         </div>
 

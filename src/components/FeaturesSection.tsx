@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useInView } from "@/hooks/useInView";
+import { MagneticCard } from "@/components/ui/MagneticCard";
 
 export default function FeaturesSection({ dict }: { dict: any }) {
   const { ref, isInView } = useInView({ threshold: 0.1 });
@@ -48,7 +49,7 @@ export default function FeaturesSection({ dict }: { dict: any }) {
       setActiveTab((prev) => (prev + 1) % features.length);
     }, 6000);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, features.length]);
 
   // Delayed fear appearance
   useEffect(() => {
@@ -81,7 +82,7 @@ export default function FeaturesSection({ dict }: { dict: any }) {
   const tabOffset = activeTab * tabWidth;
 
   return (
-    <section id="features" className="bg-[#070c09] py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
+    <section id="features" className="py-32 relative overflow-hidden selection:bg-[#00E5A0] selection:text-[#0A0C14]">
       
       {/* Label de section */}
       <div className="absolute top-0 left-0 flex items-center w-full overflow-hidden">
@@ -157,7 +158,10 @@ export default function FeaturesSection({ dict }: { dict: any }) {
 
           {/* Mockup - Droite */}
           <div className="w-full lg:w-1/2 flex justify-center lg:justify-end -mx-6 lg:mx-0">
-            <div className="w-full lg:max-w-[440px] aspect-square lg:rounded-[24px] border-y lg:border border-[#00E5A0]/20 bg-[#0d1410] relative overflow-hidden shadow-[0_0_40px_rgba(0,229,160,0.05)]">
+            <MagneticCard 
+              tiltScale={5}
+              className="w-full lg:max-w-[440px] aspect-square lg:rounded-[24px] border-y lg:border border-[#00E5A0]/20 bg-[#0d1410] relative overflow-hidden shadow-[0_0_40px_rgba(0,229,160,0.05)]"
+            >
                
                {/* HEATMAP MOCKUP */}
                <div className={`absolute inset-0 transition-all duration-500 ease-in-out ${activeTab === 0 ? 'opacity-100 z-10 pointer-events-auto scale-100' : 'opacity-0 z-0 pointer-events-none scale-95'}`}>
@@ -292,7 +296,7 @@ export default function FeaturesSection({ dict }: { dict: any }) {
                  </div>
                </div>
 
-            </div>
+            </MagneticCard>
           </div>
           
         </div>

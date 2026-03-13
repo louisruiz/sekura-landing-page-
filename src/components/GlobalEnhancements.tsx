@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 
 export default function GlobalEnhancements() {
   const [scrollProgress, setScrollProgress] = useState(0);
-  const [showFloatingCTA, setShowFloatingCTA] = useState(false);
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
 
@@ -27,11 +26,6 @@ export default function GlobalEnhancements() {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       setScrollProgress(docHeight > 0 ? (scrollTop / docHeight) * 100 : 0);
-
-      const triggerPoint = docHeight * 0.3;
-      const ctaSection = document.getElementById("cta-final");
-      const ctaInView = ctaSection ? ctaSection.getBoundingClientRect().top < window.innerHeight : false;
-      setShowFloatingCTA(scrollTop > triggerPoint && !ctaInView);
     };
 
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -103,25 +97,6 @@ export default function GlobalEnhancements() {
 
       {/* Noise Texture Overlay */}
       <div className="noise-overlay" />
-
-      {/* Floating Sticky CTA */}
-      <a
-        href="#cta-final"
-        aria-label="Rejoindre Sekura — 3 mois offerts"
-        className={`fixed z-[9998] transition-all duration-500 ease-[cubic-bezier(0.34,1.56,0.64,1)] ${
-          showFloatingCTA
-            ? "translate-y-0 opacity-100"
-            : "translate-y-[120px] opacity-0 pointer-events-none"
-        }
-        bottom-6 right-6 md:bottom-8 md:right-8
-        sm:w-auto w-[calc(100%-48px)] sm:left-auto left-6
-        `}
-      >
-        <div className="cta-shimmer bg-[#00E5A0] text-[#070c09] font-mono font-bold text-[11px] tracking-widest px-6 py-4 rounded-md shadow-[0_0_40px_rgba(0,229,160,0.4)] hover:bg-white hover:shadow-[0_0_50px_rgba(255,255,255,0.3)] transition-all flex items-center justify-center gap-3 cursor-pointer">
-          <span className="w-2 h-2 rounded-full bg-[#070c09] animate-pulse" />
-          REJOINDRE &middot; 3 MOIS OFFERTS →
-        </div>
-      </a>
     </>
   );
 }
